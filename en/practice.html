@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-sheet="2">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Practice — toz+ architects</title>
   <meta name="description" content="The practice of toz+ architects: housing, interiors, existing buildings and small civic work. Beşiktaş, Istanbul.">
   <meta name="author" content="toz+ architects">
@@ -37,7 +37,23 @@
   <link rel="preload" href="../assets/fonts/schibsted-900-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/schibsted-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prev" href="studio.html">
+  <link rel="next" href="contact.html">
   <link rel="stylesheet" href="../css/site.css">
+  <script>
+    document.documentElement.classList.add("js");
+    addEventListener("pageswap", function () {
+      sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
+    });
+    addEventListener("pagereveal", function (e) {
+      var from = sessionStorage.getItem("toz-sheet");
+      var to = document.documentElement.dataset.sheet;
+      if (!e.viewTransition || from === null || from === to) return;
+      var d = (to - from + 4) % 4;
+      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+    });
+  </script>
+  <script src="../js/site.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -88,7 +104,7 @@
         { "@type": "Person", "name": "Başak Toz" },
         { "@type": "Person", "name": "Macit Toz" }
       ],
-      "description": "Beşiktaş Abbasağa'da mimarlık ofisi. Konut, iç mekân, mevcut yapı ve küçük kamusal işler."
+      "description": "Architecture office in Abbasağa, Beşiktaş, Istanbul. Housing, interiors, existing buildings and small civic work."
     },
     {
       "@type": "WebSite",
@@ -124,28 +140,30 @@
 <body>
   <a class="skip" href="#icerik">Skip to content</a>
   <header class="site-header">
-    <div class="header-bar bar">
-      <a class="logo" href="index.html">
+    <div class="header-bar">
+      <a class="logo glass" href="./" aria-label="toz+ architects, cover">
         <img src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
-      <nav class="site-nav" aria-label="Pages">
+      <nav class="site-nav glass" aria-label="Pages">
         <a href="studio.html">Studio</a>
         <a href="practice.html" aria-current="page">Practice</a>
         <a href="contact.html">Contact</a>
-        <a class="lang" href="../pratik.html" hreflang="tr" lang="tr">TR</a>
+        <a class="nav-call" href="tel:+905425190361"><span class="call-short">Call</span><span class="call-long">0542 519 0361</span></a>
       </nav>
+      <a class="lang glass" href="../pratik.html" hreflang="tr" lang="tr">TR</a>
     </div>
   </header>
+  <div class="progress" aria-hidden="true"></div>
   <main id="icerik">
     <article class="page bar">
       <p class="kicker"><span class="sq" aria-hidden="true"></span> Sheet 02 · Practice</p>
       <h1>Four scales.</h1>
-      <p class="lede">There is no list of finished work. The photographs show the light and the fabric the office looks at. The drawing under each one is the plan of that look.</p>
+      <p class="lede">Four scales, four studies. The photographs show the light and fabric the office looks at; the drawing under each is the plan of that look. They are not presented as completed projects.</p>
       <div class="studies">
     <article class="study" id="housing">
       <div class="study-visual">
       <figure class="shot">
-        <img src="../assets/photos/konut.jpg" width="1152" height="864" alt="A stone threshold, a dark wooden door, an iron rail and the window beside it.">
+        <img loading="lazy" decoding="async" src="../assets/photos/konut.jpg" width="1152" height="864" alt="A stone threshold, a dark wooden door, an iron rail and the window beside it." style="view-transition-name: ph-konut" data-zoom>
         <figcaption><span>Threshold</span><span>Door, step, window</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -194,13 +212,13 @@
         <span class="num">01</span>
         <h2>Housing</h2>
         <p>A house is not a list of rooms. First the threshold: where the door turns, the height the window sits at, the tread the hand meets. The plan is the result of these three.</p>
-        <p>No hall enlarged for show. Light enters from one face and stays on that face in the evening. The red line on the plan marks the threshold. The work starts there.</p>
+        <p>Hall and rooms are as large as they need to be. Light enters from one face and stays on that face in the evening. The red line on the plan marks the threshold. The work starts there.</p>
       </div>
     </article>
     <article class="study flip" id="interior">
       <div class="study-visual">
       <figure class="shot">
-        <img src="../assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Daylight from a window in a plastered room, a wooden table and one chair.">
+        <img loading="lazy" decoding="async" src="../assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Daylight from a window in a plastered room, a wooden table and one chair." style="view-transition-name: ph-ic" data-zoom>
         <figcaption><span>Interior</span><span>Window, table, light</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -234,14 +252,14 @@
       <div class="study-copy">
         <span class="num">02</span>
         <h2>Interior</h2>
-        <p>Inside, a mistake is not hidden. Joint, sill and door frame are chosen from the same family. Colour is used to separate one surface, not to paint every wall.</p>
-        <p>Furniture is a tool with a known height, not an object explaining the room. In section the table sits at sitting height. The red frame marks where the light comes in.</p>
+        <p>Inside, every junction shows. Joint, sill and door frame are chosen from the same family. Colour is used to separate one surface, not to paint every wall.</p>
+        <p>Furniture is drawn as a tool with a known height. In section the table sits at sitting height. The red frame marks where the light comes in.</p>
       </div>
     </article>
     <article class="study" id="existing">
       <div class="study-visual">
       <figure class="shot">
-        <img src="../assets/photos/mevcut.jpg" width="1152" height="864" alt="An old facade with peeling plaster, uneven windows, an iron balcony and wires.">
+        <img loading="lazy" decoding="async" src="../assets/photos/mevcut.jpg" width="1152" height="864" alt="An old facade with peeling plaster, uneven windows, an iron balcony and wires." style="view-transition-name: ph-mevcut" data-zoom>
         <figcaption><span>Existing</span><span>Plaster, window, balcony</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -275,7 +293,7 @@
     <article class="study flip" id="civic">
       <div class="study-visual">
       <figure class="shot">
-        <img src="../assets/photos/avlu.jpg" width="1152" height="864" alt="A small court with a tree, a wooden bench and a steel canopy.">
+        <img loading="lazy" decoding="async" src="../assets/photos/avlu.jpg" width="1152" height="864" alt="A small court with a tree, a wooden bench and a steel canopy." style="view-transition-name: ph-avlu" data-zoom>
         <figcaption><span>Court</span><span>Tree, bench, canopy</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -296,14 +314,39 @@
         <span class="num">04</span>
         <h2>Small civic</h2>
         <p>The metre between street and building is often left empty. A canopy, a threshold, a seat, the shade of a tree. A neighbourhood is read from these pieces.</p>
-        <p>No promise of a grand square. What matters is the hour at which a court can be sat in. In plan the black mass is the existing building. The red dashed line is the canopy added to it.</p>
+        <p>The scale is small: the hour at which a court is in shade. In plan the black mass is the existing building. The red dashed line is the canopy added to it.</p>
       </div>
     </article>
       </div>
+      <section class="sheets" aria-labelledby="sheets-title">
+        <div class="index-label">
+          <p id="sheets-title">Sheets</p>
+          <p>The drawing set of a job</p>
+        </div>
+        <ol class="sheet-list">
+          <li><span class="sheet-scale">1:50</span><h3>Survey</h3><p>A measured drawing of what is there. Walls, levels, openings, damage.</p></li>
+          <li><span class="sheet-scale">1:100</span><h3>Scheme</h3><p>The first decision in plan, section and elevation. What stays, what is added.</p></li>
+          <li><span class="sheet-scale">1:50</span><h3>Construction drawings</h3><p>Dimensioned, specified, buildable.</p></li>
+          <li><span class="sheet-scale">1:5</span><h3>Details</h3><p>Junction, sill, threshold, rail. Where the hand meets the building.</p></li>
+          <li><span class="sheet-scale">On site</span><h3>Inspection</h3><p>What was drawn, checked against what was built.</p></li>
+        </ol>
+      </section>
     </article>
+    <nav class="next-sheet bar" aria-label="Next sheet">
+      <a href="contact.html" rel="next">
+        <span class="meta-label">Next sheet · Sheet 03</span>
+        <span class="next-title">Contact</span>
+        <span class="next-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="swipe-hint" aria-hidden="true">← Swipe to turn →</p>
+    </nav>
   </main>
   <footer class="colophon">
     <div class="bar">
+      <div class="colophon-top">
+        <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
+        <img class="colophon-mark" src="../assets/mark.svg" width="163" height="161" alt="" loading="lazy">
+      </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Office</span><span translate="no">toz+ architects</span></p>
         <address><span class="meta-label">Place</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>

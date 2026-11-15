@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-sheet="3">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>İletişim — toz+ architects, Beşiktaş</title>
   <meta name="description" content="toz+ architects iletişim: 0542 519 0361. Abbasağa, Bostanüstü Dere Sok. 34/1, 34353 Beşiktaş / İstanbul.">
   <meta name="author" content="toz+ architects">
@@ -37,7 +37,23 @@
   <link rel="preload" href="assets/fonts/schibsted-900-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prev" href="pratik.html">
+  <link rel="next" href="index.html">
   <link rel="stylesheet" href="css/site.css">
+  <script>
+    document.documentElement.classList.add("js");
+    addEventListener("pageswap", function () {
+      sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
+    });
+    addEventListener("pagereveal", function (e) {
+      var from = sessionStorage.getItem("toz-sheet");
+      var to = document.documentElement.dataset.sheet;
+      if (!e.viewTransition || from === null || from === to) return;
+      var d = (to - from + 4) % 4;
+      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+    });
+  </script>
+  <script src="js/site.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -124,26 +140,30 @@
 <body>
   <a class="skip" href="#icerik">İçeriğe geç</a>
   <header class="site-header">
-    <div class="header-bar bar">
-      <a class="logo" href="index.html">
+    <div class="header-bar">
+      <a class="logo glass" href="index.html" aria-label="toz+ architects, kapak">
         <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
-      <nav class="site-nav" aria-label="Sayfalar">
+      <nav class="site-nav glass" aria-label="Sayfalar">
         <a href="ofis.html">Ofis</a>
         <a href="pratik.html">Pratik</a>
         <a href="iletisim.html" aria-current="page">İletişim</a>
-        <a class="lang" href="en/contact.html" hreflang="en" lang="en">EN</a>
+        <a class="nav-call" href="tel:+905425190361"><span class="call-short">Ara</span><span class="call-long">0542 519 0361</span></a>
       </nav>
+      <a class="lang glass" href="en/contact.html" hreflang="en" lang="en">EN</a>
     </div>
   </header>
+  <div class="progress" aria-hidden="true"></div>
   <main id="icerik">
     <article class="page bar contact">
       <p class="kicker"><span class="sq" aria-hidden="true"></span> Pafta 03 · İletişim</p>
       <h1>Önce bir telefon.</h1>
       <p class="lede">Ziyaretten önce arayın. Ofis Abbasağa’da, randevu ile.</p>
+      <div class="contact-grid">
+      <div>
       <a class="contact-phone" href="tel:+905425190361">0542 519 0361</a>
       <aside class="plate" aria-label="Ofis bilgisi">
-    <div class="brand"><img src="assets/mark.svg" width="18" height="18" alt=""><span translate="no">toz+ architects</span></div>
+    <div class="brand"><img loading="lazy" decoding="async" src="assets/mark.svg" width="18" height="18" alt=""><span translate="no">toz+ architects</span></div>
     
     <p><span class="meta-label">Mahalle</span><span>Abbasağa</span></p>
     <p><span class="meta-label">Sokak</span><span>Bostanüstü Dere Sokak</span></p>
@@ -152,12 +172,31 @@
     <p><span class="meta-label">Kent</span><span>İstanbul</span></p>
     <p><span class="meta-label">Posta</span><span>34353</span></p>
     <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
+    <p><span class="meta-label">Saat</span><span><time data-clock>GMT+3</time> · İstanbul</span></p>
   </aside>
       <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">→</span></a>
+      </div>
+      <figure class="map">
+        <iframe src="https://maps.google.com/maps?q=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul&amp;z=16&amp;output=embed" title="Harita: Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <figcaption class="glass"><span class="sq" aria-hidden="true"></span>Bostanüstü Dere Sok. 34/1</figcaption>
+      </figure>
+      </div>
     </article>
+    <nav class="next-sheet bar" aria-label="Sonraki pafta">
+      <a href="index.html" rel="next">
+        <span class="meta-label">Sonraki pafta · Pafta 00</span>
+        <span class="next-title">Kapak</span>
+        <span class="next-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
+    </nav>
   </main>
   <footer class="colophon">
     <div class="bar">
+      <div class="colophon-top">
+        <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
+        <img class="colophon-mark" src="assets/mark.svg" width="163" height="161" alt="" loading="lazy">
+      </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
         <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>

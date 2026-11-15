@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-sheet="2">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Pratik — toz+ architects</title>
   <meta name="description" content="toz+ architects pratiği: konut, iç mekân, mevcut yapı ve küçük kamusal ölçek. Beşiktaş, İstanbul.">
   <meta name="author" content="toz+ architects">
@@ -37,7 +37,23 @@
   <link rel="preload" href="assets/fonts/schibsted-900-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prev" href="ofis.html">
+  <link rel="next" href="iletisim.html">
   <link rel="stylesheet" href="css/site.css">
+  <script>
+    document.documentElement.classList.add("js");
+    addEventListener("pageswap", function () {
+      sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
+    });
+    addEventListener("pagereveal", function (e) {
+      var from = sessionStorage.getItem("toz-sheet");
+      var to = document.documentElement.dataset.sheet;
+      if (!e.viewTransition || from === null || from === to) return;
+      var d = (to - from + 4) % 4;
+      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+    });
+  </script>
+  <script src="js/site.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -124,28 +140,30 @@
 <body>
   <a class="skip" href="#icerik">İçeriğe geç</a>
   <header class="site-header">
-    <div class="header-bar bar">
-      <a class="logo" href="index.html">
+    <div class="header-bar">
+      <a class="logo glass" href="index.html" aria-label="toz+ architects, kapak">
         <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
-      <nav class="site-nav" aria-label="Sayfalar">
+      <nav class="site-nav glass" aria-label="Sayfalar">
         <a href="ofis.html">Ofis</a>
         <a href="pratik.html" aria-current="page">Pratik</a>
         <a href="iletisim.html">İletişim</a>
-        <a class="lang" href="en/practice.html" hreflang="en" lang="en">EN</a>
+        <a class="nav-call" href="tel:+905425190361"><span class="call-short">Ara</span><span class="call-long">0542 519 0361</span></a>
       </nav>
+      <a class="lang glass" href="en/practice.html" hreflang="en" lang="en">EN</a>
     </div>
   </header>
+  <div class="progress" aria-hidden="true"></div>
   <main id="icerik">
     <article class="page bar">
       <p class="kicker"><span class="sq" aria-hidden="true"></span> Pafta 02 · Pratik</p>
       <h1>Dört ölçek.</h1>
-      <p class="lede">Bitmiş işlerin listesi yok. Kareler, ofisin baktığı ışığı ve dokuyu gösterir. Alttaki çizim, o bakışın planıdır.</p>
+      <p class="lede">Dört ölçek, dört çalışma. Kareler ofisin baktığı ışığı ve dokuyu gösterir, altındaki çizim o bakışın planıdır. Tamamlanmış proje olarak sunulmazlar.</p>
       <div class="studies">
     <article class="study" id="konut">
       <div class="study-visual">
       <figure class="shot">
-        <img src="assets/photos/konut.jpg" width="1152" height="864" alt="Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere.">
+        <img loading="lazy" decoding="async" src="assets/photos/konut.jpg" width="1152" height="864" alt="Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere." style="view-transition-name: ph-konut" data-zoom>
         <figcaption><span>Eşik</span><span>Kapı, basamak, pencere</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -194,13 +212,13 @@
         <span class="num">01</span>
         <h2>Konut</h2>
         <p>Evi odaların listesinden kurmayız. Önce eşik: kapının döndüğü yer, pencerenin oturduğu yükseklik, merdivenin ele geldiği basamak. Plan bu üç kararın sonucudur.</p>
-        <p>Büyük hol, gösteriş için şişirilmiş oda yok. Işık bir cepheden girer. Akşam da o cephede kalır. Plandaki kırmızı çizgi eşiği işaretler; iş orada başlar.</p>
+        <p>Hol ve odalar gerektiği kadar büyüktür. Işık bir cepheden girer. Akşam da o cephede kalır. Plandaki kırmızı çizgi eşiği işaretler; iş orada başlar.</p>
       </div>
     </article>
     <article class="study flip" id="ic-mekan">
       <div class="study-visual">
       <figure class="shot">
-        <img src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye.">
+        <img loading="lazy" decoding="async" src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye." style="view-transition-name: ph-ic" data-zoom>
         <figcaption><span>İç</span><span>Pencere, masa, ışık</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -234,14 +252,14 @@
       <div class="study-copy">
         <span class="num">02</span>
         <h2>İç mekân</h2>
-        <p>İçeride hata gizlenmez. Derz, denizlik, kapı kasası aynı aileden seçilir. Renk, duvarın tamamını boyasın diye değil, bir yüzeyi ayırsın diye kullanılır.</p>
-        <p>Mobilya, mekânı anlatan bir nesne değil, yüksekliği belli bir araçtır. Kesitte masa oturma hizasındadır. Kırmızı çerçeve, ışığın girdiği yeri gösterir.</p>
+        <p>İç mekânda her birleşim görünür. Derz, denizlik, kapı kasası aynı aileden seçilir. Renk, duvarın tamamını boyasın diye değil, bir yüzeyi ayırsın diye kullanılır.</p>
+        <p>Mobilya, yüksekliği belli bir araç olarak çizilir. Kesitte masa oturma hizasındadır. Kırmızı çerçeve, ışığın girdiği yeri gösterir.</p>
       </div>
     </article>
     <article class="study" id="mevcut">
       <div class="study-visual">
       <figure class="shot">
-        <img src="assets/photos/mevcut.jpg" width="1152" height="864" alt="Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar.">
+        <img loading="lazy" decoding="async" src="assets/photos/mevcut.jpg" width="1152" height="864" alt="Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar." style="view-transition-name: ph-mevcut" data-zoom>
         <figcaption><span>Mevcut</span><span>Sıva, pencere, balkon</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -275,7 +293,7 @@
     <article class="study flip" id="kamusal">
       <div class="study-visual">
       <figure class="shot">
-        <img src="assets/photos/avlu.jpg" width="1152" height="864" alt="Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi.">
+        <img loading="lazy" decoding="async" src="assets/photos/avlu.jpg" width="1152" height="864" alt="Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi." style="view-transition-name: ph-avlu" data-zoom>
         <figcaption><span>Avlu</span><span>Ağaç, bank, saçak</span></figcaption>
       </figure>
       <figure class="drawing">
@@ -296,14 +314,39 @@
         <span class="num">04</span>
         <h2>Küçük kamusal</h2>
         <p>Sokakla yapı arasındaki bir metre çoğu zaman boş bırakılır. Saçak, eşik, oturma, bir ağacın gölgesi. Mahalle bu ara parçalardan okunur.</p>
-        <p>Büyük meydan vaadi yok. Bir avlunun, günün hangi saatinde oturulur olduğu var. Planda siyah kütle mevcut yapıdır. Kırmızı kesik çizgi, eklenen saçaktır.</p>
+        <p>Ölçü küçüktür: bir avlunun günün hangi saatinde gölgede kaldığı. Planda siyah kütle mevcut yapıdır. Kırmızı kesik çizgi, eklenen saçaktır.</p>
       </div>
     </article>
       </div>
+      <section class="sheets" aria-labelledby="paftalar-baslik">
+        <div class="index-label">
+          <p id="paftalar-baslik">Paftalar</p>
+          <p>Bir işin çizim seti</p>
+        </div>
+        <ol class="sheet-list">
+          <li><span class="sheet-scale">1:50</span><h3>Rölöve</h3><p>Mevcut durumun ölçülü çizimi. Duvar, kot, açıklık, hasar.</p></li>
+          <li><span class="sheet-scale">1:100</span><h3>Avan proje</h3><p>Plan, kesit ve görünüşte ilk karar. Ne kalacak, ne eklenecek.</p></li>
+          <li><span class="sheet-scale">1:50</span><h3>Uygulama projesi</h3><p>Ölçülü, malzemesi yazılmış, yapılabilir çizim.</p></li>
+          <li><span class="sheet-scale">1:5</span><h3>Detay</h3><p>Birleşim, denizlik, eşik, korkuluk. Elin değdiği yer.</p></li>
+          <li><span class="sheet-scale">Yerinde</span><h3>Kontrol</h3><p>Çizilenle yapılanın şantiyede karşılaştırılması.</p></li>
+        </ol>
+      </section>
     </article>
+    <nav class="next-sheet bar" aria-label="Sonraki pafta">
+      <a href="iletisim.html" rel="next">
+        <span class="meta-label">Sonraki pafta · Pafta 03</span>
+        <span class="next-title">İletişim</span>
+        <span class="next-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
+    </nav>
   </main>
   <footer class="colophon">
     <div class="bar">
+      <div class="colophon-top">
+        <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
+        <img class="colophon-mark" src="assets/mark.svg" width="163" height="161" alt="" loading="lazy">
+      </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
         <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>

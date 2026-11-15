@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-sheet="0">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>toz+ architects — Beşiktaş, İstanbul</title>
   <meta name="description" content="Efe Bahri Toz baş mimar. Beşiktaş Abbasağa'da mimarlık ofisi. Bostanüstü Dere Sok. 34/1. 0542 519 0361.">
   <meta name="author" content="toz+ architects">
@@ -37,7 +37,23 @@
   <link rel="preload" href="assets/fonts/schibsted-900-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prev" href="iletisim.html">
+  <link rel="next" href="ofis.html">
   <link rel="stylesheet" href="css/site.css">
+  <script>
+    document.documentElement.classList.add("js");
+    addEventListener("pageswap", function () {
+      sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
+    });
+    addEventListener("pagereveal", function (e) {
+      var from = sessionStorage.getItem("toz-sheet");
+      var to = document.documentElement.dataset.sheet;
+      if (!e.viewTransition || from === null || from === to) return;
+      var d = (to - from + 4) % 4;
+      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+    });
+  </script>
+  <script src="js/site.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -124,22 +140,24 @@
 <body>
   <a class="skip" href="#icerik">İçeriğe geç</a>
   <header class="site-header">
-    <div class="header-bar bar">
-      <a class="logo" href="index.html">
+    <div class="header-bar">
+      <a class="logo glass" href="index.html" aria-label="toz+ architects, kapak">
         <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
-      <nav class="site-nav" aria-label="Sayfalar">
+      <nav class="site-nav glass" aria-label="Sayfalar">
         <a href="ofis.html">Ofis</a>
         <a href="pratik.html">Pratik</a>
         <a href="iletisim.html">İletişim</a>
-        <a class="lang" href="en/" hreflang="en" lang="en">EN</a>
+        <a class="nav-call" href="tel:+905425190361"><span class="call-short">Ara</span><span class="call-long">0542 519 0361</span></a>
       </nav>
+      <a class="lang glass" href="en/" hreflang="en" lang="en">EN</a>
     </div>
   </header>
+  <div class="progress" aria-hidden="true"></div>
   <main id="icerik">
     <section class="hero bar">
       <p class="kicker"><span class="sq" aria-hidden="true"></span> Pafta 00 · Kapak</p>
-      <h1>Beşiktaş'ta<br>bir mimarlık<br>ofisi.</h1>
+      <h1>Beşiktaş’ta<br>bir mimarlık<br>ofisi.</h1>
       <p class="lede">İşe yerinde başlarız. Ölçer, mevcut olanı ayırır, yenisini az ve net ekleriz.</p>
       <div class="hero-meta">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
@@ -148,8 +166,8 @@
       </div>
     </section>
     <figure class="street">
-      <img src="assets/photos/sokak.jpg" width="1280" height="720" alt="Beşiktaş’ta dar bir sokak. Solda yüksek yeşil bir duvar, sağda eski sıvalı apartmanlar.">
-      <figcaption class="bar"><span>Beşiktaş</span><span>Sokak, öğleden sonra</span></figcaption>
+      <div class="street-frame"><img decoding="async" src="assets/photos/sokak.jpg" width="1280" height="720" alt="Dar bir sokak. Solda yüksek yeşil bir duvar, sağda eski sıvalı apartmanlar." data-zoom></div>
+      <figcaption class="bar"><span>Sokak</span><span>Duvar, cephe, öğleden sonra</span></figcaption>
     </figure>
     <section class="index bar" aria-labelledby="olcek-baslik">
       <div class="index-label">
@@ -161,31 +179,94 @@
           <span class="num">01</span>
           <h2>Konut</h2>
           <p>Kapı, pencere, merdiven. Plan bu üçünden kurulur.</p>
-          <img class="thumb" src="assets/photos/konut.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="assets/photos/konut.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-konut">
         </a>
         <a class="row" href="pratik.html#ic-mekan">
           <span class="num">02</span>
           <h2>İç mekân</h2>
           <p>Derz, birleşim, elin değdiği kenar.</p>
-          <img class="thumb" src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-ic">
         </a>
         <a class="row" href="pratik.html#mevcut">
           <span class="num">03</span>
           <h2>Mevcut yapı</h2>
           <p>Eski duvar bir kusur değil, bir veridir.</p>
-          <img class="thumb" src="assets/photos/mevcut.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="assets/photos/mevcut.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-mevcut">
         </a>
         <a class="row" href="pratik.html#kamusal">
           <span class="num">04</span>
           <h2>Küçük kamusal</h2>
-          <p>Avlu, saçak, oturma. Büyük jest şart değil.</p>
-          <img class="thumb" src="assets/photos/avlu.jpg" width="1152" height="864" alt="">
+          <p>Avlu, saçak, oturma. Sokakla yapı arasındaki bir metre.</p>
+          <img loading="lazy" decoding="async" class="thumb" src="assets/photos/avlu.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-avlu">
         </a>
       </div>
     </section>
+    <section class="people bar" aria-labelledby="ofis-baslik">
+      <div class="index-label">
+        <p id="ofis-baslik">Ofis</p>
+        <a href="ofis.html">Ekibe bak</a>
+      </div>
+      <div class="people-grid">
+        <a class="people-photo" href="ofis.html">
+          <img loading="lazy" decoding="async" src="assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz, siyah beyaz portre." style="view-transition-name: ph-efe">
+        </a>
+        <div class="people-copy">
+          <p class="people-lead">Ofisi Efe Bahri Toz yönetir. Başak Toz ve Macit Toz ile Abbasağa’da çalışır.</p>
+          <dl class="people-list">
+            <div><dt>Baş mimar</dt><dd>Efe Bahri Toz</dd></div>
+            <div><dt>Ekip</dt><dd>Başak Toz</dd></div>
+            <div><dt>Ekip</dt><dd>Macit Toz</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+    <section class="materials" aria-labelledby="malzeme-baslik">
+      <div class="bar index-label">
+        <p id="malzeme-baslik">Malzeme</p>
+        <p class="strip-count" aria-hidden="true"><span data-strip-index>01</span> / 05</p>
+      </div>
+      <div class="strip" data-strip tabindex="0" aria-label="Malzeme kareleri, yatay kaydırılır">
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="assets/materials/kufeki.jpg" width="864" height="1152" alt="Kaba yontulmuş açık renkli kireçtaşı bloklar ve kireç harcı derzleri." data-zoom>
+          <figcaption><strong>Küfeki taşı</strong><span>Eski İstanbul yapılarının kireçtaşı. Ocaktan yumuşak çıkar, havayla sertleşir.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="assets/materials/kirec.jpg" width="864" height="1152" alt="Kireç sıvalı beyaz bir duvarda pencere gölgesi." data-zoom>
+          <figcaption><strong>Kireç sıva</strong><span>Buharı geçirir. Eski duvarın nemini içine hapsetmez.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="assets/materials/mese.jpg" width="864" height="1152" alt="Elle aşınmış meşe merdiven korkuluğu ve basamak kenarı." data-zoom>
+          <figcaption><strong>Meşe</strong><span>Korkulukta, eşikte, elin değdiği yerde. Kullandıkça koyulaşır.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="assets/materials/karo.jpg" width="864" height="1152" alt="Desenli eski çimento karo zemin, kırmızı, siyah ve krem." data-zoom>
+          <figcaption><strong>Karo mozaik</strong><span>Eski apartman girişlerinin zemini. Kırılan karo aynı desenle yeniden dökülür.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="assets/materials/demir.jpg" width="864" height="1152" alt="Boyası dökülmüş dövme demir pencere parmaklığı ve duvardaki gölgesi." data-zoom>
+          <figcaption><strong>Dövme demir</strong><span>Pencere parmaklığı, balkon korkuluğu. Boyası yenilenir, kendisi kalır.</span></figcaption>
+        </figure>
+      </div>
+      <div class="bar strip-controls">
+        <button class="round glass" type="button" data-strip-prev aria-label="Önceki malzeme">←</button>
+        <button class="round glass" type="button" data-strip-next aria-label="Sonraki malzeme">→</button>
+      </div>
+    </section>
+    <nav class="next-sheet bar" aria-label="Sonraki pafta">
+      <a href="ofis.html" rel="next">
+        <span class="meta-label">Sonraki pafta · Pafta 01</span>
+        <span class="next-title">Ofis</span>
+        <span class="next-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
+    </nav>
   </main>
   <footer class="colophon">
     <div class="bar">
+      <div class="colophon-top">
+        <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
+        <img class="colophon-mark" src="assets/mark.svg" width="163" height="161" alt="" loading="lazy">
+      </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
         <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>

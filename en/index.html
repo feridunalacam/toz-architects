@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-sheet="0">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>toz+ architects — Beşiktaş, Istanbul</title>
   <meta name="description" content="Efe Bahri Toz, head architect. An architecture office in Abbasağa, Beşiktaş, Istanbul. Bostanüstü Dere Sok. 34/1. +90 542 519 0361.">
   <meta name="author" content="toz+ architects">
@@ -37,7 +37,23 @@
   <link rel="preload" href="../assets/fonts/schibsted-900-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/schibsted-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prev" href="contact.html">
+  <link rel="next" href="studio.html">
   <link rel="stylesheet" href="../css/site.css">
+  <script>
+    document.documentElement.classList.add("js");
+    addEventListener("pageswap", function () {
+      sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
+    });
+    addEventListener("pagereveal", function (e) {
+      var from = sessionStorage.getItem("toz-sheet");
+      var to = document.documentElement.dataset.sheet;
+      if (!e.viewTransition || from === null || from === to) return;
+      var d = (to - from + 4) % 4;
+      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+    });
+  </script>
+  <script src="../js/site.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -88,7 +104,7 @@
         { "@type": "Person", "name": "Başak Toz" },
         { "@type": "Person", "name": "Macit Toz" }
       ],
-      "description": "Beşiktaş Abbasağa'da mimarlık ofisi. Konut, iç mekân, mevcut yapı ve küçük kamusal işler."
+      "description": "Architecture office in Abbasağa, Beşiktaş, Istanbul. Housing, interiors, existing buildings and small civic work."
     },
     {
       "@type": "WebSite",
@@ -124,18 +140,20 @@
 <body>
   <a class="skip" href="#icerik">Skip to content</a>
   <header class="site-header">
-    <div class="header-bar bar">
-      <a class="logo" href="index.html">
+    <div class="header-bar">
+      <a class="logo glass" href="./" aria-label="toz+ architects, cover">
         <img src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
-      <nav class="site-nav" aria-label="Pages">
+      <nav class="site-nav glass" aria-label="Pages">
         <a href="studio.html">Studio</a>
         <a href="practice.html">Practice</a>
         <a href="contact.html">Contact</a>
-        <a class="lang" href="../" hreflang="tr" lang="tr">TR</a>
+        <a class="nav-call" href="tel:+905425190361"><span class="call-short">Call</span><span class="call-long">0542 519 0361</span></a>
       </nav>
+      <a class="lang glass" href="../" hreflang="tr" lang="tr">TR</a>
     </div>
   </header>
+  <div class="progress" aria-hidden="true"></div>
   <main id="icerik">
     <section class="hero bar">
       <p class="kicker"><span class="sq" aria-hidden="true"></span> Sheet 00 · Cover</p>
@@ -148,8 +166,8 @@
       </div>
     </section>
     <figure class="street">
-      <img src="../assets/photos/sokak.jpg" width="1280" height="720" alt="A narrow street in Beşiktaş. A tall green wall on the left, old plastered apartment buildings on the right.">
-      <figcaption class="bar"><span>Beşiktaş</span><span>Street, afternoon</span></figcaption>
+      <div class="street-frame"><img decoding="async" src="../assets/photos/sokak.jpg" width="1280" height="720" alt="A narrow street. A tall green wall on the left, old plastered apartment buildings on the right." data-zoom></div>
+      <figcaption class="bar"><span>Street</span><span>Wall, facade, afternoon</span></figcaption>
     </figure>
     <section class="index bar" aria-labelledby="scales-title">
       <div class="index-label">
@@ -161,31 +179,94 @@
           <span class="num">01</span>
           <h2>Housing</h2>
           <p>Door, window, stair. The plan is built from these three.</p>
-          <img class="thumb" src="../assets/photos/konut.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="../assets/photos/konut.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-konut">
         </a>
         <a class="row" href="practice.html#interior">
           <span class="num">02</span>
           <h2>Interior</h2>
           <p>Joint, junction, the edge a hand meets.</p>
-          <img class="thumb" src="../assets/photos/ic-mekan.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="../assets/photos/ic-mekan.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-ic">
         </a>
         <a class="row" href="practice.html#existing">
           <span class="num">03</span>
           <h2>Existing fabric</h2>
           <p>An old wall is data, not a defect.</p>
-          <img class="thumb" src="../assets/photos/mevcut.jpg" width="1152" height="864" alt="">
+          <img loading="lazy" decoding="async" class="thumb" src="../assets/photos/mevcut.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-mevcut">
         </a>
         <a class="row" href="practice.html#civic">
           <span class="num">04</span>
           <h2>Small civic</h2>
-          <p>A court, a canopy, a place to sit. A grand gesture is not required.</p>
-          <img class="thumb" src="../assets/photos/avlu.jpg" width="1152" height="864" alt="">
+          <p>A court, a canopy, a place to sit. The metre between street and building.</p>
+          <img loading="lazy" decoding="async" class="thumb" src="../assets/photos/avlu.jpg" width="1152" height="864" alt="" style="view-transition-name: ph-avlu">
         </a>
       </div>
     </section>
+    <section class="people bar" aria-labelledby="studio-title">
+      <div class="index-label">
+        <p id="studio-title">Studio</p>
+        <a href="studio.html">Meet the studio</a>
+      </div>
+      <div class="people-grid">
+        <a class="people-photo" href="studio.html">
+          <img loading="lazy" decoding="async" src="../assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz, black and white portrait." style="view-transition-name: ph-efe">
+        </a>
+        <div class="people-copy">
+          <p class="people-lead">The office is led by Efe Bahri Toz. He works with Başak Toz and Macit Toz in Abbasağa.</p>
+          <dl class="people-list">
+            <div><dt>Head architect</dt><dd>Efe Bahri Toz</dd></div>
+            <div><dt>Studio</dt><dd>Başak Toz</dd></div>
+            <div><dt>Studio</dt><dd>Macit Toz</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+    <section class="materials" aria-labelledby="materials-title">
+      <div class="bar index-label">
+        <p id="materials-title">Material</p>
+        <p class="strip-count" aria-hidden="true"><span data-strip-index>01</span> / 05</p>
+      </div>
+      <div class="strip" data-strip tabindex="0" aria-label="Material photographs, scroll sideways">
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="../assets/materials/kufeki.jpg" width="864" height="1152" alt="Rough-cut pale limestone blocks with lime mortar joints." data-zoom>
+          <figcaption><strong>Küfeki stone</strong><span>The limestone of old Istanbul. Soft from the quarry, it hardens in the air.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="../assets/materials/kirec.jpg" width="864" height="1152" alt="A window shadow on a white lime-plastered wall." data-zoom>
+          <figcaption><strong>Lime plaster</strong><span>It lets vapour through. An old wall does not trap its moisture behind it.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="../assets/materials/mese.jpg" width="864" height="1152" alt="A hand-worn oak stair rail and the edge of a tread." data-zoom>
+          <figcaption><strong>Oak</strong><span>On the rail, the threshold, wherever a hand meets it. It darkens with use.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="../assets/materials/karo.jpg" width="864" height="1152" alt="An old patterned cement tile floor in red, black and cream." data-zoom>
+          <figcaption><strong>Cement tile</strong><span>The floor of old apartment entrances. A broken tile is cast again in the same pattern.</span></figcaption>
+        </figure>
+        <figure class="material">
+          <img loading="lazy" decoding="async" src="../assets/materials/demir.jpg" width="864" height="1152" alt="A wrought iron window grille with peeling paint and its shadow on the wall." data-zoom>
+          <figcaption><strong>Wrought iron</strong><span>Window grilles, balcony rails. The paint is renewed; the iron stays.</span></figcaption>
+        </figure>
+      </div>
+      <div class="bar strip-controls">
+        <button class="round glass" type="button" data-strip-prev aria-label="Previous material">←</button>
+        <button class="round glass" type="button" data-strip-next aria-label="Next material">→</button>
+      </div>
+    </section>
+    <nav class="next-sheet bar" aria-label="Next sheet">
+      <a href="studio.html" rel="next">
+        <span class="meta-label">Next sheet · Sheet 01</span>
+        <span class="next-title">Studio</span>
+        <span class="next-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="swipe-hint" aria-hidden="true">← Swipe to turn →</p>
+    </nav>
   </main>
   <footer class="colophon">
     <div class="bar">
+      <div class="colophon-top">
+        <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
+        <img class="colophon-mark" src="../assets/mark.svg" width="163" height="161" alt="" loading="lazy">
+      </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Office</span><span translate="no">toz+ architects</span></p>
         <address><span class="meta-label">Place</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
