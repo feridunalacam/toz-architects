@@ -4,6 +4,7 @@
   const root = document.documentElement;
   const en = root.lang === "en";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const main = document.querySelector("main");
   const prevLink = document.querySelector('link[rel="prev"]');
   const nextLink = document.querySelector('link[rel="next"]');
@@ -17,6 +18,107 @@
     setTimeout(() => el.classList.remove("is-settling"), 460);
   };
 
+  const transition = (update, type) => {
+    if (!document.startViewTransition || reduce) { update(); return null; }
+    try { return document.startViewTransition({ update, types: type ? [type] : [] }); }
+    catch { return document.startViewTransition(update); }
+  };
+
+  /* Opening slideshow: autoplay with progress, swipe, buttons, arrow keys while in view. */
+  const hero = document.querySelector("[data-hero]");
+  let heroStep = null;
+  let heroInView = false;
+  if (hero) {
+    const slides = [...hero.querySelectorAll(".slide")];
+    const bars = [...hero.querySelectorAll(".hero-progress span")];
+    const num = hero.querySelector("[data-hero-n]");
+    const cap = hero.querySelector("[data-hero-cap]");
+    const pauseB = hero.querySelector("[data-hero-pause]");
+    const t = en
+      ? { pause: "Pause images", play: "Play images" }
+      : { pause: "Görselleri durdur", play: "Görselleri oynat" };
+    const state = { user: reduce, hidden: document.hidden, away: false };
+    let cur = 0;
+    let cleanup = 0;
+
+    hero.style.setProperty("--hero-dur", "7s");
+    hero.dataset.tone = slides[0].dataset.tone || "dark";
+    hero.querySelectorAll("img").forEach((img) => { img.draggable = false; });
+
+    const sync = () => {
+      const paused = state.user || state.hidden || state.away;
+      hero.classList.toggle("is-paused", paused);
+      pauseB.setAttribute("aria-pressed", String(state.user));
+      pauseB.setAttribute("aria-label", state.user ? t.play : t.pause);
+    };
+
+    const runBar = () => {
+      bars.forEach((b, i) => {
+        b.classList.remove("is-active");
+        b.classList.toggle("is-done", i < cur);
+      });
+      void bars[cur].offsetWidth;
+      bars[cur].classList.add("is-active");
+    };
+
+    const show = (i, dir) => {
+      const next = (i + slides.length) % slides.length;
+      if (next === cur) return;
+      const old = slides[cur];
+      const neu = slides[next];
+      clearTimeout(cleanup);
+      slides.forEach((s) => s.classList.remove("is-leaving", "is-entering", "from-left", "to-right"));
+      old.classList.remove("is-active");
+      old.classList.add("is-leaving");
+      neu.classList.add("is-active", "is-entering");
+      if (dir < 0) { old.classList.add("to-right"); neu.classList.add("from-left"); }
+      cur = next;
+      num.textContent = pad(cur + 1);
+      cap.textContent = neu.dataset.cap;
+      hero.dataset.tone = neu.dataset.tone || "dark";
+      runBar();
+      dispatchEvent(new Event("toz:tone"));
+      cleanup = setTimeout(() => {
+        old.classList.remove("is-leaving", "to-right");
+        neu.classList.remove("is-entering", "from-left");
+      }, 1250);
+    };
+    heroStep = (d) => show(cur + d, d);
+
+    hero.querySelector(".hero-progress").addEventListener("animationend", (e) => {
+      if (e.animationName === "fill") show(cur + 1, 1);
+    });
+    hero.querySelector("[data-hero-prev]").addEventListener("click", () => heroStep(-1));
+    hero.querySelector("[data-hero-next]").addEventListener("click", () => heroStep(1));
+    pauseB.addEventListener("click", () => { state.user = !state.user; sync(); });
+    document.addEventListener("visibilitychange", () => { state.hidden = document.hidden; sync(); });
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => {
+        heroInView = e.intersectionRatio >= 0.5;
+        state.away = !e.isIntersecting;
+        sync();
+      }, { threshold: [0, 0.5] }).observe(hero);
+    }
+
+    let x0 = null, y0 = 0;
+    hero.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0 || e.target.closest("a, button")) return;
+      x0 = e.clientX; y0 = e.clientY;
+    });
+    hero.addEventListener("pointerup", (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      const dy = e.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) heroStep(dx < 0 ? 1 : -1);
+    });
+    hero.addEventListener("pointercancel", () => { x0 = null; });
+
+    runBar();
+    sync();
+  }
+
   /* Sheet navigation: horizontal swipe on touch, arrow keys on desktop. */
   if (main && (prevLink || nextLink)) {
     let sx = 0, sy = 0, st = 0, dx = 0, mode = "y";
@@ -24,7 +126,7 @@
     main.addEventListener("touchstart", (e) => {
       const t = e.touches[0];
       const edge = t.clientX < 24 || t.clientX > innerWidth - 24;
-      mode = e.touches.length !== 1 || edge || e.target.closest("[data-strip], .map") ? "y" : "";
+      mode = e.touches.length !== 1 || edge || e.target.closest("[data-strip], .map, [data-hero], .filters") ? "y" : "";
       sx = t.clientX; sy = t.clientY; st = Date.now(); dx = 0;
     }, { passive: true });
 
@@ -60,15 +162,265 @@
 
     addEventListener("keydown", (e) => {
       if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
       if (document.querySelector("dialog[open]")) return;
       const el = document.activeElement;
-      if (el && el.closest("[data-strip], input, textarea, select, iframe")) return;
-      if (e.key === "ArrowRight") go(nextLink);
-      if (e.key === "ArrowLeft") go(prevLink);
+      if (el && el.closest("[data-strip], input, textarea, select, iframe, .filters, [data-views]")) return;
+      const d = e.key === "ArrowRight" ? 1 : -1;
+      if (heroStep && heroInView) { heroStep(d); return; }
+      go(d > 0 ? nextLink : prevLink);
     });
 
     addEventListener("pageshow", (e) => {
       if (e.persisted) { main.style.transform = ""; main.style.opacity = ""; }
+    });
+  }
+
+  /* Glass bar: light or dark tone depending on what passes behind it. */
+  const topbar = document.querySelector("[data-topbar]");
+  const liquid = document.querySelector("[data-liquid]");
+  if (topbar && liquid) {
+    const colophon = document.querySelector(".colophon");
+    const under = (el, y) => {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return r.top <= y && r.bottom >= y;
+    };
+    let queued = false;
+    const tone = () => {
+      queued = false;
+      const b = liquid.getBoundingClientRect();
+      const y = b.top + b.height / 2;
+      const dark = (under(hero, y) && hero.dataset.tone === "dark") || under(colophon, y);
+      topbar.classList.toggle("on-dark", dark);
+    };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(tone); } };
+    addEventListener("scroll", queue, { passive: true });
+    addEventListener("resize", queue);
+    addEventListener("toz:tone", queue);
+    tone();
+  }
+
+  /* Chromium: the bar bends what passes behind its rim, through an SVG displacement map. */
+  const chromium = !!navigator.userAgentData?.brands?.some((b) => b.brand === "Chromium");
+  if (liquid && chromium && !reduce) {
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("width", "0");
+    svg.setAttribute("height", "0");
+    svg.setAttribute("aria-hidden", "true");
+    svg.style.position = "absolute";
+    svg.innerHTML =
+      '<filter id="liquid-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">' +
+      '<feImage result="map" preserveAspectRatio="none"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+      "</filter>";
+    document.body.append(svg);
+    const feImage = svg.querySelector("feImage");
+    const disp = svg.querySelector("feDisplacementMap");
+    let size = "";
+
+    const build = () => {
+      const w = Math.round(liquid.offsetWidth);
+      const h = Math.round(liquid.offsetHeight);
+      if (!w || !h || size === `${w}x${h}`) return;
+      size = `${w}x${h}`;
+      const c = document.createElement("canvas");
+      c.width = w;
+      c.height = h;
+      const ctx = c.getContext("2d");
+      const img = ctx.createImageData(w, h);
+      const d = img.data;
+      const r = h / 2;
+      const rim = Math.min(r * 0.85, 20);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const px = x + 0.5, py = y + 0.5;
+          const vx = px - Math.min(Math.max(px, r), w - r);
+          const vy = py - r;
+          const len = Math.hypot(vx, vy) || 1e-6;
+          const inset = r - len;
+          let ox = 0, oy = 0;
+          if (inset > 0 && inset < rim) {
+            const k = (1 - inset / rim) ** 2;
+            ox = (vx / len) * k;
+            oy = (vy / len) * k;
+          }
+          const i = (y * w + x) * 4;
+          d[i] = 128 + ox * 127;
+          d[i + 1] = 128 + oy * 127;
+          d[i + 2] = 128;
+          d[i + 3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      feImage.setAttribute("href", c.toDataURL());
+      feImage.setAttribute("width", w);
+      feImage.setAttribute("height", h);
+      disp.setAttribute("scale", String(Math.round(h * 0.55)));
+    };
+
+    build();
+    liquid.classList.add("refract");
+    let rt = 0;
+    addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 150); });
+  }
+
+  /* Menu: full-screen glass sheet with image previews; Esc, button or a vertical swipe closes it. */
+  const menu = document.getElementById("menu");
+  const menuBtn = document.querySelector("[data-menu-open]");
+  if (menu && menuBtn && window.HTMLDialogElement) {
+    const preview = menu.querySelector(".menu-preview");
+    const pimg = preview?.querySelector("img");
+    let closing = false;
+
+    const open = () => {
+      root.style.overflow = "hidden";
+      menu.showModal();
+      menuBtn.setAttribute("aria-expanded", "true");
+    };
+    const close = () => {
+      if (!menu.open || closing) return;
+      if (reduce) { menu.close(); return; }
+      closing = true;
+      menu.classList.add("is-closing");
+      menu.addEventListener("animationend", function done(e) {
+        if (e.target !== menu) return;
+        menu.removeEventListener("animationend", done);
+        menu.classList.remove("is-closing");
+        closing = false;
+        menu.close();
+      });
+    };
+
+    menuBtn.addEventListener("click", open);
+    menu.querySelector("[data-menu-close]").addEventListener("click", close);
+    menu.addEventListener("cancel", (e) => { e.preventDefault(); close(); });
+    menu.addEventListener("close", () => {
+      root.style.overflow = "";
+      menuBtn.setAttribute("aria-expanded", "false");
+    });
+    menu.addEventListener("click", (e) => { if (e.target === menu) close(); });
+
+    let swap = 0;
+    const showPreview = (a) => {
+      const src = a.dataset.preview;
+      if (!pimg || !src || pimg.getAttribute("src") === src) return;
+      clearTimeout(swap);
+      preview.classList.add("is-swapping");
+      swap = setTimeout(() => {
+        pimg.src = src;
+        pimg.decode?.().catch(() => {}).finally(() => preview.classList.remove("is-swapping"));
+      }, 180);
+    };
+    menu.querySelectorAll("[data-preview]").forEach((a) => {
+      a.addEventListener("pointerenter", () => showPreview(a));
+      a.addEventListener("focus", () => showPreview(a));
+      if (finePointer) new Image().src = a.dataset.preview;
+    });
+
+    let ty = null, tx = 0;
+    menu.addEventListener("touchstart", (e) => { ty = e.touches[0].clientY; tx = e.touches[0].clientX; }, { passive: true });
+    menu.addEventListener("touchend", (e) => {
+      if (ty === null) return;
+      const dy = e.changedTouches[0].clientY - ty;
+      const dx = e.changedTouches[0].clientX - tx;
+      ty = null;
+      const atTop = menu.scrollTop <= 0;
+      const atEnd = menu.scrollTop + menu.clientHeight >= menu.scrollHeight - 1;
+      if (Math.abs(dy) > 80 && Math.abs(dy) > Math.abs(dx) * 1.4 && ((dy > 0 && atTop) || (dy < 0 && atEnd))) close();
+    });
+  }
+
+  /* Projects: scale filters, grid or list view, cursor preview in the list, morph from card to study. */
+  const works = document.querySelector("[data-works]");
+  if (works) {
+    const items = [...works.querySelectorAll(".work")];
+    const filterBtns = [...document.querySelectorAll("[data-filters] button")];
+    const viewBtns = [...document.querySelectorAll("[data-views] button")];
+
+    const named = (fn, type) => {
+      if (!document.startViewTransition || reduce) { fn(); return; }
+      items.forEach((li, i) => { li.style.viewTransitionName = `work-${i + 1}`; });
+      const vt = transition(fn, type);
+      vt?.finished.finally(() => items.forEach((li) => { li.style.viewTransitionName = ""; }));
+    };
+
+    const filter = (cat) => {
+      items.forEach((li) => { li.hidden = cat !== "all" && li.dataset.cat !== cat; });
+      filterBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === cat)));
+    };
+    filterBtns.forEach((b) => b.addEventListener("click", () => {
+      if (b.getAttribute("aria-pressed") !== "true") named(() => filter(b.dataset.filter), "filter");
+    }));
+
+    const setView = (v) => {
+      works.dataset.view = v;
+      viewBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+      try { localStorage.setItem("toz-view", v); } catch {}
+    };
+    viewBtns.forEach((b) => b.addEventListener("click", () => {
+      if (b.getAttribute("aria-pressed") !== "true") named(() => setView(b.dataset.view), "filter");
+    }));
+    try { if (localStorage.getItem("toz-view") === "list" && viewBtns.length) setView("list"); } catch {}
+
+    if (finePointer) {
+      const pv = document.createElement("img");
+      pv.className = "hover-preview";
+      pv.alt = "";
+      pv.setAttribute("aria-hidden", "true");
+      document.body.append(pv);
+      let x = 0, y = 0, tx = 0, ty = 0, raf = 0, on = false;
+      const loop = () => {
+        x += (tx - x) * 0.2;
+        y += (ty - y) * 0.2;
+        const w = pv.offsetWidth;
+        const left = x + 28 + w > innerWidth ? x - 28 - w : x + 28;
+        pv.style.transform = `translate3d(${left}px, ${y - pv.offsetHeight / 2}px, 0)`;
+        raf = on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(loop) : 0;
+      };
+      const hide = () => { on = false; pv.classList.remove("is-on"); };
+      works.addEventListener("pointermove", (e) => {
+        if (works.dataset.view !== "list") return;
+        const a = e.target.closest(".work a");
+        tx = e.clientX;
+        ty = e.clientY;
+        if (!a) { hide(); return; }
+        const src = a.querySelector("img").src;
+        if (!on) { x = tx; y = ty; }
+        if (pv.getAttribute("src") !== src) pv.src = src;
+        on = true;
+        pv.classList.add("is-on");
+        if (!raf) raf = requestAnimationFrame(loop);
+      });
+      works.addEventListener("pointerleave", hide);
+      addEventListener("scroll", hide, { passive: true });
+    }
+
+    works.addEventListener("click", (e) => {
+      const a = e.target.closest(".work a");
+      const target = a && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      if (!target) return;
+      e.preventDefault();
+      const jump = (behavior) => {
+        target.scrollIntoView({ behavior, block: "start" });
+        history.pushState(null, "", a.hash);
+      };
+      const from = a.querySelector(".work-img img");
+      const to = target.querySelector(".shot img");
+      if (!document.startViewTransition || reduce || works.dataset.view !== "grid" || !from || !to) {
+        jump(reduce ? "instant" : "smooth");
+        return;
+      }
+      const saved = to.style.viewTransitionName;
+      from.style.viewTransitionName = "morph";
+      to.style.viewTransitionName = "none";
+      const vt = transition(() => {
+        from.style.viewTransitionName = "";
+        to.style.viewTransitionName = "morph";
+        jump("instant");
+      }, "morph");
+      vt?.finished.finally(() => { to.style.viewTransitionName = saved; });
     });
   }
 
@@ -142,16 +494,16 @@
     dlg.innerHTML =
       '<div class="lb-stage"><img class="lb-img" alt=""></div>' +
       '<div class="lb-bar"><p class="lb-caption" aria-live="polite"></p><div class="lb-nav">' +
-      `<button type="button" class="round glass" data-lb="prev" aria-label="${t.prev}">←</button>` +
-      `<button type="button" class="round glass" data-lb="next" aria-label="${t.next}">→</button>` +
+      `<button type="button" class="round" data-lb="prev" aria-label="${t.prev}">←</button>` +
+      `<button type="button" class="round" data-lb="next" aria-label="${t.next}">→</button>` +
       "</div></div>" +
-      `<button type="button" class="round glass lb-close" data-lb="close" aria-label="${t.close}">×</button>`;
+      `<button type="button" class="round lb-close" data-lb="close" aria-label="${t.close}">×</button>`;
     document.body.append(dlg);
 
     const stage = dlg.querySelector(".lb-stage");
     const img = dlg.querySelector(".lb-img");
     const cap = dlg.querySelector(".lb-caption");
-    const groupOf = (el) => el.closest(".studies, [data-strip], .team, .street") || main;
+    const groupOf = (el) => el.closest(".studies, [data-strip], .team") || main;
     let set = zooms;
     let cur = 0;
 
@@ -256,10 +608,10 @@
   const drawings = document.querySelectorAll(".drawing svg");
   if (drawings.length && "IntersectionObserver" in window && !reduce) {
     const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (!en.isIntersecting) return;
-        en.target.closest(".drawing").classList.add("is-drawn");
-        io.unobserve(en.target);
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.closest(".drawing").classList.add("is-drawn");
+        io.unobserve(entry.target);
       });
     }, { threshold: 0.3 });
 
@@ -280,7 +632,7 @@
     });
   }
 
-  /* Local time in Istanbul on the contact sheet. */
+  /* Local time in Istanbul. */
   const clocks = document.querySelectorAll("[data-clock]");
   if (clocks.length) {
     const fmt = new Intl.DateTimeFormat(en ? "en-GB" : "tr-TR", {

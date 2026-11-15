@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://feridunalacam.github.io/toz-architects/</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/ofis.html</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/pratik.html</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/iletisim.html</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/en/</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/en/studio.html</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/en/practice.html</loc><lastmod>2026-11-16</lastmod></url>
-  <url><loc>https://feridunalacam.github.io/toz-architects/en/contact.html</loc><lastmod>2026-11-16</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/en/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/projeler.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/projeler.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/projeler.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/en/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/projeler.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/projeler.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/ekip.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/ekip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/team.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/ekip.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/en/team.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/ekip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/team.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/ekip.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/iletisim.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/iletisim.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/iletisim.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feridunalacam.github.io/toz-architects/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://feridunalacam.github.io/toz-architects/iletisim.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://feridunalacam.github.io/toz-architects/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://feridunalacam.github.io/toz-architects/iletisim.html"/>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
