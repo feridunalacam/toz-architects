@@ -310,15 +310,27 @@ h1 {
 
 .row {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr) 4.75rem;
   grid-template-areas:
-    "num title"
-    "num text";
+    "num title thumb"
+    "num text thumb";
   gap: 0.15rem 1rem;
-  padding: 1.15rem 0;
+  align-items: start;
+  padding: 0.85rem 0;
   border-bottom: 1px solid var(--line);
   text-decoration: none;
   color: inherit;
+}
+
+.row .thumb {
+  grid-area: thumb;
+  justify-self: end;
+  align-self: start;
+  display: block;
+  width: 4.75rem;
+  height: 3.55rem;
+  margin-top: 0.2rem;
+  object-fit: cover;
 }
 
 .row .num {
@@ -577,11 +589,18 @@ h1 {
   .hero-meta p:last-child,
   .hero-meta address:last-child { text-align: right; }
   .row {
-    grid-template-columns: 4.2rem minmax(11rem, 0.7fr) 1.3fr;
-    grid-template-areas: "num title text";
-    align-items: baseline;
+    grid-template-columns: 4.2rem minmax(11rem, 0.72fr) minmax(0, 1.15fr) 9.25rem;
+    grid-template-areas: "num title text thumb";
+    align-items: center;
     gap: 0.4rem 2rem;
-    padding-block: 1.4rem;
+    padding-block: 1.05rem;
+  }
+  .row .num { padding-top: 0; }
+  .row .thumb {
+    width: 9.25rem;
+    height: 6.15rem;
+    align-self: center;
+    margin-top: 0;
   }
 }
 
@@ -595,7 +614,7 @@ h1 {
   .study {
     grid-template-columns: 1.15fr 0.85fr;
     gap: 3.5rem;
-    align-items: center;
+    align-items: start;
     padding-block: 3.2rem;
   }
   .study.flip { grid-template-columns: 0.85fr 1.15fr; }
@@ -624,6 +643,139 @@ h1 {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+.street { margin: 0; }
+.street img {
+  display: block;
+  width: 100%;
+  height: min(72vh, 760px);
+  object-fit: cover;
+}
+.street figcaption,
+.shot figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(1480px, 100%);
+  margin: 0 auto;
+  padding: 0.7rem var(--pad) 0;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+.shot figcaption {
+  width: auto;
+  padding: 0.55rem 0.15rem 0;
+}
+
+.study-visual { display: grid; gap: 0.85rem; }
+.shot {
+  margin: 0;
+  background: var(--sheet);
+  border: 1px solid rgba(20, 20, 20, 0.22);
+  padding: 0.45rem 0.45rem 0.55rem;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.team { margin-top: clamp(3rem, 7vw, 5rem); }
+.team-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-top: 1px solid var(--ink);
+  padding-top: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+.team-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+.portrait { margin: 0; }
+.portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 22%;
+  background: #d9d6d0;
+  border: 1px solid var(--ink);
+}
+.portrait figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-top: 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--ink);
+}
+.portrait .who {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-size: 1.05rem;
+}
+.portrait .role {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--quiet);
+  text-align: right;
+}
+.nameplate {
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--ink);
+  background:
+    linear-gradient(var(--sheet), var(--sheet)) bottom / 100% 8.6rem no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 55px, rgba(20, 20, 20, 0.09) 55px 56px),
+    repeating-linear-gradient(to right, transparent 0 55px, rgba(20, 20, 20, 0.09) 55px 56px),
+    var(--sheet);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.85rem 0.9rem 1rem;
+}
+.nameplate-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.nameplate-no {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--quiet);
+}
+.nameplate strong {
+  border-top: 1px solid var(--ink);
+  padding-top: 0.7rem;
+  font-weight: 900;
+  font-size: clamp(2.7rem, 4.6vw, 3.45rem);
+  letter-spacing: -0.05em;
+  line-height: 0.86;
+}
+
+@media (min-width: 860px) {
+  .team-grid { grid-template-columns: 1fr 1fr 1fr; align-items: start; }
+  .nameplate strong { font-size: clamp(2.15rem, 2.5vw, 3.05rem); }
 }
 
 @media print {
