@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sayfa yok — toz+ architects</title>
+  <meta name="robots" content="noindex">
+  <link id="site-css" rel="stylesheet" href="css/site.css">
+  <script>
+    if (location.hostname.endsWith("github.io")) {
+      document.getElementById("site-css").href = "/toz-architects/css/site.css";
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-bar bar">
+      <a class="logo" id="home" href="index.html">
+        <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
+      </a>
+    </div>
+  </header>
+  <main id="icerik" class="page bar">
+    <p class="kicker"><span class="sq" aria-hidden="true"></span> 404</p>
+    <h1>Bu sayfa yok.</h1>
+    <p class="lede">Aradığınız pafta bu sette değil.</p>
+    <p style="margin-top:1.5rem"><a id="back" href="index.html">Ana sayfaya dön</a></p>
+  </main>
+  <script>
+    if (location.hostname.endsWith("github.io")) {
+      var root = "/toz-architects/";
+      document.getElementById("home").href = root;
+      document.getElementById("back").href = root;
+      document.querySelector(".logo img").src = root + "assets/logo.png";
+    }
+  </script>
+</body>
+</html>

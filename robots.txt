@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://feridunalacam.github.io/toz-architects/sitemap.xml
