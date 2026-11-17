@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M250 60 H284 V566 H250 Z" fill="#141414"/>
+    <path d="M110 186 H250 V200 H110 Z M110 400 H250 V414 H110 Z" fill="#141414"/>
+    <g fill="none" stroke="#141414" stroke-width="2">
+      <path d="M284 400 H524 V418 H284 Z"/>
+      <path d="M504 172 H520 V400 H504 Z"/>
+      <path d="M278 162 L548 182 M284 172 H504"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M504 222 H520 M504 334 H520 M512 222 V334"/>
+      <path d="M294 404 L304 414 M314 404 L324 414 M334 404 L344 414 M354 404 L364 414 M374 404 L384 414 M394 404 L404 414 M414 404 L424 414 M434 404 L444 414 M454 404 L464 414 M474 404 L484 414 M494 404 L504 414"/>
+      <path d="M266 156 L560 178" stroke-width="1"/>
+    </g>
+    <path d="M284 556 C352 548 420 500 470 418 H440 C404 470 344 512 284 520" fill="none" stroke="#141414" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M504 344 H520 V400 H504 Z" fill="#f2c94c" fill-opacity="0.6"/>
+    <path d="M504 344 H520 V400 H504 Z" fill="none" stroke="#e0a400" stroke-width="2" stroke-dasharray="5 4"/>
+    <path d="M440 418 H470 C463 430 455 442 446 452 H412 C422 442 432 431 440 418 Z" fill="#f2c94c" fill-opacity="0.6"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M500 344 H524 V400 H500 Z" fill="none" stroke="#e50015" stroke-width="2.2"/>
+    <path d="M508 350 V394 M516 350 V394" fill="none" stroke="#e50015" stroke-width="1"/>
+    <path d="M440 418 H470 C463 430 455 442 446 452 H412 C422 442 432 431 440 418 Z" fill="none" stroke="#e50015" stroke-width="2.2"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="540" y="282" data-en="WINDOW">PENCERE</text>
+    <text x="540" y="376" data-en="BOARDING" fill="#e50015">KAPLAMA</text>
+    <text x="484" y="446" data-en="NEW TIP" fill="#e50015">YENİ UÇ</text>
+    <text x="440" y="506" data-en="BRACKET">KONSOL</text>
+    <text x="238" y="300" text-anchor="end" data-en="EXISTING WALL">MEVCUT DUVAR</text>
+    <text x="410" y="148" text-anchor="middle" data-en="EAVE">SAÇAK</text>
+    <text x="640" y="556" text-anchor="middle" data-en="SECTION C–C">KESİT C–C</text>
+  </g>
+</svg>

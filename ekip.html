@@ -46,11 +46,29 @@
       sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
     });
     addEventListener("pagereveal", function (e) {
-      var from = sessionStorage.getItem("toz-sheet");
-      var to = document.documentElement.dataset.sheet;
-      if (!e.viewTransition || from === null || from === to) return;
-      var d = (to - from + 4) % 4;
-      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+      var vt = e.viewTransition, html = document.documentElement;
+      var from = sessionStorage.getItem("toz-sheet"), to = html.dataset.sheet;
+      if (!vt || from === null || from === to) return;
+      var f = from.split("."), t = to.split(".");
+      if (f[1] && t[1]) {
+        var n = +html.dataset.count || 1, d = (t[1] - f[1] + n) % n;
+        vt.types.add(d <= n / 2 ? "forward" : "back");
+        return;
+      }
+      if ((f[1] && !t[1] && t[0] < 2) || (t[1] && !f[1] && f[0] < 2)) {
+        vt.types.add("proj");
+        var a = window.navigation && navigation.activation;
+        var key = f[1] && a && a.from && a.from.url ? a.from.url.split(/[?#]/)[0].split("/").pop().replace(/\.html$/, "") : "";
+        if (key) {
+          var s = document.createElement("style");
+          s.textContent = '[data-vt="' + key.replace(/[^\w-]/g, "") + '"]{view-transition-name:proj}';
+          document.head.append(s);
+          vt.finished.finally(function () { s.remove(); });
+        }
+        return;
+      }
+      var k = (t[0] - f[0] + 4) % 4;
+      vt.types.add(k === 1 || (k === 2 && +t[0] > +f[0]) ? "forward" : "back");
     });
   </script>
   <script src="js/site.js" defer></script>
@@ -197,7 +215,7 @@
       </div>
       <div class="menu-foot">
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
-        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
+        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
         <p><span class="meta-label">İstanbul</span><time data-clock>GMT+3</time></p>
         <p><span class="meta-label">Dil</span><a href="en/team.html" hreflang="en" lang="en">English</a></p>
       </div>
@@ -212,7 +230,7 @@
     <section class="team bar" aria-label="Ekip üyeleri">
       <div class="team-grid">
           <figure class="portrait">
-            <img fetchpriority="high" decoding="async" src="assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz yürürken. Siyah beyaz portre." style="view-transition-name: ph-efe" data-zoom>
+            <img fetchpriority="high" decoding="async" src="assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz yürürken. Siyah beyaz portre." style="view-transition-name: ph-lead" data-zoom>
             <figcaption>
               <span class="who">Efe Bahri Toz</span>
               <span class="role">Baş mimar</span>
@@ -238,7 +256,7 @@
               <span class="role">Ekip</span>
             </figcaption>
           </figure>
-        </div>
+      </div>
     </section>
     <section class="method bar" aria-labelledby="method-title">
       <div class="method-side">
@@ -246,12 +264,38 @@
         <p class="statement">Her iş paftayla ilerler: plan, kesit, malzeme ve ışık. Ne kalacak, ne değişecek, ne eklenecek — bu üçü konuşulmadan kalem kalınlaşmaz.</p>
       </div>
       <ol class="steps">
-            <li><span>01</span><div><h3>Yeri görmek</h3><p>Fotoğrafla yetinmeyiz. Eşiği, yokuşu, komşu pencereyi yerinde durarak alırız.</p></div></li>
-            <li><span>02</span><div><h3>Ölçmek</h3><p>Duvar kalınlığı, kot, pencere yüksekliği, merdivenin çıktığı yer. Çizim bu sayılardan çıkar.</p></div></li>
-            <li><span>03</span><div><h3>Ayırmak</h3><p>Korunan, sökülen, tamir edilen. Üçü yazılmadan plan ilerlemez.</p></div></li>
-            <li><span>04</span><div><h3>Çizmek</h3><p>Az karar. Plan, kesit ve bir cephe. Kalem, karar netleşince kalınlaşır.</p></div></li>
-            <li><span>05</span><div><h3>Malzemeyi seçmek</h3><p>Numune ofiste değil, yerinde, o saatin ışığında bakılır.</p></div></li>
-          </ol>
+        <li><span>01</span><div><h3>Yeri görmek</h3><p>Fotoğrafla yetinmeyiz. Eşiği, yokuşu, komşu pencereyi yerinde durarak alırız.</p></div></li>
+        <li><span>02</span><div><h3>Ölçmek</h3><p>Duvar kalınlığı, kot, pencere yüksekliği, merdivenin çıktığı yer. Çizim bu sayılardan çıkar.</p></div></li>
+        <li><span>03</span><div><h3>Ayırmak</h3><p>Korunan, sökülen, tamir edilen. Üçü yazılmadan plan ilerlemez.</p></div></li>
+        <li><span>04</span><div><h3>Çizmek</h3><p>Az karar. Plan, kesit ve bir cephe. Kalem, karar netleşince kalınlaşır.</p></div></li>
+        <li><span>05</span><div><h3>Malzemeyi seçmek</h3><p>Numune ofiste değil, yerinde, o saatin ışığında bakılır.</p></div></li>
+      </ol>
+    </section>
+    <section class="studio bar" aria-labelledby="studio-title">
+      <div class="section-head">
+        <h2 class="label" id="studio-title"><span class="sq" aria-hidden="true"></span>Atölye</h2>
+        <p class="section-note">Masadaki araçlar</p>
+      </div>
+      <ul class="studio-grid">
+        <li>
+          <figure>
+            <img loading="lazy" decoding="async" src="assets/atolye/maket.jpg" width="1152" height="864" alt="Beyaz kartondan merdivenli bir sokak maketi; sahanlıkta yosundan küçük bir ağaç." data-zoom>
+            <figcaption><strong>Maket</strong><span>Yokuş, basamak ve komşu yapılar kartonla kurulur. Kot farkı ve gölge maket üzerinde kontrol edilir.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img loading="lazy" decoding="async" src="assets/atolye/eskiz.jpg" width="1152" height="864" alt="Sarı aydınger üzerinde elle çizilmiş bir plan; eşik kırmızı kalemle işaretlenmiş." data-zoom>
+            <figcaption><strong>Eskiz</strong><span>Aydınger mevcut çizimin üstüne serilir. Kalan siyah, eklenen kırmızı çizilir.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img loading="lazy" decoding="async" src="assets/atolye/numune.jpg" width="864" height="1152" alt="Zeytin yeşili sıvalı bir duvarın önünde taş, kireç sıva, meşe, kiremit ve demir numuneleri." data-zoom>
+            <figcaption><strong>Numune</strong><span>Taş, kireç, meşe, kiremit, demir. Numuneler yan yana, gün ışığında karşılaştırılır.</span></figcaption>
+          </figure>
+        </li>
+      </ul>
     </section>
     <section class="office bar" aria-labelledby="office-title">
       <div class="office-copy">
@@ -279,7 +323,7 @@
       <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
     </nav>
   </main>
-  <footer class="colophon">
+  <footer class="colophon" data-zone="dark">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
@@ -287,7 +331,7 @@
       </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
-        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
+        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
         <p><span class="meta-label">Sayfalar</span><span><a href="index.html">Ana sayfa</a> · <a href="projeler.html">Projeler</a> · <a href="ekip.html">Ekip</a> · <a href="iletisim.html">İletişim</a></span></p>
       </div>

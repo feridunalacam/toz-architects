@@ -46,11 +46,29 @@
       sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
     });
     addEventListener("pagereveal", function (e) {
-      var from = sessionStorage.getItem("toz-sheet");
-      var to = document.documentElement.dataset.sheet;
-      if (!e.viewTransition || from === null || from === to) return;
-      var d = (to - from + 4) % 4;
-      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+      var vt = e.viewTransition, html = document.documentElement;
+      var from = sessionStorage.getItem("toz-sheet"), to = html.dataset.sheet;
+      if (!vt || from === null || from === to) return;
+      var f = from.split("."), t = to.split(".");
+      if (f[1] && t[1]) {
+        var n = +html.dataset.count || 1, d = (t[1] - f[1] + n) % n;
+        vt.types.add(d <= n / 2 ? "forward" : "back");
+        return;
+      }
+      if ((f[1] && !t[1] && t[0] < 2) || (t[1] && !f[1] && f[0] < 2)) {
+        vt.types.add("proj");
+        var a = window.navigation && navigation.activation;
+        var key = f[1] && a && a.from && a.from.url ? a.from.url.split(/[?#]/)[0].split("/").pop().replace(/\.html$/, "") : "";
+        if (key) {
+          var s = document.createElement("style");
+          s.textContent = '[data-vt="' + key.replace(/[^\w-]/g, "") + '"]{view-transition-name:proj}';
+          document.head.append(s);
+          vt.finished.finally(function () { s.remove(); });
+        }
+        return;
+      }
+      var k = (t[0] - f[0] + 4) % 4;
+      vt.types.add(k === 1 || (k === 2 && +t[0] > +f[0]) ? "forward" : "back");
     });
   </script>
   <script src="js/site.js" defer></script>
@@ -197,7 +215,7 @@
       </div>
       <div class="menu-foot">
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
-        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
+        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
         <p><span class="meta-label">İstanbul</span><time data-clock>GMT+3</time></p>
         <p><span class="meta-label">Dil</span><a href="en/contact.html" hreflang="en" lang="en">English</a></p>
       </div>
@@ -223,7 +241,7 @@
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
         <p><span class="meta-label">Saat</span><span><time data-clock>GMT+3</time> · İstanbul</span></p>
       </aside>
-        <a class="pill" href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">→</span></a>
+        <a class="pill" href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">→</span></a>
       </div>
       <figure class="map">
         <iframe src="https://maps.google.com/maps?q=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul&amp;z=16&amp;output=embed" title="Harita: Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -239,7 +257,7 @@
       <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
     </nav>
   </main>
-  <footer class="colophon">
+  <footer class="colophon" data-zone="dark">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
@@ -247,7 +265,7 @@
       </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
-        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
+        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
         <p><span class="meta-label">Sayfalar</span><span><a href="index.html">Ana sayfa</a> · <a href="projeler.html">Projeler</a> · <a href="ekip.html">Ekip</a> · <a href="iletisim.html">İletişim</a></span></p>
       </div>

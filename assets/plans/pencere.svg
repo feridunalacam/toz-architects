@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 500 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M160 168 H630 V184 H160 Z M160 430 H630 V446 H160 Z M160 168 H176 V446 H160 Z M614 168 H630 V230 H614 Z M614 330 H630 V446 H614 Z" fill="#141414"/>
+    <path d="M630 446 V500 M160 446 V500" fill="none" stroke="#141414" stroke-width="1.4"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M220 368 H390"/>
+      <path d="M236 368 V430 M374 368 V430"/>
+      <path d="M420 392 H470 M424 392 V430 M466 392 V430 M466 392 V338"/>
+    </g>
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M690 210 L640 246"/>
+      <path d="M708 236 L640 286"/>
+      <path d="M716 270 L640 322"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M614 300 H630 V330 H614 Z" fill="#f2c94c" fill-opacity="0.6"/>
+    <path d="M614 300 H630 V330 H614 Z" fill="none" stroke="#e0a400" stroke-width="2" stroke-dasharray="5 4"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M606 230 H638 V330 H606 Z" fill="none" stroke="#e50015" stroke-width="2.6"/>
+    <path d="M622 230 V330" fill="none" stroke="#e50015" stroke-width="1.2"/>
+    <path d="M598 334 H652" fill="none" stroke="#e50015" stroke-width="3"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" stroke-dasharray="3 6" opacity="0.7">
+      <path d="M606 240 L330 368"/>
+      <path d="M606 280 L400 430"/>
+      <path d="M606 320 L480 430"/>
+    </g>
+    <g fill="none" stroke="#e50015" stroke-width="1.1">
+      <path d="M676 334 V430 M670 334 H682 M670 430 H682"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="305" y="356" text-anchor="middle" data-en="TABLE">MASA</text>
+    <text x="594" y="222" text-anchor="end" data-en="WINDOW" fill="#e50015">PENCERE</text>
+    <text x="690" y="378" data-en="SILL" fill="#e50015">DENİZLİK</text>
+    <text x="690" y="394" fill="#e50015">120</text>
+    <g fill="none" stroke="#141414" stroke-width="1.1">
+      <path d="M204 368 V430 M198 368 H210 M198 430 H210"/>
+    </g>
+    <text x="196" y="404" text-anchor="end" font-size="11">75</text>
+    <text x="400" y="530" text-anchor="middle" data-en="SECTION B–B">KESİT B–B</text>
+  </g>
+</svg>

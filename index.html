@@ -47,11 +47,29 @@
       sessionStorage.setItem("toz-sheet", document.documentElement.dataset.sheet);
     });
     addEventListener("pagereveal", function (e) {
-      var from = sessionStorage.getItem("toz-sheet");
-      var to = document.documentElement.dataset.sheet;
-      if (!e.viewTransition || from === null || from === to) return;
-      var d = (to - from + 4) % 4;
-      e.viewTransition.types.add(d === 1 || (d === 2 && +to > +from) ? "forward" : "back");
+      var vt = e.viewTransition, html = document.documentElement;
+      var from = sessionStorage.getItem("toz-sheet"), to = html.dataset.sheet;
+      if (!vt || from === null || from === to) return;
+      var f = from.split("."), t = to.split(".");
+      if (f[1] && t[1]) {
+        var n = +html.dataset.count || 1, d = (t[1] - f[1] + n) % n;
+        vt.types.add(d <= n / 2 ? "forward" : "back");
+        return;
+      }
+      if ((f[1] && !t[1] && t[0] < 2) || (t[1] && !f[1] && f[0] < 2)) {
+        vt.types.add("proj");
+        var a = window.navigation && navigation.activation;
+        var key = f[1] && a && a.from && a.from.url ? a.from.url.split(/[?#]/)[0].split("/").pop().replace(/\.html$/, "") : "";
+        if (key) {
+          var s = document.createElement("style");
+          s.textContent = '[data-vt="' + key.replace(/[^\w-]/g, "") + '"]{view-transition-name:proj}';
+          document.head.append(s);
+          vt.finished.finally(function () { s.remove(); });
+        }
+        return;
+      }
+      var k = (t[0] - f[0] + 4) % 4;
+      vt.types.add(k === 1 || (k === 2 && +t[0] > +f[0]) ? "forward" : "back");
     });
   </script>
   <script src="js/site.js" defer></script>
@@ -160,7 +178,7 @@
         <a href="ekip.html">Ekip</a>
         <a href="iletisim.html">İletişim</a>
       </nav>
-      <a class="lang" href="en/" hreflang="en" lang="en">EN</a>
+      <a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>
       <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menü</span><i aria-hidden="true"></i></button>
     </div>
   </header>
@@ -181,26 +199,26 @@
       </div>
       <div class="menu-foot">
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
-        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
+        <p><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1, Beşiktaş İstanbul</a></p>
         <p><span class="meta-label">İstanbul</span><time data-clock>GMT+3</time></p>
-        <p><span class="meta-label">Dil</span><a href="en/" hreflang="en" lang="en">English</a></p>
+        <p><span class="meta-label">Dil</span><a href="en/index.html" hreflang="en" lang="en">English</a></p>
       </div>
     </div>
   </dialog>
   <main id="icerik">
-    <section class="hero" data-hero aria-roledescription="carousel" aria-label="Açılış görselleri">
+    <section class="hero" data-hero data-zone="dark" aria-roledescription="carousel" aria-label="Açılış görselleri">
       <div class="hero-slides">
         <figure class="slide is-active" data-tone="dark" data-cap="Merdivenli sokak, ikindi">
-          <img src="assets/photos/hero-merdiven.jpg" srcset="assets/photos/hero-merdiven-960.jpg 960w, assets/photos/hero-merdiven.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi." fetchpriority="high" decoding="async">
+          <img fetchpriority="high" decoding="async" src="assets/photos/hero-merdiven.jpg" srcset="assets/photos/hero-merdiven-960.jpg 960w, assets/photos/hero-merdiven.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi.">
         </figure>
         <figure class="slide" data-tone="light" data-cap="Oda, sabah ışığı">
-          <img src="assets/photos/hero-salon.jpg" srcset="assets/photos/hero-salon-960.jpg 960w, assets/photos/hero-salon.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Boş bir odada ahşap masa ve iki sandalye; pencereden kiremit çatılar görünüyor, duvarda pencerenin gölgesi." loading="lazy" decoding="async">
+          <img loading="lazy" decoding="async" src="assets/photos/hero-salon.jpg" srcset="assets/photos/hero-salon-960.jpg 960w, assets/photos/hero-salon.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Boş bir odada ahşap masa ve iki sandalye; pencereden kiremit çatılar görünüyor, duvarda pencerenin gölgesi.">
         </figure>
         <figure class="slide" data-tone="light" data-cap="Cephe, kireç sıva ve ahşap kepenk">
-          <img src="assets/photos/hero-cephe.jpg" srcset="assets/photos/hero-cephe-960.jpg 960w, assets/photos/hero-cephe.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Kireç sıvalı simetrik bir cephe: ahşap kepenkler, ahşap kapı ve dövme demir balkon." loading="lazy" decoding="async">
+          <img loading="lazy" decoding="async" src="assets/photos/hero-cephe.jpg" srcset="assets/photos/hero-cephe-960.jpg 960w, assets/photos/hero-cephe.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Kireç sıvalı simetrik bir cephe: ahşap kepenkler, ahşap kapı ve dövme demir balkon.">
         </figure>
         <figure class="slide" data-tone="light" data-cap="Sokak, sarmaşıklı duvar">
-          <img src="assets/photos/hero-sokak.jpg" srcset="assets/photos/hero-sokak-960.jpg 960w, assets/photos/hero-sokak.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Bir yanı sarmaşıkla kaplı duvar, öbür yanı apartmanlar olan sessiz bir yokuş sokak." loading="lazy" decoding="async">
+          <img loading="lazy" decoding="async" src="assets/photos/hero-sokak.jpg" srcset="assets/photos/hero-sokak-960.jpg 960w, assets/photos/hero-sokak.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Bir yanı sarmaşıkla kaplı duvar, öbür yanı apartmanlar olan sessiz bir yokuş sokak.">
         </figure>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -209,19 +227,222 @@
         <h1>Beşiktaş’ta bir<br>mimarlık ofisi.</h1>
         <a class="hero-cta" href="projeler.html">Projeler <span aria-hidden="true">→</span></a>
       </div>
-      <div class="hero-ui bar">
-        <p class="hero-count" aria-live="polite"><span class="hero-n" data-hero-n>01</span><span class="hero-of">/ 04</span><span class="hero-cap" data-hero-cap>Merdivenli sokak, ikindi</span></p>
-        <div class="hero-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <div class="hero-btns">
-          <button class="round" type="button" data-hero-pause aria-pressed="false" aria-label="Görselleri durdur"><i class="icon-pause" aria-hidden="true"></i></button>
-          <button class="round" type="button" data-hero-prev aria-label="Önceki görsel">←</button>
-          <button class="round" type="button" data-hero-next aria-label="Sonraki görsel">→</button>
+      <p class="wordmark" aria-hidden="true">toz<span>+</span></p>
+      <div class="hero-card" role="group" aria-label="Görsel ve çalışma">
+        <div class="hc-top">
+          <p class="hero-count" aria-live="polite"><span class="hero-n" data-hero-n>01</span><span class="hero-of">/ 04</span></p>
+          <p class="hero-cap" data-hero-cap>Merdivenli sokak, ikindi</p>
+        </div>
+        <div class="hc-projects">
+          <a class="hc-project" href="projeler/merdivenli-sokak.html" data-hc="0">
+            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M92 500 V262 H206 V420"/>
+      <path d="M232 410 V176 H372 V340"/>
+      <path d="M402 330 V108 H540 V260"/>
+      <path d="M572 250 V62 H718 V180"/>
+      <path d="M110 290 H134 V330 H110 Z M160 290 H184 V330 H160 Z M110 360 H134 V400 H110 Z M160 360 H184 V400 H160 Z"/>
+      <path d="M252 204 H276 V244 H252 Z M300 204 H324 V244 H300 Z M252 274 H276 V314 H252 Z M300 274 H324 V314 H300 Z M346 204 H362 V244 H346 Z"/>
+      <path d="M422 136 H446 V176 H422 Z M470 136 H494 V176 H470 Z M422 206 H446 V246 H422 Z M470 206 H494 V246 H470 Z M514 136 H530 V176 H514 Z"/>
+      <path d="M592 90 H616 V130 H592 Z M640 90 H664 V130 H640 Z M688 90 H708 V130 H688 Z M592 160 H616 V200 H592 Z M640 160 H664 V200 H640 Z"/>
+    </g>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744 V540 H60 Z" fill="#ebe8e1"/>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744" fill="none" stroke="#141414" stroke-width="3" stroke-linejoin="miter"/>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M420 342 L548 270" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+    <path d="M84 504 L212 432" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M212 420 H252 M380 340 H420 M548 260 H588" fill="none" stroke="#e50015" stroke-width="5"/>
+    <g fill="none" stroke="#e50015" stroke-width="2">
+      <path d="M232 420 V384"/>
+      <circle cx="232" cy="360" r="26"/>
+      <path d="M386 326 H414 M390 326 V340 M410 326 V340"/>
+      <path d="M576 260 V196 M576 196 H592"/>
+    </g>
+    <circle cx="594" cy="198" r="4" fill="#e50015"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="232" y="322" text-anchor="middle" fill="#e50015">AĞAÇ</text>
+    <text x="400" y="314" text-anchor="middle" fill="#e50015">OTURMA</text>
+    <text x="566" y="200" text-anchor="end" fill="#e50015">AYDINLATMA</text>
+    <text x="568" y="300" text-anchor="middle">SAHANLIK</text>
+    <text x="176" y="524" text-anchor="middle">8 BASAMAK</text>
+    <text x="400" y="566" text-anchor="middle">BOY KESİTİ</text>
+  </g>
+</svg></span>
+            <span class="hc-meta"><span class="hc-no">Çalışma 08 · Kamusal</span><span class="hc-title">Merdivenli sokak</span><span class="hc-what">Basamak, sahanlık, ağaç</span></span>
+            <span class="hc-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="hc-project" href="projeler/pencere.html" data-hc="1" hidden>
+            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 500 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M160 168 H630 V184 H160 Z M160 430 H630 V446 H160 Z M160 168 H176 V446 H160 Z M614 168 H630 V230 H614 Z M614 330 H630 V446 H614 Z" fill="#141414"/>
+    <path d="M630 446 V500 M160 446 V500" fill="none" stroke="#141414" stroke-width="1.4"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M220 368 H390"/>
+      <path d="M236 368 V430 M374 368 V430"/>
+      <path d="M420 392 H470 M424 392 V430 M466 392 V430 M466 392 V338"/>
+    </g>
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M690 210 L640 246"/>
+      <path d="M708 236 L640 286"/>
+      <path d="M716 270 L640 322"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M614 300 H630 V330 H614 Z" fill="#f2c94c" fill-opacity="0.6"/>
+    <path d="M614 300 H630 V330 H614 Z" fill="none" stroke="#e0a400" stroke-width="2" stroke-dasharray="5 4"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M606 230 H638 V330 H606 Z" fill="none" stroke="#e50015" stroke-width="2.6"/>
+    <path d="M622 230 V330" fill="none" stroke="#e50015" stroke-width="1.2"/>
+    <path d="M598 334 H652" fill="none" stroke="#e50015" stroke-width="3"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" stroke-dasharray="3 6" opacity="0.7">
+      <path d="M606 240 L330 368"/>
+      <path d="M606 280 L400 430"/>
+      <path d="M606 320 L480 430"/>
+    </g>
+    <g fill="none" stroke="#e50015" stroke-width="1.1">
+      <path d="M676 334 V430 M670 334 H682 M670 430 H682"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="305" y="356" text-anchor="middle">MASA</text>
+    <text x="594" y="222" text-anchor="end" fill="#e50015">PENCERE</text>
+    <text x="690" y="378" fill="#e50015">DENİZLİK</text>
+    <text x="690" y="394" fill="#e50015">120</text>
+    <g fill="none" stroke="#141414" stroke-width="1.1">
+      <path d="M204 368 V430 M198 368 H210 M198 430 H210"/>
+    </g>
+    <text x="196" y="404" text-anchor="end" font-size="11">75</text>
+    <text x="400" y="530" text-anchor="middle">KESİT B–B</text>
+  </g>
+</svg></span>
+            <span class="hc-meta"><span class="hc-no">Çalışma 03 · İç mekân</span><span class="hc-title">Pencere</span><span class="hc-what">Pencere, masa, ışık</span></span>
+            <span class="hc-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="hc-project" href="projeler/cephe.html" data-hc="2" hidden>
+            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 470 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M140 150 H660 V470 H140 Z" fill="none" stroke="#141414" stroke-width="2.25"/>
+    <path d="M128 162 H672 M128 150 H672" fill="none" stroke="#141414" stroke-width="1.5"/>
+    <path d="M140 352 H660 M140 360 H660" fill="none" stroke="#141414" stroke-width="1.2"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M180 190 H242 V268 H180 Z M180 229 H242 M211 190 V268"/>
+      <path d="M275 175 H323 V283 H275 Z M275 229 H323 M299 175 V283"/>
+      <path d="M360 205 H446 V269 H360 Z M403 205 V269"/>
+      <path d="M480 250 H534 V320 H480 Z M507 250 V320"/>
+      <path d="M250 380 H296 V470 H250 Z M273 380 V470"/>
+      <path d="M180 400 H226 V446 H180 Z"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="3">
+      <path d="M174 272 H248 M269 287 H329 M474 324 H540 M174 450 H232"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M352 274 H454 V306 H352 Z"/>
+      <path d="M362 274 V306 M372 274 V306 M382 274 V306 M392 274 V306 M402 274 V306 M412 274 V306 M422 274 V306 M432 274 V306 M442 274 V306"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <g fill="none" stroke="#e0a400" stroke-width="2.4" stroke-dasharray="8 6">
+      <path d="M140 236 C260 252 380 226 470 238 S600 226 660 232"/>
+      <path d="M466 238 C460 270 470 300 462 336"/>
+      <path d="M560 390 H612 V424 H560 Z"/>
+      <circle cx="586" cy="407" r="11"/>
+    </g>
+  </g>
+  <g data-layer="yeni">
+    <path d="M560 200 H630 V350 H560 Z" fill="none" stroke="#e50015" stroke-width="2.6" stroke-dasharray="8 5"/>
+    <path d="M550 194 H640" fill="none" stroke="#e50015" stroke-width="4"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="595" y="186" text-anchor="middle" fill="#e50015">YENİ AÇIKLIK</text>
+    <text x="146" y="342">SİLME</text>
+    <text x="586" y="446" text-anchor="middle">KABLO, KLİMA</text>
+    <text x="403" y="326" text-anchor="middle">DEMİR BALKON</text>
+    <text x="400" y="530" text-anchor="middle">SOKAK GÖRÜNÜŞÜ</text>
+    <g transform="translate(700 470)">
+      <path d="M0 0 L-8 -12 H8 Z" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <text x="12" y="-6" font-size="10">±0.00</text>
+    </g>
+  </g>
+</svg></span>
+            <span class="hc-meta"><span class="hc-no">Çalışma 05 · Mevcut yapı</span><span class="hc-title">Cephe</span><span class="hc-what">Eski duvar, yeni açıklık</span></span>
+            <span class="hc-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="hc-project" href="projeler/avlu.html" data-hc="3" hidden>
+            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M78 78 H718 V528 H560 M300 528 H78 Z" fill="none" stroke="#141414" stroke-width="2"/>
+    <path d="M110 120 H430 V300 H270 V470 H110 Z M210 120 H272 V142 H210 Z" fill="#141414" fill-rule="evenodd"/>
+    <g fill="none" stroke="#141414" stroke-width="1.7">
+      <circle cx="510" cy="380" r="40"/>
+      <path d="M430 448 H518 V460 H430 Z"/>
+    </g>
+    <circle cx="510" cy="380" r="4" fill="#141414"/>
+    <g fill="#b9b6ae">
+      <circle cx="320" cy="350" r="1.6"/><circle cx="352" cy="372" r="1.6"/><circle cx="388" cy="340" r="1.6"/>
+      <circle cx="604" cy="352" r="1.6"/><circle cx="640" cy="420" r="1.6"/><circle cx="590" cy="470" r="1.6"/>
+      <circle cx="340" cy="430" r="1.6"/><circle cx="396" cy="486" r="1.6"/><circle cx="660" cy="320" r="1.6"/>
+      <circle cx="470" cy="500" r="1.6"/><circle cx="690" cy="480" r="1.6"/><circle cx="312" cy="500" r="1.6"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M300 528 H560" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M430 170 H660 V290 H430" fill="none" stroke="#e50015" stroke-width="2.6" stroke-dasharray="9 6"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" opacity="0.8">
+      <path d="M430 200 H660 M430 230 H660 M430 260 H660"/>
+      <path d="M500 170 V290 M580 170 V290"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="545" y="158" text-anchor="middle" fill="#e50015">SAÇAK</text>
+    <text x="620" y="400" text-anchor="middle">AVLU</text>
+    <text x="510" y="336" text-anchor="middle">AĞAÇ</text>
+    <text x="474" y="482" text-anchor="middle">BANK</text>
+    <text x="430" y="556" text-anchor="middle">SOKAK</text>
+    <g transform="translate(740 60)" fill="none" stroke="#141414" stroke-width="1.5">
+      <circle r="16"/>
+      <path d="M0 11 V-13"/>
+      <path d="M-4.5 -6 L0 -14 L4.5 -6" fill="#141414" stroke="none"/>
+    </g>
+    <g transform="translate(110 556)">
+      <path d="M0 0 H120 M0 -5 V5 M30 -5 V5 M60 -5 V5 M120 -5 V5" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M0 -2 H30 V2 H0 Z M60 -2 H120 V2 H60 Z" fill="#141414"/>
+      <text x="0" y="-10" font-size="10" text-anchor="middle">0</text>
+      <text x="60" y="-10" font-size="10" text-anchor="middle">2</text>
+      <text x="120" y="-10" font-size="10" text-anchor="middle">4 M</text>
+    </g>
+  </g>
+</svg></span>
+            <span class="hc-meta"><span class="hc-no">Çalışma 07 · Kamusal</span><span class="hc-title">Avlu</span><span class="hc-what">Saçak, gölge, oturma</span></span>
+            <span class="hc-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="hc-ui">
+          <div class="hero-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <div class="hero-btns">
+            <button class="round" type="button" data-hero-pause aria-pressed="false" aria-label="Görselleri durdur"><i class="icon-pause" aria-hidden="true"></i></button>
+            <button class="round" type="button" data-hero-prev aria-label="Önceki görsel">←</button>
+            <button class="round" type="button" data-hero-next aria-label="Sonraki görsel">→</button>
+          </div>
         </div>
       </div>
     </section>
     <section class="intro bar" aria-labelledby="intro-title">
       <h2 class="label" id="intro-title"><span class="sq" aria-hidden="true"></span>Ofis</h2>
-      <p class="statement">İşe yerinde başlarız. Ölçer, mevcut olanı ayırır, yenisini az ve net ekleriz.</p>
+      <p class="statement">İşe yerinde <span class="inl" aria-hidden="true"><img src="assets/photos/hero-sokak-960.jpg" alt="" loading="lazy" decoding="async"></span> başlarız. Ölçer, mevcut olanı <span class="inl" aria-hidden="true"><img src="assets/atolye/eskiz.jpg" alt="" loading="lazy" decoding="async"></span> ayırır, yenisini az ve net <span class="inl" aria-hidden="true"><img src="assets/atolye/numune.jpg" alt="" loading="lazy" decoding="async"></span> ekleriz.</p>
       <div class="intro-side">
         <p>Konut, iç mekân, mevcut yapı ve küçük kamusal ölçekte çalışıyoruz. Her iş paftayla ilerler: plan, kesit, malzeme ve ışık.</p>
         <p class="pills"><a class="pill" href="projeler.html">Projeler <span aria-hidden="true">→</span></a><a class="pill" href="ekip.html">Ekip <span aria-hidden="true">→</span></a></p>
@@ -240,30 +461,528 @@
       </div>
       <ul class="cards">
         <li class="card">
-          <a href="projeler.html#esik">
-            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/konut.jpg" width="1152" height="864" alt="Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere." style="view-transition-name: ph-konut"></span>
-            <span class="card-meta"><span class="card-no">01</span><span class="card-title">Eşik</span><span class="card-cat">Konut</span></span>
+          <a href="projeler/esik.html">
+            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/konut.jpg" width="1152" height="864" alt="Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere." data-vt="esik"><span class="chips" aria-hidden="true"><span class="chip">Konut</span><span class="chip">Çalışma</span></span></span>
+            <span class="card-meta"><span class="card-no">01</span><span class="card-title">Eşik</span><span class="card-cat">Kapı, basamak, pencere</span></span>
           </a>
         </li>
         <li class="card">
-          <a href="projeler.html#pencere">
-            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye." style="view-transition-name: ph-ic"></span>
-            <span class="card-meta"><span class="card-no">03</span><span class="card-title">Pencere</span><span class="card-cat">İç mekân</span></span>
+          <a href="projeler/pencere.html">
+            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/ic-mekan.jpg" width="1152" height="864" alt="Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye." data-vt="pencere"><span class="chips" aria-hidden="true"><span class="chip">İç mekân</span><span class="chip">Çalışma</span></span></span>
+            <span class="card-meta"><span class="card-no">03</span><span class="card-title">Pencere</span><span class="card-cat">Pencere, masa, ışık</span></span>
           </a>
         </li>
         <li class="card">
-          <a href="projeler.html#cephe">
-            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/mevcut.jpg" width="1152" height="864" alt="Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar." style="view-transition-name: ph-mevcut"></span>
-            <span class="card-meta"><span class="card-no">05</span><span class="card-title">Cephe</span><span class="card-cat">Mevcut yapı</span></span>
+          <a href="projeler/cephe.html">
+            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/mevcut.jpg" width="1152" height="864" alt="Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar." data-vt="cephe"><span class="chips" aria-hidden="true"><span class="chip">Mevcut yapı</span><span class="chip">Çalışma</span></span></span>
+            <span class="card-meta"><span class="card-no">05</span><span class="card-title">Cephe</span><span class="card-cat">Eski duvar, yeni açıklık</span></span>
           </a>
         </li>
         <li class="card">
-          <a href="projeler.html#avlu">
-            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/avlu.jpg" width="1152" height="864" alt="Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi." style="view-transition-name: ph-avlu"></span>
-            <span class="card-meta"><span class="card-no">07</span><span class="card-title">Avlu</span><span class="card-cat">Kamusal</span></span>
+          <a href="projeler/avlu.html">
+            <span class="card-img"><img loading="lazy" decoding="async" src="assets/photos/avlu.jpg" width="1152" height="864" alt="Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi." data-vt="avlu"><span class="chips" aria-hidden="true"><span class="chip">Kamusal</span><span class="chip">Çalışma</span></span></span>
+            <span class="card-meta"><span class="card-no">07</span><span class="card-title">Avlu</span><span class="card-cat">Saçak, gölge, oturma</span></span>
           </a>
         </li>
       </ul>
+    </section>
+    <section class="pafta bar" aria-labelledby="pafta-title" data-pafta>
+      <div class="section-head">
+        <h2 class="label" id="pafta-title"><span class="sq" aria-hidden="true"></span>Paftalar</h2>
+        <p class="section-note">Mevcut siyah, sökülen sarı, yeni kırmızı</p>
+      </div>
+      <div class="pafta-grid">
+        <div class="pafta-tabs" role="tablist" aria-label="Çizimler" data-tabs>
+          <button type="button" role="tab" id="pt-0" aria-controls="pp-0" aria-selected="true"><span class="pt-no">01.1</span><span class="pt-title">Eşik</span><span class="pt-kind">Plan</span></button>
+          <button type="button" role="tab" id="pt-1" aria-controls="pp-1" aria-selected="false" tabindex="-1"><span class="pt-no">01.2</span><span class="pt-title">Çatı katı</span><span class="pt-kind">Kesit</span></button>
+          <button type="button" role="tab" id="pt-2" aria-controls="pp-2" aria-selected="false" tabindex="-1"><span class="pt-no">01.3</span><span class="pt-title">Pencere</span><span class="pt-kind">Kesit</span></button>
+          <button type="button" role="tab" id="pt-3" aria-controls="pp-3" aria-selected="false" tabindex="-1"><span class="pt-no">01.4</span><span class="pt-title">Islak hacim</span><span class="pt-kind">Plan</span></button>
+          <button type="button" role="tab" id="pt-4" aria-controls="pp-4" aria-selected="false" tabindex="-1"><span class="pt-no">01.5</span><span class="pt-title">Cephe</span><span class="pt-kind">Görünüş</span></button>
+          <button type="button" role="tab" id="pt-5" aria-controls="pp-5" aria-selected="false" tabindex="-1"><span class="pt-no">01.6</span><span class="pt-title">Cumba</span><span class="pt-kind">Kesit</span></button>
+          <button type="button" role="tab" id="pt-6" aria-controls="pp-6" aria-selected="false" tabindex="-1"><span class="pt-no">01.7</span><span class="pt-title">Avlu</span><span class="pt-kind">Plan</span></button>
+          <button type="button" role="tab" id="pt-7" aria-controls="pp-7" aria-selected="false" tabindex="-1"><span class="pt-no">01.8</span><span class="pt-title">Merdivenli sokak</span><span class="pt-kind">Boy kesiti</span></button>
+        </div>
+        <div class="pafta-stage">
+        <figure class="sheet" role="tabpanel" id="pp-0" aria-labelledby="pt-0">
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <g fill="none" stroke="#141414" stroke-width="8" stroke-linejoin="miter">
+      <path d="M150 110 H250"/>
+      <path d="M390 110 H640"/>
+      <path d="M640 110 V470"/>
+      <path d="M640 470 H300"/>
+      <path d="M210 470 H150"/>
+      <path d="M150 470 V110"/>
+      <path d="M360 110 V300"/>
+      <path d="M150 300 H250"/>
+      <path d="M330 300 H500"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.4">
+      <path d="M250 106 H390"/>
+      <path d="M250 114 H390"/>
+      <path d="M250 300 A80 80 0 0 1 330 220" stroke-width="1.1"/>
+      <path d="M330 300 V220" stroke-width="1.1"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M430 150 H590 V258 H430 Z"/>
+      <path d="M430 168 H590"/>
+      <path d="M430 186 H590"/>
+      <path d="M430 204 H590"/>
+      <path d="M430 222 H590"/>
+      <path d="M430 240 H590"/>
+      <path d="M430 258 L590 150"/>
+      <path d="M510 236 V172"/>
+      <path d="M504 180 L510 170 L516 180"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M440 304 V466" fill="none" stroke="#e0a400" stroke-width="6" stroke-dasharray="9 7"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M210 470 H300" fill="none" stroke="#e50015" stroke-width="4"/>
+    <path d="M210 470 A90 90 0 0 1 300 380" fill="none" stroke="#e50015" stroke-width="1.2"/>
+    <path d="M300 470 V380" fill="none" stroke="#e50015" stroke-width="1.2"/>
+    <path d="M200 478 H310 V498 H200 Z" fill="none" stroke="#e50015" stroke-width="1.6"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="255" y="210" text-anchor="middle">ODA</text>
+    <text x="545" y="392" text-anchor="middle">HOL</text>
+    <text x="510" y="284" text-anchor="middle">MERDİVEN</text>
+    <text x="255" y="530" text-anchor="middle">SOKAK</text>
+    <text x="320" y="446" fill="#e50015">EŞİK</text>
+    <g fill="none" stroke="#6b6963" stroke-width="1">
+      <circle cx="150" cy="62" r="11"/>
+      <circle cx="360" cy="62" r="11"/>
+      <circle cx="640" cy="62" r="11"/>
+      <path d="M150 73 V92 M360 73 V92 M640 73 V92"/>
+      <circle cx="100" cy="110" r="11"/>
+      <circle cx="100" cy="300" r="11"/>
+      <circle cx="100" cy="470" r="11"/>
+      <path d="M111 110 H132 M111 300 H132 M111 470 H132"/>
+    </g>
+    <g font-size="11" text-anchor="middle">
+      <text x="150" y="66">A</text>
+      <text x="360" y="66">B</text>
+      <text x="640" y="66">C</text>
+      <text x="100" y="114">1</text>
+      <text x="100" y="304">2</text>
+      <text x="100" y="474">3</text>
+    </g>
+    <g transform="translate(712 72)" fill="none" stroke="#141414" stroke-width="1.5">
+      <circle r="16"/>
+      <path d="M0 11 V-13"/>
+      <path d="M-4.5 -6 L0 -14 L4.5 -6" fill="#141414" stroke="none"/>
+    </g>
+    <g transform="translate(596 540)">
+      <path d="M0 0 H120 M0 -5 V5 M30 -5 V5 M60 -5 V5 M120 -5 V5" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M0 -2 H30 V2 H0 Z M60 -2 H120 V2 H60 Z" fill="#141414"/>
+      <text x="0" y="20" font-size="10" text-anchor="middle">0</text>
+      <text x="60" y="20" font-size="10" text-anchor="middle">1</text>
+      <text x="120" y="20" font-size="10" text-anchor="middle">2 M</text>
+    </g>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.1</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Plan · eşik</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/esik.html">Eşik <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-1" aria-labelledby="pt-1" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M110 380 H134 V470 H110 Z M666 380 H690 V470 H666 Z" fill="#141414"/>
+    <path d="M104 470 H696" fill="none" stroke="#141414" stroke-width="6"/>
+    <path d="M140 476 H152 V492 H140 Z M220 476 H232 V492 H220 Z M300 476 H312 V492 H300 Z M380 476 H392 V492 H380 Z M460 476 H472 V492 H460 Z M540 476 H552 V492 H540 Z M620 476 H632 V492 H620 Z" fill="#141414"/>
+    <g fill="none" stroke="#141414" stroke-linecap="round">
+      <path d="M122 392 L400 130 L678 392" stroke-width="7"/>
+      <path d="M276 250 H524" stroke-width="6"/>
+      <path d="M400 130 V250" stroke-width="4"/>
+      <path d="M400 214 L346 250 M400 214 L454 250" stroke-width="3"/>
+      <path d="M96 382 L400 96 L704 382" stroke-width="1.4"/>
+      <path d="M104 389 L400 110 L696 389" stroke-width="1.1"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M292 266 H508" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+    <path d="M590 466 V318" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M556 272 L606 320" fill="none" stroke="#e50015" stroke-width="7"/>
+    <path d="M550 280 L560 268 M600 328 L610 316" fill="none" stroke="#e50015" stroke-width="2"/>
+    <path d="M140 462 H660" fill="none" stroke="#e50015" stroke-width="2"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" stroke-dasharray="3 6" opacity="0.7">
+      <path d="M562 284 L440 462"/>
+      <path d="M578 298 L470 462"/>
+      <path d="M594 312 L500 462"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="330" y="232" text-anchor="middle">MAKAS</text>
+    <text x="236" y="330">MERTEK</text>
+    <text x="618" y="272" fill="#e50015">ÇATI PENCERESİ</text>
+    <text x="400" y="452" text-anchor="middle" fill="#e50015">MEŞE DÖŞEME</text>
+    <text x="400" y="530" text-anchor="middle">KESİT A–A</text>
+    <g transform="translate(710 470)">
+      <path d="M0 0 L-8 -12 H8 Z" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M-14 0 H40" fill="none" stroke="#141414" stroke-width="1"/>
+      <text x="12" y="-6" font-size="10">±0.00</text>
+    </g>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.2</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Kesit · makas ve çatı penceresi</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/catikati.html">Çatı katı <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-2" aria-labelledby="pt-2" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 500 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M160 168 H630 V184 H160 Z M160 430 H630 V446 H160 Z M160 168 H176 V446 H160 Z M614 168 H630 V230 H614 Z M614 330 H630 V446 H614 Z" fill="#141414"/>
+    <path d="M630 446 V500 M160 446 V500" fill="none" stroke="#141414" stroke-width="1.4"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M220 368 H390"/>
+      <path d="M236 368 V430 M374 368 V430"/>
+      <path d="M420 392 H470 M424 392 V430 M466 392 V430 M466 392 V338"/>
+    </g>
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M690 210 L640 246"/>
+      <path d="M708 236 L640 286"/>
+      <path d="M716 270 L640 322"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M614 300 H630 V330 H614 Z" fill="#f2c94c" fill-opacity="0.6"/>
+    <path d="M614 300 H630 V330 H614 Z" fill="none" stroke="#e0a400" stroke-width="2" stroke-dasharray="5 4"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M606 230 H638 V330 H606 Z" fill="none" stroke="#e50015" stroke-width="2.6"/>
+    <path d="M622 230 V330" fill="none" stroke="#e50015" stroke-width="1.2"/>
+    <path d="M598 334 H652" fill="none" stroke="#e50015" stroke-width="3"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" stroke-dasharray="3 6" opacity="0.7">
+      <path d="M606 240 L330 368"/>
+      <path d="M606 280 L400 430"/>
+      <path d="M606 320 L480 430"/>
+    </g>
+    <g fill="none" stroke="#e50015" stroke-width="1.1">
+      <path d="M676 334 V430 M670 334 H682 M670 430 H682"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="305" y="356" text-anchor="middle">MASA</text>
+    <text x="594" y="222" text-anchor="end" fill="#e50015">PENCERE</text>
+    <text x="690" y="378" fill="#e50015">DENİZLİK</text>
+    <text x="690" y="394" fill="#e50015">120</text>
+    <g fill="none" stroke="#141414" stroke-width="1.1">
+      <path d="M204 368 V430 M198 368 H210 M198 430 H210"/>
+    </g>
+    <text x="196" y="404" text-anchor="end" font-size="11">75</text>
+    <text x="400" y="530" text-anchor="middle">KESİT B–B</text>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.3</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Kesit · pencere</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/pencere.html">Pencere <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-3" aria-labelledby="pt-3" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M230 130 H360 V146 H230 Z M460 130 H570 V146 H460 Z M554 130 H570 V470 H554 Z M230 454 H262 V470 H230 Z M342 454 H570 V470 H342 Z M230 130 H246 V470 H230 Z" fill="#141414"/>
+    <g fill="none" stroke="#141414" stroke-width="1.4">
+      <path d="M360 134 H460 M360 142 H460"/>
+      <path d="M262 454 A80 80 0 0 1 342 374" stroke-width="1.1"/>
+      <path d="M342 454 V374" stroke-width="1.1"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <g fill="none" stroke="#e0a400" stroke-width="2.4" stroke-dasharray="8 6">
+      <path d="M372 380 H548 V450 H372 Z"/>
+      <path d="M392 392 H528 Q536 415 528 438 H392 Q384 415 392 392 Z"/>
+      <circle cx="520" cy="168" r="18"/>
+    </g>
+  </g>
+  <g data-layer="yeni">
+    <g fill="none" stroke="#e50015" stroke-width="2.2">
+      <path d="M246 146 H350 V258 H246" stroke-dasharray="4 5" stroke-width="1.4"/>
+      <circle cx="298" cy="203" r="8"/>
+      <path d="M292 203 H304 M298 197 V209" stroke-width="1.2"/>
+      <path d="M494 196 H554 V276 H494 Z"/>
+      <ellipse cx="522" cy="236" rx="16" ry="26" stroke-width="1.4"/>
+      <path d="M534 302 H554 V360 H534 Z"/>
+      <ellipse cx="512" cy="331" rx="22" ry="17"/>
+    </g>
+    <g fill="none" stroke="#e50015" stroke-width="1.3">
+      <path d="M260 160 L288 193 M336 160 L308 193 M260 246 L288 213 M336 246 L308 213"/>
+      <path d="M280 192 L288 193 L287 185 M316 192 L308 193 L309 185 M280 214 L288 213 L287 221 M316 214 L308 213 L309 221"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="410" y="116" text-anchor="middle">BUZLU CAM</text>
+    <text x="298" y="280" text-anchor="middle">DUŞ</text>
+    <text x="298" y="232" text-anchor="middle" font-size="10" fill="#e50015">%2</text>
+    <text x="482" y="240" text-anchor="end" fill="#e50015">LAVABO</text>
+    <text x="482" y="336" text-anchor="end" fill="#e50015">WC</text>
+    <text x="460" y="420" text-anchor="middle">ESKİ KÜVET</text>
+    <path d="M308 203 H362" fill="none" stroke="#e50015" stroke-width="0.8"/>
+    <text x="368" y="207" fill="#e50015">GİDER</text>
+    <g transform="translate(712 72)" fill="none" stroke="#141414" stroke-width="1.5">
+      <circle r="16"/>
+      <path d="M0 11 V-13"/>
+      <path d="M-4.5 -6 L0 -14 L4.5 -6" fill="#141414" stroke="none"/>
+    </g>
+    <g transform="translate(596 540)">
+      <path d="M0 0 H120 M0 -5 V5 M30 -5 V5 M60 -5 V5 M120 -5 V5" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M0 -2 H30 V2 H0 Z M60 -2 H120 V2 H60 Z" fill="#141414"/>
+      <text x="0" y="20" font-size="10" text-anchor="middle">0</text>
+      <text x="60" y="20" font-size="10" text-anchor="middle">0.5</text>
+      <text x="120" y="20" font-size="10" text-anchor="middle">1 M</text>
+    </g>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.4</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Plan · gider ve eğim</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/islak-hacim.html">Islak hacim <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-4" aria-labelledby="pt-4" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 470 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M140 150 H660 V470 H140 Z" fill="none" stroke="#141414" stroke-width="2.25"/>
+    <path d="M128 162 H672 M128 150 H672" fill="none" stroke="#141414" stroke-width="1.5"/>
+    <path d="M140 352 H660 M140 360 H660" fill="none" stroke="#141414" stroke-width="1.2"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M180 190 H242 V268 H180 Z M180 229 H242 M211 190 V268"/>
+      <path d="M275 175 H323 V283 H275 Z M275 229 H323 M299 175 V283"/>
+      <path d="M360 205 H446 V269 H360 Z M403 205 V269"/>
+      <path d="M480 250 H534 V320 H480 Z M507 250 V320"/>
+      <path d="M250 380 H296 V470 H250 Z M273 380 V470"/>
+      <path d="M180 400 H226 V446 H180 Z"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="3">
+      <path d="M174 272 H248 M269 287 H329 M474 324 H540 M174 450 H232"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M352 274 H454 V306 H352 Z"/>
+      <path d="M362 274 V306 M372 274 V306 M382 274 V306 M392 274 V306 M402 274 V306 M412 274 V306 M422 274 V306 M432 274 V306 M442 274 V306"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <g fill="none" stroke="#e0a400" stroke-width="2.4" stroke-dasharray="8 6">
+      <path d="M140 236 C260 252 380 226 470 238 S600 226 660 232"/>
+      <path d="M466 238 C460 270 470 300 462 336"/>
+      <path d="M560 390 H612 V424 H560 Z"/>
+      <circle cx="586" cy="407" r="11"/>
+    </g>
+  </g>
+  <g data-layer="yeni">
+    <path d="M560 200 H630 V350 H560 Z" fill="none" stroke="#e50015" stroke-width="2.6" stroke-dasharray="8 5"/>
+    <path d="M550 194 H640" fill="none" stroke="#e50015" stroke-width="4"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="595" y="186" text-anchor="middle" fill="#e50015">YENİ AÇIKLIK</text>
+    <text x="146" y="342">SİLME</text>
+    <text x="586" y="446" text-anchor="middle">KABLO, KLİMA</text>
+    <text x="403" y="326" text-anchor="middle">DEMİR BALKON</text>
+    <text x="400" y="530" text-anchor="middle">SOKAK GÖRÜNÜŞÜ</text>
+    <g transform="translate(700 470)">
+      <path d="M0 0 L-8 -12 H8 Z" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <text x="12" y="-6" font-size="10">±0.00</text>
+    </g>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.5</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Görünüş · yeni açıklık</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/cephe.html">Cephe <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-5" aria-labelledby="pt-5" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M250 60 H284 V566 H250 Z" fill="#141414"/>
+    <path d="M110 186 H250 V200 H110 Z M110 400 H250 V414 H110 Z" fill="#141414"/>
+    <g fill="none" stroke="#141414" stroke-width="2">
+      <path d="M284 400 H524 V418 H284 Z"/>
+      <path d="M504 172 H520 V400 H504 Z"/>
+      <path d="M278 162 L548 182 M284 172 H504"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M504 222 H520 M504 334 H520 M512 222 V334"/>
+      <path d="M294 404 L304 414 M314 404 L324 414 M334 404 L344 414 M354 404 L364 414 M374 404 L384 414 M394 404 L404 414 M414 404 L424 414 M434 404 L444 414 M454 404 L464 414 M474 404 L484 414 M494 404 L504 414"/>
+      <path d="M266 156 L560 178" stroke-width="1"/>
+    </g>
+    <path d="M284 556 C352 548 420 500 470 418 H440 C404 470 344 512 284 520" fill="none" stroke="#141414" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M504 344 H520 V400 H504 Z" fill="#f2c94c" fill-opacity="0.6"/>
+    <path d="M504 344 H520 V400 H504 Z" fill="none" stroke="#e0a400" stroke-width="2" stroke-dasharray="5 4"/>
+    <path d="M440 418 H470 C463 430 455 442 446 452 H412 C422 442 432 431 440 418 Z" fill="#f2c94c" fill-opacity="0.6"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M500 344 H524 V400 H500 Z" fill="none" stroke="#e50015" stroke-width="2.2"/>
+    <path d="M508 350 V394 M516 350 V394" fill="none" stroke="#e50015" stroke-width="1"/>
+    <path d="M440 418 H470 C463 430 455 442 446 452 H412 C422 442 432 431 440 418 Z" fill="none" stroke="#e50015" stroke-width="2.2"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="540" y="282">PENCERE</text>
+    <text x="540" y="376" fill="#e50015">KAPLAMA</text>
+    <text x="484" y="446" fill="#e50015">YENİ UÇ</text>
+    <text x="440" y="506">KONSOL</text>
+    <text x="238" y="300" text-anchor="end">MEVCUT DUVAR</text>
+    <text x="410" y="148" text-anchor="middle">SAÇAK</text>
+    <text x="640" y="556" text-anchor="middle">KESİT C–C</text>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.6</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Kesit · konsol ve kaplama</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/cumba.html">Cumba <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-6" aria-labelledby="pt-6" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M78 78 H718 V528 H560 M300 528 H78 Z" fill="none" stroke="#141414" stroke-width="2"/>
+    <path d="M110 120 H430 V300 H270 V470 H110 Z M210 120 H272 V142 H210 Z" fill="#141414" fill-rule="evenodd"/>
+    <g fill="none" stroke="#141414" stroke-width="1.7">
+      <circle cx="510" cy="380" r="40"/>
+      <path d="M430 448 H518 V460 H430 Z"/>
+    </g>
+    <circle cx="510" cy="380" r="4" fill="#141414"/>
+    <g fill="#b9b6ae">
+      <circle cx="320" cy="350" r="1.6"/><circle cx="352" cy="372" r="1.6"/><circle cx="388" cy="340" r="1.6"/>
+      <circle cx="604" cy="352" r="1.6"/><circle cx="640" cy="420" r="1.6"/><circle cx="590" cy="470" r="1.6"/>
+      <circle cx="340" cy="430" r="1.6"/><circle cx="396" cy="486" r="1.6"/><circle cx="660" cy="320" r="1.6"/>
+      <circle cx="470" cy="500" r="1.6"/><circle cx="690" cy="480" r="1.6"/><circle cx="312" cy="500" r="1.6"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M300 528 H560" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M430 170 H660 V290 H430" fill="none" stroke="#e50015" stroke-width="2.6" stroke-dasharray="9 6"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" opacity="0.8">
+      <path d="M430 200 H660 M430 230 H660 M430 260 H660"/>
+      <path d="M500 170 V290 M580 170 V290"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="545" y="158" text-anchor="middle" fill="#e50015">SAÇAK</text>
+    <text x="620" y="400" text-anchor="middle">AVLU</text>
+    <text x="510" y="336" text-anchor="middle">AĞAÇ</text>
+    <text x="474" y="482" text-anchor="middle">BANK</text>
+    <text x="430" y="556" text-anchor="middle">SOKAK</text>
+    <g transform="translate(740 60)" fill="none" stroke="#141414" stroke-width="1.5">
+      <circle r="16"/>
+      <path d="M0 11 V-13"/>
+      <path d="M-4.5 -6 L0 -14 L4.5 -6" fill="#141414" stroke="none"/>
+    </g>
+    <g transform="translate(110 556)">
+      <path d="M0 0 H120 M0 -5 V5 M30 -5 V5 M60 -5 V5 M120 -5 V5" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M0 -2 H30 V2 H0 Z M60 -2 H120 V2 H60 Z" fill="#141414"/>
+      <text x="0" y="-10" font-size="10" text-anchor="middle">0</text>
+      <text x="60" y="-10" font-size="10" text-anchor="middle">2</text>
+      <text x="120" y="-10" font-size="10" text-anchor="middle">4 M</text>
+    </g>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.7</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Plan · saçak</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/avlu.html">Avlu <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        <figure class="sheet" role="tabpanel" id="pp-7" aria-labelledby="pt-7" hidden>
+          <div class="sheet-paper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M92 500 V262 H206 V420"/>
+      <path d="M232 410 V176 H372 V340"/>
+      <path d="M402 330 V108 H540 V260"/>
+      <path d="M572 250 V62 H718 V180"/>
+      <path d="M110 290 H134 V330 H110 Z M160 290 H184 V330 H160 Z M110 360 H134 V400 H110 Z M160 360 H184 V400 H160 Z"/>
+      <path d="M252 204 H276 V244 H252 Z M300 204 H324 V244 H300 Z M252 274 H276 V314 H252 Z M300 274 H324 V314 H300 Z M346 204 H362 V244 H346 Z"/>
+      <path d="M422 136 H446 V176 H422 Z M470 136 H494 V176 H470 Z M422 206 H446 V246 H422 Z M470 206 H494 V246 H470 Z M514 136 H530 V176 H514 Z"/>
+      <path d="M592 90 H616 V130 H592 Z M640 90 H664 V130 H640 Z M688 90 H708 V130 H688 Z M592 160 H616 V200 H592 Z M640 160 H664 V200 H640 Z"/>
+    </g>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744 V540 H60 Z" fill="#ebe8e1"/>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744" fill="none" stroke="#141414" stroke-width="3" stroke-linejoin="miter"/>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M420 342 L548 270" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+    <path d="M84 504 L212 432" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M212 420 H252 M380 340 H420 M548 260 H588" fill="none" stroke="#e50015" stroke-width="5"/>
+    <g fill="none" stroke="#e50015" stroke-width="2">
+      <path d="M232 420 V384"/>
+      <circle cx="232" cy="360" r="26"/>
+      <path d="M386 326 H414 M390 326 V340 M410 326 V340"/>
+      <path d="M576 260 V196 M576 196 H592"/>
+    </g>
+    <circle cx="594" cy="198" r="4" fill="#e50015"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="232" y="322" text-anchor="middle" fill="#e50015">AĞAÇ</text>
+    <text x="400" y="314" text-anchor="middle" fill="#e50015">OTURMA</text>
+    <text x="566" y="200" text-anchor="end" fill="#e50015">AYDINLATMA</text>
+    <text x="568" y="300" text-anchor="middle">SAHANLIK</text>
+    <text x="176" y="524" text-anchor="middle">8 BASAMAK</text>
+    <text x="400" y="566" text-anchor="middle">BOY KESİTİ</text>
+  </g>
+</svg></div>
+          <figcaption class="sheet-block">
+            <span class="sb-brand"><img src="assets/mark.svg" width="14" height="14" alt="" loading="lazy"><span translate="no">toz+ architects</span></span>
+            <span class="sb-cell"><span class="meta-label">Pafta</span>01.8</span>
+            <span class="sb-cell sb-wide"><span class="meta-label">Çizim</span>Boy kesiti · sahanlık</span>
+            <span class="sb-cell"><span class="meta-label">Proje</span><a href="projeler/merdivenli-sokak.html">Merdivenli sokak <span aria-hidden="true">→</span></a></span>
+            <span class="sb-cell"><span class="meta-label">Durum</span>Çalışma</span>
+          </figcaption>
+        </figure>
+        </div>
+        <div class="sheet-tools">
+          <div class="layers" role="group" aria-label="Katmanlar"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Mevcut</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Sökülen</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>Yeni</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notlar</button></div>
+          <button class="pill sheet-full" type="button" data-sheet-full hidden>Tam ekran <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </section>
+    <section class="atolye" aria-labelledby="atolye-title">
+      <div class="bar section-head">
+        <h2 class="label" id="atolye-title"><span class="sq" aria-hidden="true"></span>Atölye</h2>
+        <p class="section-note">Masa — maket, aydınger, kırmızı kalem</p>
+      </div>
+      <figure class="atolye-hero bar">
+        <img loading="lazy" decoding="async" src="assets/atolye/masa.jpg" width="1280" height="720" alt="Pencere önünde bir çalışma masası: beyaz bir maket, aydınger üzerinde kırmızı çizgili bir plan ve kalemler; dışarıda İstanbul çatıları." data-zoom>
+        <ul class="stats" aria-label="Ofis sayılarla"><li><strong>08</strong><span>Çalışma</span></li><li><strong>04</strong><span>Ölçek</span></li><li><strong>03</strong><span>Kişi</span></li><li><strong>1:50</strong><span>Rölöve</span></li></ul>
+      </figure>
     </section>
     <section class="people bar" aria-labelledby="people-title">
       <div class="section-head">
@@ -272,7 +991,7 @@
       </div>
       <div class="people-grid">
         <a class="people-photo" href="ekip.html" tabindex="-1" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz, siyah beyaz portre." style="view-transition-name: ph-efe">
+          <img loading="lazy" decoding="async" src="assets/efe-bahri-toz.jpg" width="1088" height="1720" alt="Efe Bahri Toz yürürken. Siyah beyaz portre." style="view-transition-name: ph-lead">
         </a>
         <div class="people-copy">
           <p class="people-lead">Ofisi Efe Bahri Toz yönetir. Başak Toz ve Macit Toz ile Abbasağa’da çalışır.</p>
@@ -325,7 +1044,7 @@
       <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
     </nav>
   </main>
-  <footer class="colophon">
+  <footer class="colophon" data-zone="dark">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
@@ -333,7 +1052,7 @@
       </div>
       <div class="colophon-grid">
         <p><span class="meta-label">Ofis</span><span translate="no">toz+ architects</span></p>
-        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
+        <address><span class="meta-label">Yer</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Abbasa%C4%9Fa%2C%20Bostan%C3%BCst%C3%BC%20Dere%20Sok.%2034%2F1%2C%20Be%C5%9Fikta%C5%9F%2C%20%C4%B0stanbul" rel="noopener noreferrer">Abbasağa, Bostanüstü Dere Sok. 34/1<br>34353 Beşiktaş / İstanbul</a></address>
         <p><span class="meta-label">Telefon</span><a href="tel:+905425190361">0542 519 0361</a></p>
         <p><span class="meta-label">Sayfalar</span><span><a href="index.html">Ana sayfa</a> · <a href="projeler.html">Projeler</a> · <a href="ekip.html">Ekip</a> · <a href="iletisim.html">İletişim</a></span></p>
       </div>

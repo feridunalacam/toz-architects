@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M110 380 H134 V470 H110 Z M666 380 H690 V470 H666 Z" fill="#141414"/>
+    <path d="M104 470 H696" fill="none" stroke="#141414" stroke-width="6"/>
+    <path d="M140 476 H152 V492 H140 Z M220 476 H232 V492 H220 Z M300 476 H312 V492 H300 Z M380 476 H392 V492 H380 Z M460 476 H472 V492 H460 Z M540 476 H552 V492 H540 Z M620 476 H632 V492 H620 Z" fill="#141414"/>
+    <g fill="none" stroke="#141414" stroke-linecap="round">
+      <path d="M122 392 L400 130 L678 392" stroke-width="7"/>
+      <path d="M276 250 H524" stroke-width="6"/>
+      <path d="M400 130 V250" stroke-width="4"/>
+      <path d="M400 214 L346 250 M400 214 L454 250" stroke-width="3"/>
+      <path d="M96 382 L400 96 L704 382" stroke-width="1.4"/>
+      <path d="M104 389 L400 110 L696 389" stroke-width="1.1"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M292 266 H508" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+    <path d="M590 466 V318" fill="none" stroke="#e0a400" stroke-width="5" stroke-dasharray="9 7"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M556 272 L606 320" fill="none" stroke="#e50015" stroke-width="7"/>
+    <path d="M550 280 L560 268 M600 328 L610 316" fill="none" stroke="#e50015" stroke-width="2"/>
+    <path d="M140 462 H660" fill="none" stroke="#e50015" stroke-width="2"/>
+    <g fill="none" stroke="#e50015" stroke-width="1" stroke-dasharray="3 6" opacity="0.7">
+      <path d="M562 284 L440 462"/>
+      <path d="M578 298 L470 462"/>
+      <path d="M594 312 L500 462"/>
+    </g>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="330" y="232" text-anchor="middle" data-en="TRUSS">MAKAS</text>
+    <text x="236" y="330" data-en="RAFTER">MERTEK</text>
+    <text x="618" y="272" data-en="ROOF LIGHT" fill="#e50015">ÇATI PENCERESİ</text>
+    <text x="400" y="452" text-anchor="middle" data-en="OAK FLOOR" fill="#e50015">MEŞE DÖŞEME</text>
+    <text x="400" y="530" text-anchor="middle" data-en="SECTION A–A">KESİT A–A</text>
+    <g transform="translate(710 470)">
+      <path d="M0 0 L-8 -12 H8 Z" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <path d="M-14 0 H40" fill="none" stroke="#141414" stroke-width="1"/>
+      <text x="12" y="-6" font-size="10">±0.00</text>
+    </g>
+  </g>
+</svg>

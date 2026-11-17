@@ -24,13 +24,15 @@
     catch { return document.startViewTransition(update); }
   };
 
-  /* Opening slideshow: autoplay with progress, swipe, buttons, arrow keys while in view. */
+  /* Opening slideshow: autoplay with progress, swipe, buttons, arrow keys while in view.
+     The glass card follows the slide with the study the photograph belongs to. */
   const hero = document.querySelector("[data-hero]");
   let heroStep = null;
   let heroInView = false;
   if (hero) {
     const slides = [...hero.querySelectorAll(".slide")];
     const bars = [...hero.querySelectorAll(".hero-progress span")];
+    const cards = [...hero.querySelectorAll("[data-hc]")];
     const num = hero.querySelector("[data-hero-n]");
     const cap = hero.querySelector("[data-hero-cap]");
     const pauseB = hero.querySelector("[data-hero-pause]");
@@ -42,7 +44,6 @@
     let cleanup = 0;
 
     hero.style.setProperty("--hero-dur", "7s");
-    hero.dataset.tone = slides[0].dataset.tone || "dark";
     hero.querySelectorAll("img").forEach((img) => { img.draggable = false; });
 
     const sync = () => {
@@ -75,7 +76,8 @@
       cur = next;
       num.textContent = pad(cur + 1);
       cap.textContent = neu.dataset.cap;
-      hero.dataset.tone = neu.dataset.tone || "dark";
+      cards.forEach((c) => { c.hidden = +c.dataset.hc !== cur; });
+      hero.dataset.zone = neu.dataset.tone || "dark";
       runBar();
       dispatchEvent(new Event("toz:tone"));
       cleanup = setTimeout(() => {
@@ -103,7 +105,7 @@
 
     let x0 = null, y0 = 0;
     hero.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0 || e.target.closest("a, button")) return;
+      if (e.button !== 0 || e.target.closest("a, button, .hero-card")) return;
       x0 = e.clientX; y0 = e.clientY;
     });
     hero.addEventListener("pointerup", (e) => {
@@ -126,7 +128,7 @@
     main.addEventListener("touchstart", (e) => {
       const t = e.touches[0];
       const edge = t.clientX < 24 || t.clientX > innerWidth - 24;
-      mode = e.touches.length !== 1 || edge || e.target.closest("[data-strip], .map, [data-hero], .filters") ? "y" : "";
+      mode = e.touches.length !== 1 || edge || e.target.closest("[data-strip], .map, [data-hero], .filters, .pafta-tabs, .pafta-stage, .layers") ? "y" : "";
       sx = t.clientX; sy = t.clientY; st = Date.now(); dx = 0;
     }, { passive: true });
 
@@ -165,7 +167,7 @@
       if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
       if (document.querySelector("dialog[open]")) return;
       const el = document.activeElement;
-      if (el && el.closest("[data-strip], input, textarea, select, iframe, .filters, [data-views]")) return;
+      if (el && el.closest("[data-strip], input, textarea, select, iframe, .filters, [data-views], [role=tablist], .layers")) return;
       const d = e.key === "ArrowRight" ? 1 : -1;
       if (heroStep && heroInView) { heroStep(d); return; }
       go(d > 0 ? nextLink : prevLink);
@@ -176,13 +178,12 @@
     });
   }
 
-  /* Glass bar: light or dark tone depending on what passes behind it. */
+  /* Glass bar: light or dark tone depending on what passes behind it (data-zone). */
   const topbar = document.querySelector("[data-topbar]");
   const liquid = document.querySelector("[data-liquid]");
   if (topbar && liquid) {
-    const colophon = document.querySelector(".colophon");
+    const zones = [...document.querySelectorAll("[data-zone]")];
     const under = (el, y) => {
-      if (!el) return false;
       const r = el.getBoundingClientRect();
       return r.top <= y && r.bottom >= y;
     };
@@ -191,8 +192,8 @@
       queued = false;
       const b = liquid.getBoundingClientRect();
       const y = b.top + b.height / 2;
-      const dark = (under(hero, y) && hero.dataset.tone === "dark") || under(colophon, y);
-      topbar.classList.toggle("on-dark", dark);
+      const zone = zones.find((el) => under(el, y));
+      topbar.classList.toggle("on-dark", zone?.dataset.zone === "dark");
     };
     const queue = () => { if (!queued) { queued = true; requestAnimationFrame(tone); } };
     addEventListener("scroll", queue, { passive: true });
@@ -332,7 +333,7 @@
     });
   }
 
-  /* Projects: scale filters, grid or list view, cursor preview in the list, morph from card to study. */
+  /* Projects: scale filters, photograph / plan / list views, cursor preview in the list. */
   const works = document.querySelector("[data-works]");
   if (works) {
     const items = [...works.querySelectorAll(".work")];
@@ -362,7 +363,10 @@
     viewBtns.forEach((b) => b.addEventListener("click", () => {
       if (b.getAttribute("aria-pressed") !== "true") named(() => setView(b.dataset.view), "filter");
     }));
-    try { if (localStorage.getItem("toz-view") === "list" && viewBtns.length) setView("list"); } catch {}
+    try {
+      const saved = localStorage.getItem("toz-view");
+      if (saved !== "grid" && viewBtns.some((b) => b.dataset.view === saved)) setView(saved);
+    } catch {}
 
     if (finePointer) {
       const pv = document.createElement("img");
@@ -396,33 +400,111 @@
       works.addEventListener("pointerleave", hide);
       addEventListener("scroll", hide, { passive: true });
     }
-
-    works.addEventListener("click", (e) => {
-      const a = e.target.closest(".work a");
-      const target = a && document.getElementById(decodeURIComponent(a.hash.slice(1)));
-      if (!target) return;
-      e.preventDefault();
-      const jump = (behavior) => {
-        target.scrollIntoView({ behavior, block: "start" });
-        history.pushState(null, "", a.hash);
-      };
-      const from = a.querySelector(".work-img img");
-      const to = target.querySelector(".shot img");
-      if (!document.startViewTransition || reduce || works.dataset.view !== "grid" || !from || !to) {
-        jump(reduce ? "instant" : "smooth");
-        return;
-      }
-      const saved = to.style.viewTransitionName;
-      from.style.viewTransitionName = "morph";
-      to.style.viewTransitionName = "none";
-      const vt = transition(() => {
-        from.style.viewTransitionName = "";
-        to.style.viewTransitionName = "morph";
-        jump("instant");
-      }, "morph");
-      vt?.finished.finally(() => { to.style.viewTransitionName = saved; });
-    });
   }
+
+  /* Project pages: the photograph that was clicked grows into the page header (see "proj" in the CSS).
+     The way back is named by the head script of the index, which knows which page it came from. */
+  const detailDir = /\/(projeler|projects)\/[^/]*$/;
+  const isIndex = (url) => !detailDir.test(url.pathname) && /(^|\/)(index|projeler|projects)?(\.html)?$/.test(url.pathname);
+  const clearNames = () => document.querySelectorAll("[data-vt]").forEach((el) => { el.style.viewTransitionName = ""; });
+  addEventListener("pageswap", (e) => {
+    const vt = e.viewTransition;
+    const url = e.activation?.entry?.url;
+    if (!vt || !url) return;
+    const to = new URL(url);
+    if (to.origin !== location.origin) return;
+    clearNames();
+    if (detailDir.test(location.pathname)) {
+      if (isIndex(to)) vt.types.add("proj");
+      return;
+    }
+    if (!detailDir.test(to.pathname)) return;
+    const key = to.pathname.split("/").pop().replace(/\.html$/, "");
+    const img = [...document.querySelectorAll("[data-vt]")].find((el) => el.dataset.vt === key);
+    if (!img) return;
+    const r = img.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight || !r.width) return;
+    img.style.viewTransitionName = "proj";
+    vt.types.add("proj");
+  });
+  addEventListener("pageshow", clearNames);
+
+  /* Drawing sheets: tabs (arrow keys, Home, End), swipe between drawings, layer switches, full screen. */
+  const drawIn = (sheet) => {
+    if (!sheet || reduce) return;
+    sheet.classList.remove("is-drawn");
+    void sheet.offsetWidth;
+    sheet.classList.add("is-drawn");
+  };
+  document.querySelectorAll("[data-pafta]").forEach((box) => {
+    const tabs = [...box.querySelectorAll('[role="tab"]')];
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+    let cur = Math.max(0, tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"));
+
+    const select = (i, focus) => {
+      const next = (i + tabs.length) % tabs.length;
+      if (next === cur) return;
+      cur = next;
+      tabs.forEach((t, k) => {
+        const on = k === cur;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        panels[k].hidden = !on;
+      });
+      if (focus) tabs[cur].focus({ preventScroll: true });
+      const strip = tabs[cur].parentElement;
+      if (strip.scrollWidth > strip.clientWidth) {
+        const t = tabs[cur].getBoundingClientRect(), s = strip.getBoundingClientRect();
+        strip.scrollTo({ left: strip.scrollLeft + t.left - s.left - (s.width - t.width) / 2, behavior: reduce ? "auto" : "smooth" });
+      }
+      drawIn(panels[cur]);
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(i));
+      t.addEventListener("keydown", (e) => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (step) select(cur + step, true);
+        else if (e.key === "Home") select(0, true);
+        else if (e.key === "End") select(tabs.length - 1, true);
+        else return;
+        e.preventDefault();
+      });
+    });
+
+    const stage = box.querySelector(".pafta-stage");
+    if (stage && tabs.length > 1) {
+      let x0 = null, y0 = 0;
+      stage.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse" || e.target.closest("a")) return;
+        x0 = e.clientX; y0 = e.clientY;
+      });
+      stage.addEventListener("pointerup", (e) => {
+        if (x0 === null) return;
+        const dx = e.clientX - x0, dy = e.clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) select(cur + (dx < 0 ? 1 : -1));
+      });
+      stage.addEventListener("pointercancel", () => { x0 = null; });
+    }
+
+    const off = new Set();
+    box.querySelectorAll("[data-layer-toggle]").forEach((b) => b.addEventListener("click", () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(on));
+      off[on ? "delete" : "add"](b.dataset.layerToggle);
+      box.dataset.off = [...off].join(" ");
+    }));
+
+    const full = box.querySelector("[data-sheet-full]");
+    if (full && document.fullscreenEnabled) {
+      full.hidden = false;
+      full.addEventListener("click", () => {
+        const sheet = box.querySelector(".sheet:not([hidden])");
+        sheet?.requestFullscreen().catch(() => {});
+      });
+    }
+  });
 
   /* Material strip: snap scrolling, buttons, counter, mouse drag. */
   document.querySelectorAll("[data-strip]").forEach((strip) => {
@@ -503,7 +585,7 @@
     const stage = dlg.querySelector(".lb-stage");
     const img = dlg.querySelector(".lb-img");
     const cap = dlg.querySelector(".lb-caption");
-    const groupOf = (el) => el.closest(".studies, [data-strip], .team") || main;
+    const groupOf = (el) => el.closest("[data-strip], .team, .studio-grid, .gallery") || main;
     let set = zooms;
     let cur = 0;
 
@@ -604,31 +686,33 @@
     stage.addEventListener("pointercancel", () => { active = false; settle(img); });
   }
 
-  /* Drawings draw themselves the first time they come into view. */
-  const drawings = document.querySelectorAll(".drawing svg");
-  if (drawings.length && "IntersectionObserver" in window && !reduce) {
+  /* Drawings draw themselves the first time they come into view: existing lines first, red last. */
+  const sheets = document.querySelectorAll(".sheet");
+  if (sheets.length && "IntersectionObserver" in window && !reduce) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.closest(".drawing").classList.add("is-drawn");
+        entry.target.classList.add("is-drawn");
         io.unobserve(entry.target);
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.25 });
 
-    drawings.forEach((svg) => {
+    sheets.forEach((sheet) => {
+      const svg = sheet.querySelector(".plan-svg");
+      if (!svg) return;
       let i = 0;
-      svg.querySelectorAll("path, rect, circle, line, polyline").forEach((el) => {
+      svg.querySelectorAll("path, rect, circle, ellipse, line, polyline, polygon, text").forEach((el) => {
         const cs = getComputedStyle(el);
-        const red = cs.stroke.includes("229, 0, 21");
-        if (cs.fill !== "none" || cs.stroke === "none" || cs.strokeDasharray !== "none") {
+        const red = cs.stroke.includes("229, 0, 21") || cs.fill.includes("229, 0, 21");
+        if (el.tagName === "text" || cs.fill !== "none" || cs.stroke === "none" || cs.strokeDasharray !== "none") {
           el.setAttribute("data-fade", "");
         } else {
           el.setAttribute("pathLength", "1");
           el.setAttribute("data-draw", "");
         }
-        el.style.setProperty("--i", red ? i + 14 : i++);
+        el.style.setProperty("--i", Math.min(red ? i + 12 : i++, 48));
       });
-      io.observe(svg);
+      if (!sheet.hidden) io.observe(sheet);
     });
   }
 

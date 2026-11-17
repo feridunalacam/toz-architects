@@ -1,0 +1,683 @@
+{
+  "version": 1,
+  "office": {
+    "name": "toz+ architects",
+    "base": "https://feridunalacam.github.io/toz-architects/",
+    "phone": "0542 519 0361",
+    "tel": "+905425190361",
+    "neighbourhood": "Abbasağa",
+    "street": "Bostanüstü Dere Sok. 34/1",
+    "streetName": "Bostanüstü Dere Sokak",
+    "door": "34/1",
+    "district": "Beşiktaş",
+    "city": "İstanbul",
+    "postcode": "34353"
+  },
+  "pages": {
+    "home": {
+      "tr": {
+        "title": "toz+ architects — Beşiktaş, İstanbul mimarlık ofisi",
+        "description": "Beşiktaş Abbasağa’da mimarlık ofisi. Baş mimar Efe Bahri Toz. Konut, iç mekân, mevcut yapı ve küçük kamusal ölçek. Bostanüstü Dere Sok. 34/1 · 0542 519 0361."
+      },
+      "en": {
+        "title": "toz+ architects — architecture office in Beşiktaş, Istanbul",
+        "description": "Architecture office in Abbasağa, Beşiktaş. Head architect Efe Bahri Toz. Housing, interiors, existing buildings and small civic work. +90 542 519 0361."
+      }
+    },
+    "projects": {
+      "tr": {
+        "title": "Projeler — toz+ architects, Beşiktaş",
+        "description": "toz+ architects çalışmaları: konut, iç mekân, mevcut yapı ve küçük kamusal ölçekte {n} çalışma, plan ve kesitleriyle. Beşiktaş, İstanbul.",
+        "lede": "Dört ölçekte {n:word} çalışma. Kareler ofisin baktığı ışığı ve dokuyu, çizimler o bakışın planını gösterir. Tamamlanmış proje olarak sunulmazlar."
+      },
+      "en": {
+        "title": "Projects — toz+ architects, Beşiktaş",
+        "description": "{n:Word} studies by toz+ architects in housing, interiors, existing buildings and small civic work, with plans and sections. Beşiktaş, Istanbul.",
+        "lede": "{n:Word} studies across four scales. The photographs show the light and texture the office looks for; the drawings show how it is planned. They are not presented as completed projects."
+      }
+    },
+    "team": {
+      "tr": {
+        "title": "Ekip — toz+ architects, Beşiktaş",
+        "description": "Baş mimar Efe Bahri Toz, Başak Toz ve Macit Toz. toz+ architects, Abbasağa, Beşiktaş. Çalışma yöntemi: yeri görmek, ölçmek, ayırmak, çizmek.",
+        "lede": "Ofisi Efe Bahri Toz yönetir. Başak Toz ve Macit Toz ile Abbasağa’da çalışır. İşin konusu konut, iç mekân, mevcut yapı ve küçük kamusal ölçektir.",
+        "method": "Her iş paftayla ilerler: plan, kesit, malzeme ve ışık. Ne kalacak, ne değişecek, ne eklenecek — bu üçü konuşulmadan kalem kalınlaşmaz.",
+        "office": "Abbasağa’nın yokuşu, bitişik yapıları ve günün olağan hali çizimin dışında bir manzara değildir. Her iş, sokağın ölçüsüyle başlar."
+      },
+      "en": {
+        "title": "Team — toz+ architects, Beşiktaş",
+        "description": "Head architect Efe Bahri Toz, with Başak Toz and Macit Toz. toz+ architects, Abbasağa, Beşiktaş, Istanbul. How we work: see, measure, separate, draw.",
+        "lede": "Efe Bahri Toz leads the office, with Başak Toz and Macit Toz in Abbasağa. The work is housing, interiors, existing buildings and small civic work.",
+        "method": "Each job moves forward on paper: plan, section, material, light. What stays, what goes, what is added — the line stays thin until those three are decided.",
+        "office": "The slope, the party walls and the ordinary day of Abbasağa are not a backdrop. Every job starts with the measure of the street."
+      }
+    },
+    "contact": {
+      "tr": {
+        "title": "İletişim — toz+ architects, Beşiktaş",
+        "description": "toz+ architects iletişim: 0542 519 0361. Abbasağa, Bostanüstü Dere Sok. 34/1, 34353 Beşiktaş / İstanbul. Görüşmeler randevu ile.",
+        "lede": "Ziyaretten önce arayın. Ofis Abbasağa’da; görüşmeler randevu ile."
+      },
+      "en": {
+        "title": "Contact — toz+ architects, Beşiktaş",
+        "description": "Contact toz+ architects: +90 542 519 0361. Abbasağa, Bostanüstü Dere Sok. 34/1, 34353 Beşiktaş / Istanbul. By appointment.",
+        "lede": "Phone before you visit. The office is in Abbasağa; visits by appointment."
+      }
+    }
+  },
+  "home": {
+    "tr": {
+      "eyebrow": "Konut · İç mekân · Mevcut yapı · Kamusal",
+      "title": "Beşiktaş’ta bir\nmimarlık ofisi.",
+      "statement": "İşe yerinde {1} başlarız. Ölçer, mevcut olanı {2} ayırır, yenisini az ve net {3} ekleriz.",
+      "intro": "Konut, iç mekân, mevcut yapı ve küçük kamusal ölçekte çalışıyoruz. Her iş paftayla ilerler: plan, kesit, malzeme ve ışık.",
+      "people": "Ofisi Efe Bahri Toz yönetir. Başak Toz ve Macit Toz ile Abbasağa’da çalışır.",
+      "visits": "Randevu ile"
+    },
+    "en": {
+      "eyebrow": "Housing · Interiors · Existing buildings · Civic",
+      "title": "An architecture office\nin Beşiktaş.",
+      "statement": "We start on site {1}. We measure, set apart what is there {2}, and add the new sparingly and clearly {3}.",
+      "intro": "We work on housing, interiors, existing buildings and small civic projects. Every job moves sheet by sheet: plan, section, material and light.",
+      "people": "The office is led by Efe Bahri Toz. He works with Başak Toz and Macit Toz in Abbasağa.",
+      "visits": "By appointment"
+    },
+    "statementImages": [
+      "assets/photos/hero-sokak-960.jpg",
+      "assets/atolye/eskiz.jpg",
+      "assets/atolye/numune.jpg"
+    ],
+    "slides": [
+      {
+        "src": "assets/photos/hero-merdiven.jpg",
+        "small": "assets/photos/hero-merdiven-960.jpg",
+        "w": 1920,
+        "h": 1080,
+        "tone": "dark",
+        "project": "merdivenli-sokak",
+        "cap": { "tr": "Merdivenli sokak, ikindi", "en": "Stepped street, late afternoon" },
+        "alt": {
+          "tr": "Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi.",
+          "en": "A stone stair street between old apartment blocks, a plane tree in the middle, late afternoon sun."
+        }
+      },
+      {
+        "src": "assets/photos/hero-salon.jpg",
+        "small": "assets/photos/hero-salon-960.jpg",
+        "w": 1920,
+        "h": 1080,
+        "tone": "light",
+        "project": "pencere",
+        "cap": { "tr": "Oda, sabah ışığı", "en": "Room, morning light" },
+        "alt": {
+          "tr": "Boş bir odada ahşap masa ve iki sandalye; pencereden kiremit çatılar görünüyor, duvarda pencerenin gölgesi.",
+          "en": "A timber table and two chairs in an empty room; tiled roofs through the window, its shadow on the wall."
+        }
+      },
+      {
+        "src": "assets/photos/hero-cephe.jpg",
+        "small": "assets/photos/hero-cephe-960.jpg",
+        "w": 1920,
+        "h": 1080,
+        "tone": "light",
+        "project": "cephe",
+        "cap": { "tr": "Cephe, kireç sıva ve ahşap kepenk", "en": "Facade, lime plaster and timber shutters" },
+        "alt": {
+          "tr": "Kireç sıvalı simetrik bir cephe: ahşap kepenkler, ahşap kapı ve dövme demir balkon.",
+          "en": "A symmetrical lime-plastered facade: timber shutters, a timber door and a wrought iron balcony."
+        }
+      },
+      {
+        "src": "assets/photos/hero-sokak.jpg",
+        "small": "assets/photos/hero-sokak-960.jpg",
+        "w": 1920,
+        "h": 1080,
+        "tone": "light",
+        "project": "avlu",
+        "cap": { "tr": "Sokak, sarmaşıklı duvar", "en": "Street and ivy wall" },
+        "alt": {
+          "tr": "Bir yanı sarmaşıkla kaplı duvar, öbür yanı apartmanlar olan sessiz bir yokuş sokak.",
+          "en": "A quiet sloping street with an ivy-covered wall on one side and apartment blocks on the other."
+        }
+      }
+    ]
+  },
+  "categories": [
+    { "key": "konut", "tr": "Konut", "en": "Housing" },
+    { "key": "ic", "tr": "İç mekân", "en": "Interior" },
+    { "key": "mevcut", "tr": "Mevcut yapı", "en": "Existing" },
+    { "key": "kamusal", "tr": "Kamusal", "en": "Civic" }
+  ],
+  "projects": [
+    {
+      "id": "esik",
+      "slug": { "tr": "esik", "en": "threshold" },
+      "cat": "konut",
+      "featured": true,
+      "title": { "tr": "Eşik", "en": "Threshold" },
+      "what": { "tr": "Kapı, basamak, pencere", "en": "Door, step, window" },
+      "cover": {
+        "src": "assets/photos/konut.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere.",
+          "en": "A stone threshold, a dark wooden door, an iron rail and the window beside it."
+        }
+      },
+      "pins": [
+        { "x": 30, "y": 28, "tr": "Kapı", "en": "Door" },
+        { "x": 40, "y": 80, "tr": "Eşik", "en": "Threshold" },
+        { "x": 77, "y": 30, "tr": "Pencere", "en": "Window" }
+      ],
+      "body": {
+        "tr": [
+          "Evi odaların listesinden kurmayız. Önce eşik: kapının döndüğü yer, pencerenin oturduğu yükseklik, merdivenin ele geldiği basamak. Plan bu üç kararın sonucudur.",
+          "Hol ve odalar gerektiği kadar büyüktür. Işık bir cepheden girer. Akşam da o cephede kalır. Plandaki kırmızı çizgi eşiği işaretler; iş orada başlar."
+        ],
+        "en": [
+          "A house is not a list of rooms. First the threshold: where the door turns, the height the window sits at, the tread the hand meets. The plan is the result of these three.",
+          "Hall and rooms are as large as they need to be. Light enters from one face and stays on that face in the evening. The red line on the plan marks the threshold. The work starts there."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/esik.svg",
+        "kind": { "tr": "Plan", "en": "Plan" },
+        "note": { "tr": "eşik", "en": "threshold" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "catikati",
+      "slug": { "tr": "catikati", "en": "attic" },
+      "cat": "konut",
+      "featured": false,
+      "title": { "tr": "Çatı katı", "en": "Attic" },
+      "what": { "tr": "Makas, mertek, çatı penceresi", "en": "Truss, rafter, roof light" },
+      "cover": {
+        "src": "assets/photos/catikati.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Ahşap makaslı bir çatı katı; çatı penceresinden giren ışık meşe döşemeye düşüyor.",
+          "en": "An attic with timber trusses; light from a roof window falls on an oak floor."
+        }
+      },
+      "pins": [
+        { "x": 40, "y": 33, "tr": "Makas", "en": "Truss" },
+        { "x": 83, "y": 33, "tr": "Çatı penceresi", "en": "Roof light" },
+        { "x": 50, "y": 86, "tr": "Meşe döşeme", "en": "Oak floor" }
+      ],
+      "body": {
+        "tr": [
+          "Çatı katı çoğu zaman depo olarak kalır. Önce makaslar ve mertekler ölçülür; hangisinin taşıdığı, hangisinin sonradan eklendiği ayrılır.",
+          "Işık çatıdan girer. Pencere iki mertek arasına yerleşir; ahşap kaplanmaz, görünür kalır."
+        ],
+        "en": [
+          "An attic often stays a store room. First the trusses and rafters are measured; what carries and what was added later is separated.",
+          "Light comes in through the roof. The window sits between two rafters; the timber is not boxed in, it stays visible."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/catikati.svg",
+        "kind": { "tr": "Kesit", "en": "Section" },
+        "note": { "tr": "makas ve çatı penceresi", "en": "truss and roof light" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "pencere",
+      "slug": { "tr": "pencere", "en": "window" },
+      "cat": "ic",
+      "featured": true,
+      "title": { "tr": "Pencere", "en": "Window" },
+      "what": { "tr": "Pencere, masa, ışık", "en": "Window, table, light" },
+      "cover": {
+        "src": "assets/photos/ic-mekan.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye.",
+          "en": "Daylight from a window in a plastered room, a wooden table and one chair."
+        }
+      },
+      "pins": [
+        { "x": 16, "y": 28, "tr": "Pencere", "en": "Window" },
+        { "x": 20, "y": 61, "tr": "Denizlik", "en": "Sill" },
+        { "x": 50, "y": 57, "tr": "Masa · 75", "en": "Table · 75" }
+      ],
+      "body": {
+        "tr": [
+          "İç mekânda her birleşim görünür. Derz, denizlik, kapı kasası aynı aileden seçilir. Renk, duvarın tamamını boyasın diye değil, bir yüzeyi ayırsın diye kullanılır.",
+          "Mobilya, yüksekliği belli bir araç olarak çizilir. Kesitte masa oturma hizasındadır. Kırmızı çerçeve, ışığın girdiği yeri gösterir."
+        ],
+        "en": [
+          "Inside, every junction shows. Joint, sill and door frame are chosen from the same family. Colour is used to separate one surface, not to paint every wall.",
+          "Furniture is drawn as a tool with a known height. In section the table sits at sitting height. The red frame marks where the light comes in."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/pencere.svg",
+        "kind": { "tr": "Kesit", "en": "Section" },
+        "note": { "tr": "pencere", "en": "window" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "islak-hacim",
+      "slug": { "tr": "islak-hacim", "en": "wet-room" },
+      "cat": "ic",
+      "featured": false,
+      "title": { "tr": "Islak hacim", "en": "Wet room" },
+      "what": { "tr": "Lavabo, eğim, gider", "en": "Basin, fall, drain" },
+      "cover": {
+        "src": "assets/photos/islak.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Kireç sıvalı küçük bir banyoda taş lavabo, ahşap raf ve buzlu camlı pencere; zemin terrazzo.",
+          "en": "A small lime-plastered bathroom with a stone basin, a timber shelf and a frosted window; terrazzo floor."
+        }
+      },
+      "pins": [
+        { "x": 13, "y": 35, "tr": "Buzlu cam", "en": "Frosted glass" },
+        { "x": 57, "y": 60, "tr": "Taş lavabo", "en": "Stone basin" },
+        { "x": 50, "y": 88, "tr": "Terrazzo", "en": "Terrazzo" }
+      ],
+      "body": {
+        "tr": [
+          "Küçük bir banyoda her santim bir karardır. Gider, eğim ve tesisat çizimde yerini bulmadan malzeme seçilmez.",
+          "Zemin terrazzo, duvar kireç sıva, lavabo taş. Az malzeme, görünür birleşim."
+        ],
+        "en": [
+          "In a small bathroom every centimetre is a decision. No material is chosen before the drain, the fall and the pipes have their place in the drawing.",
+          "Terrazzo floor, lime-plastered walls, a stone basin. Few materials, visible junctions."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/islak-hacim.svg",
+        "kind": { "tr": "Plan", "en": "Plan" },
+        "note": { "tr": "gider ve eğim", "en": "drain and fall" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "cephe",
+      "slug": { "tr": "cephe", "en": "facade" },
+      "cat": "mevcut",
+      "featured": true,
+      "title": { "tr": "Cephe", "en": "Facade" },
+      "what": { "tr": "Eski duvar, yeni açıklık", "en": "Old wall, new opening" },
+      "cover": {
+        "src": "assets/photos/mevcut.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar.",
+          "en": "An old facade with peeling plaster, uneven windows, an iron balcony and wires."
+        }
+      },
+      "pins": [
+        { "x": 60, "y": 52, "tr": "Demir balkon", "en": "Iron balcony" },
+        { "x": 70, "y": 27, "tr": "Kablolar", "en": "Cables" },
+        { "x": 42, "y": 88, "tr": "Dökülen sıva", "en": "Peeling plaster" }
+      ],
+      "body": {
+        "tr": [
+          "Eski yapı önce belgelenir. Eğri duvar, düzeltilmesi gereken bir ayıp değildir. Yeni iş ona oturur. Sökülen şey yazılır. Eklenen şey, eskinin taklidi olmak zorunda değildir.",
+          "Yüksekliğine, ritmine ve ağırlığına cevap verir. Cephede kırmızı kesik çizgi, önerilen yeni açıklıktır. Mevcut pencerelerin düzenini bozmadan, neden orada olduğunu ayrıca anlatır."
+        ],
+        "en": [
+          "An old building is recorded first. A crooked wall is not a fault to be corrected. The new work sits against it. What is removed is written down. What is added does not have to imitate the old.",
+          "It answers the old building’s height, rhythm and weight. On the elevation the red dashed line is the proposed opening. It does not break the existing windows; it has to explain why it is there."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/cephe.svg",
+        "kind": { "tr": "Görünüş", "en": "Elevation" },
+        "note": { "tr": "yeni açıklık", "en": "new opening" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "cumba",
+      "slug": { "tr": "cumba", "en": "bay-window" },
+      "cat": "mevcut",
+      "featured": false,
+      "title": { "tr": "Cumba", "en": "Bay window" },
+      "what": { "tr": "Konsol, kaplama, pencere", "en": "Bracket, boarding, window" },
+      "cover": {
+        "src": "assets/photos/cumba.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "light",
+        "alt": {
+          "tr": "Sıvalı bir cephede eski ahşap cumba; boyası dökülmüş, oymalı konsollar üzerinde.",
+          "en": "An old timber bay window on a plastered facade, paint peeling, resting on carved brackets."
+        }
+      },
+      "pins": [
+        { "x": 48, "y": 33, "tr": "Pencere", "en": "Window" },
+        { "x": 30, "y": 60, "tr": "Ahşap kaplama", "en": "Timber boarding" },
+        { "x": 45, "y": 84, "tr": "Oymalı konsol", "en": "Carved bracket" }
+      ],
+      "body": {
+        "tr": [
+          "Ahşap cumba cephenin en kırılgan parçasıdır. Önce rölövesi alınır; çürüyen kısım sağlam kısımdan ayrılır.",
+          "Onarım eskinin ölçüsüyle yapılır. Yeni parça eskisini taklit etmez; aynı kesitle devam eder."
+        ],
+        "en": [
+          "A timber bay window is the most fragile part of a facade. It is surveyed first; the rotten parts are separated from the sound ones.",
+          "The repair keeps the old dimensions. A new piece does not imitate the old one; it continues the same section."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/cumba.svg",
+        "kind": { "tr": "Kesit", "en": "Section" },
+        "note": { "tr": "konsol ve kaplama", "en": "bracket and boarding" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "avlu",
+      "slug": { "tr": "avlu", "en": "courtyard" },
+      "cat": "kamusal",
+      "featured": true,
+      "title": { "tr": "Avlu", "en": "Courtyard" },
+      "what": { "tr": "Saçak, gölge, oturma", "en": "Canopy, shade, seat" },
+      "cover": {
+        "src": "assets/photos/avlu.jpg",
+        "w": 1152,
+        "h": 864,
+        "tone": "dark",
+        "alt": {
+          "tr": "Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi.",
+          "en": "A small court with a tree, a wooden bench and a steel canopy."
+        }
+      },
+      "pins": [
+        { "x": 72, "y": 24, "tr": "Çelik saçak", "en": "Steel canopy" },
+        { "x": 37, "y": 42, "tr": "Ağaç", "en": "Tree" },
+        { "x": 58, "y": 66, "tr": "Bank", "en": "Bench" }
+      ],
+      "body": {
+        "tr": [
+          "Sokakla yapı arasındaki bir metre çoğu zaman boş bırakılır. Saçak, eşik, oturma, bir ağacın gölgesi. Mahalle bu ara parçalardan okunur.",
+          "Ölçü küçüktür: bir avlunun günün hangi saatinde gölgede kaldığı. Planda siyah kütle mevcut yapıdır. Kırmızı kesik çizgi, eklenen saçaktır."
+        ],
+        "en": [
+          "The metre between street and building is often left empty. A canopy, a threshold, a seat, the shade of a tree. A neighbourhood is read from these pieces.",
+          "The scale is small: the hour at which a court is in shade. In plan the black mass is the existing building. The red dashed line is the canopy added to it."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/avlu.svg",
+        "kind": { "tr": "Plan", "en": "Plan" },
+        "note": { "tr": "saçak", "en": "canopy" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    },
+    {
+      "id": "merdivenli-sokak",
+      "slug": { "tr": "merdivenli-sokak", "en": "stepped-street" },
+      "cat": "kamusal",
+      "featured": false,
+      "title": { "tr": "Merdivenli sokak", "en": "Stepped street" },
+      "what": { "tr": "Basamak, sahanlık, ağaç", "en": "Step, landing, tree" },
+      "cover": {
+        "src": "assets/photos/hero-merdiven.jpg",
+        "small": "assets/photos/hero-merdiven-960.jpg",
+        "w": 1920,
+        "h": 1080,
+        "tone": "dark",
+        "alt": {
+          "tr": "Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi.",
+          "en": "A stone stair street between old apartment blocks, a plane tree in the middle, late afternoon sun."
+        }
+      },
+      "pins": [
+        { "x": 33, "y": 30, "tr": "Çınar", "en": "Plane tree" },
+        { "x": 54, "y": 64, "tr": "Sahanlık", "en": "Landing" },
+        { "x": 52, "y": 85, "tr": "Basamak", "en": "Steps" }
+      ],
+      "body": {
+        "tr": [
+          "Yokuşta merdiven sokağın kendisidir. Basamak yüksekliği ve sahanlık aralığı, yürüyenin nefesine göre ayarlanır.",
+          "Bir ağaç, bir oturma yeri, akşam için bir aydınlatma. Üçü de aynı paftada, aynı ölçekte çizilir."
+        ],
+        "en": [
+          "On a slope the stair is the street. Riser height and landing intervals are set by the walker’s breath.",
+          "A tree, a place to sit, a light for the evening. All three are drawn on the same sheet, at the same scale."
+        ]
+      },
+      "plan": {
+        "src": "assets/plans/merdivenli-sokak.svg",
+        "kind": { "tr": "Boy kesiti", "en": "Long section" },
+        "note": { "tr": "sahanlık", "en": "landings" }
+      },
+      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "gallery": []
+    }
+  ],
+  "studio": {
+    "hero": {
+      "src": "assets/atolye/masa.jpg",
+      "w": 1280,
+      "h": 720,
+      "cap": { "tr": "Masa — maket, aydınger, kırmızı kalem", "en": "Table — model, tracing paper, red pencil" },
+      "alt": {
+        "tr": "Pencere önünde bir çalışma masası: beyaz bir maket, aydınger üzerinde kırmızı çizgili bir plan ve kalemler; dışarıda İstanbul çatıları.",
+        "en": "A work table by a window: a white model, a plan on tracing paper with a red line, and pencils; Istanbul roofs outside."
+      }
+    },
+    "items": [
+      {
+        "src": "assets/atolye/maket.jpg",
+        "w": 1152,
+        "h": 864,
+        "title": { "tr": "Maket", "en": "Model" },
+        "text": {
+          "tr": "Yokuş, basamak ve komşu yapılar kartonla kurulur. Kot farkı ve gölge maket üzerinde kontrol edilir.",
+          "en": "The slope, the steps and the neighbouring buildings are built in card. Level changes and shadows are checked on the model."
+        },
+        "alt": {
+          "tr": "Beyaz kartondan merdivenli bir sokak maketi; sahanlıkta yosundan küçük bir ağaç.",
+          "en": "A white card model of a stepped street, with a small moss tree on a landing."
+        }
+      },
+      {
+        "src": "assets/atolye/eskiz.jpg",
+        "w": 1152,
+        "h": 864,
+        "title": { "tr": "Eskiz", "en": "Sketch" },
+        "text": {
+          "tr": "Aydınger mevcut çizimin üstüne serilir. Kalan siyah, eklenen kırmızı çizilir.",
+          "en": "Tracing paper is laid over the existing drawing. What stays is drawn in black, what is added in red."
+        },
+        "alt": {
+          "tr": "Sarı aydınger üzerinde elle çizilmiş bir plan; eşik kırmızı kalemle işaretlenmiş.",
+          "en": "A hand-drawn plan on yellow tracing paper, with the threshold marked in red pencil."
+        }
+      },
+      {
+        "src": "assets/atolye/numune.jpg",
+        "w": 864,
+        "h": 1152,
+        "title": { "tr": "Numune", "en": "Samples" },
+        "text": {
+          "tr": "Taş, kireç, meşe, kiremit, demir. Numuneler yan yana, gün ışığında karşılaştırılır.",
+          "en": "Stone, lime, oak, terracotta, iron. Samples are compared side by side, in daylight."
+        },
+        "alt": {
+          "tr": "Zeytin yeşili sıvalı bir duvarın önünde taş, kireç sıva, meşe, kiremit ve demir numuneleri.",
+          "en": "Samples of stone, lime plaster, oak, terracotta and iron against an olive plaster wall."
+        }
+      }
+    ]
+  },
+  "team": [
+    {
+      "name": "Efe Bahri Toz",
+      "role": { "tr": "Baş mimar", "en": "Head architect" },
+      "photo": {
+        "src": "assets/efe-bahri-toz.jpg",
+        "w": 1088,
+        "h": 1720,
+        "alt": { "tr": "Efe Bahri Toz yürürken. Siyah beyaz portre.", "en": "Efe Bahri Toz walking. Black and white portrait." }
+      }
+    },
+    { "name": "Başak Toz", "role": { "tr": "Ekip", "en": "Studio" }, "photo": null },
+    { "name": "Macit Toz", "role": { "tr": "Ekip", "en": "Studio" }, "photo": null }
+  ],
+  "materials": [
+    {
+      "src": "assets/materials/kufeki.jpg",
+      "w": 864,
+      "h": 1152,
+      "name": { "tr": "Küfeki taşı", "en": "Küfeki stone" },
+      "text": {
+        "tr": "Eski İstanbul yapılarının kireçtaşı. Ocaktan yumuşak çıkar, havayla sertleşir.",
+        "en": "The limestone of old Istanbul. Soft from the quarry, it hardens in the air."
+      },
+      "alt": {
+        "tr": "Kaba yontulmuş açık renkli kireçtaşı bloklar ve kireç harcı derzleri.",
+        "en": "Rough-cut pale limestone blocks with lime mortar joints."
+      }
+    },
+    {
+      "src": "assets/materials/kirec.jpg",
+      "w": 864,
+      "h": 1152,
+      "name": { "tr": "Kireç sıva", "en": "Lime plaster" },
+      "text": {
+        "tr": "Buharı geçirir. Eski duvarın nemini içine hapsetmez.",
+        "en": "It lets vapour through. An old wall does not trap its moisture behind it."
+      },
+      "alt": { "tr": "Kireç sıvalı beyaz bir duvarda pencere gölgesi.", "en": "A window shadow on a white lime-plastered wall." }
+    },
+    {
+      "src": "assets/materials/mese.jpg",
+      "w": 864,
+      "h": 1152,
+      "name": { "tr": "Meşe", "en": "Oak" },
+      "text": {
+        "tr": "Korkulukta, eşikte, elin değdiği yerde. Kullandıkça koyulaşır.",
+        "en": "On the rail, the threshold, wherever a hand meets it. It darkens with use."
+      },
+      "alt": { "tr": "Elle aşınmış meşe merdiven korkuluğu ve basamak kenarı.", "en": "A hand-worn oak stair rail and the edge of a tread." }
+    },
+    {
+      "src": "assets/materials/karo.jpg",
+      "w": 864,
+      "h": 1152,
+      "name": { "tr": "Karo mozaik", "en": "Cement tile" },
+      "text": {
+        "tr": "Eski apartman girişlerinin zemini. Kırılan karo aynı desenle yeniden dökülür.",
+        "en": "The floor of old apartment entrances. A broken tile is cast again in the same pattern."
+      },
+      "alt": { "tr": "Desenli eski çimento karo zemin, kırmızı, siyah ve krem.", "en": "An old patterned cement tile floor in red, black and cream." }
+    },
+    {
+      "src": "assets/materials/demir.jpg",
+      "w": 864,
+      "h": 1152,
+      "name": { "tr": "Dövme demir", "en": "Wrought iron" },
+      "text": {
+        "tr": "Pencere parmaklığı, balkon korkuluğu. Boyası yenilenir, kendisi kalır.",
+        "en": "Window grilles, balcony rails. The paint is renewed; the iron stays."
+      },
+      "alt": {
+        "tr": "Boyası dökülmüş dövme demir pencere parmaklığı ve duvardaki gölgesi.",
+        "en": "A wrought iron window grille with peeling paint and its shadow on the wall."
+      }
+    }
+  ],
+  "steps": [
+    {
+      "title": { "tr": "Yeri görmek", "en": "See the place" },
+      "text": {
+        "tr": "Fotoğrafla yetinmeyiz. Eşiği, yokuşu, komşu pencereyi yerinde durarak alırız.",
+        "en": "A photograph is not enough. The threshold, the slope, the neighbour’s window — taken by standing there."
+      }
+    },
+    {
+      "title": { "tr": "Ölçmek", "en": "Measure" },
+      "text": {
+        "tr": "Duvar kalınlığı, kot, pencere yüksekliği, merdivenin çıktığı yer. Çizim bu sayılardan çıkar.",
+        "en": "Wall thickness, level, window height, where the stair lands. The drawing comes out of these numbers."
+      }
+    },
+    {
+      "title": { "tr": "Ayırmak", "en": "Separate" },
+      "text": {
+        "tr": "Korunan, sökülen, tamir edilen. Üçü yazılmadan plan ilerlemez.",
+        "en": "Kept, removed, repaired. The plan does not move until the three are written down."
+      }
+    },
+    {
+      "title": { "tr": "Çizmek", "en": "Draw" },
+      "text": {
+        "tr": "Az karar. Plan, kesit ve bir cephe. Kalem, karar netleşince kalınlaşır.",
+        "en": "Few decisions. A plan, a section, one elevation. The line thickens when the decision is clear."
+      }
+    },
+    {
+      "title": { "tr": "Malzemeyi seçmek", "en": "Choose the material" },
+      "text": {
+        "tr": "Numune ofiste değil, yerinde, o saatin ışığında bakılır.",
+        "en": "The sample is judged on site, in that hour’s light — not under the office lamp."
+      }
+    }
+  ],
+  "sheets": [
+    {
+      "scale": { "tr": "1:50", "en": "1:50" },
+      "title": { "tr": "Rölöve", "en": "Survey" },
+      "text": {
+        "tr": "Mevcut durumun ölçülü çizimi. Duvar, kot, açıklık, hasar.",
+        "en": "A measured drawing of what is there. Walls, levels, openings, damage."
+      }
+    },
+    {
+      "scale": { "tr": "1:100", "en": "1:100" },
+      "title": { "tr": "Avan proje", "en": "Scheme" },
+      "text": {
+        "tr": "Plan, kesit ve görünüşte ilk karar. Ne kalacak, ne eklenecek.",
+        "en": "The first decision in plan, section and elevation. What stays, what is added."
+      }
+    },
+    {
+      "scale": { "tr": "1:50", "en": "1:50" },
+      "title": { "tr": "Uygulama projesi", "en": "Construction drawings" },
+      "text": { "tr": "Ölçülü, malzemesi yazılmış, yapılabilir çizim.", "en": "Dimensioned, specified, buildable." }
+    },
+    {
+      "scale": { "tr": "1:5", "en": "1:5" },
+      "title": { "tr": "Detay", "en": "Details" },
+      "text": {
+        "tr": "Birleşim, denizlik, eşik, korkuluk. Elin değdiği yer.",
+        "en": "Junction, sill, threshold, rail. Where the hand meets the building."
+      }
+    },
+    {
+      "scale": { "tr": "Yerinde", "en": "On site" },
+      "title": { "tr": "Kontrol", "en": "Inspection" },
+      "text": {
+        "tr": "Çizilenle yapılanın şantiyede karşılaştırılması.",
+        "en": "What was drawn, checked against what was built."
+      }
+    }
+  ]
+}

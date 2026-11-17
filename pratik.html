@@ -8,9 +8,9 @@
   <meta http-equiv="refresh" content="0; url=projeler.html">
   <script>
     (function () {
-      var m = {"konut": "esik", "ic-mekan": "pencere", "mevcut": "cephe", "kamusal": "avlu"};
+      var m = {"konut":"projeler/esik.html","ic-mekan":"projeler/pencere.html","mevcut":"projeler/cephe.html","kamusal":"projeler/avlu.html"};
       var h = location.hash.slice(1);
-      location.replace("projeler.html" + (m[h] ? "#" + m[h] : location.hash));
+      location.replace(m[h] || "projeler.html" + location.hash);
     })();
   </script>
 </head>

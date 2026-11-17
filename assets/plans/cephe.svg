@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <path d="M70 470 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
+    <path d="M140 150 H660 V470 H140 Z" fill="none" stroke="#141414" stroke-width="2.25"/>
+    <path d="M128 162 H672 M128 150 H672" fill="none" stroke="#141414" stroke-width="1.5"/>
+    <path d="M140 352 H660 M140 360 H660" fill="none" stroke="#141414" stroke-width="1.2"/>
+    <g fill="none" stroke="#141414" stroke-width="1.6">
+      <path d="M180 190 H242 V268 H180 Z M180 229 H242 M211 190 V268"/>
+      <path d="M275 175 H323 V283 H275 Z M275 229 H323 M299 175 V283"/>
+      <path d="M360 205 H446 V269 H360 Z M403 205 V269"/>
+      <path d="M480 250 H534 V320 H480 Z M507 250 V320"/>
+      <path d="M250 380 H296 V470 H250 Z M273 380 V470"/>
+      <path d="M180 400 H226 V446 H180 Z"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="3">
+      <path d="M174 272 H248 M269 287 H329 M474 324 H540 M174 450 H232"/>
+    </g>
+    <g fill="none" stroke="#141414" stroke-width="1.2">
+      <path d="M352 274 H454 V306 H352 Z"/>
+      <path d="M362 274 V306 M372 274 V306 M382 274 V306 M392 274 V306 M402 274 V306 M412 274 V306 M422 274 V306 M432 274 V306 M442 274 V306"/>
+    </g>
+  </g>
+  <g data-layer="sokulen">
+    <g fill="none" stroke="#e0a400" stroke-width="2.4" stroke-dasharray="8 6">
+      <path d="M140 236 C260 252 380 226 470 238 S600 226 660 232"/>
+      <path d="M466 238 C460 270 470 300 462 336"/>
+      <path d="M560 390 H612 V424 H560 Z"/>
+      <circle cx="586" cy="407" r="11"/>
+    </g>
+  </g>
+  <g data-layer="yeni">
+    <path d="M560 200 H630 V350 H560 Z" fill="none" stroke="#e50015" stroke-width="2.6" stroke-dasharray="8 5"/>
+    <path d="M550 194 H640" fill="none" stroke="#e50015" stroke-width="4"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="595" y="186" text-anchor="middle" data-en="NEW OPENING" fill="#e50015">YENİ AÇIKLIK</text>
+    <text x="146" y="342" data-en="STRING COURSE">SİLME</text>
+    <text x="586" y="446" text-anchor="middle" data-en="CABLES, AC UNIT">KABLO, KLİMA</text>
+    <text x="403" y="326" text-anchor="middle" data-en="IRON BALCONY">DEMİR BALKON</text>
+    <text x="400" y="530" text-anchor="middle" data-en="STREET ELEVATION">SOKAK GÖRÜNÜŞÜ</text>
+    <g transform="translate(700 470)">
+      <path d="M0 0 L-8 -12 H8 Z" fill="none" stroke="#141414" stroke-width="1.2"/>
+      <text x="12" y="-6" font-size="10">±0.00</text>
+    </g>
+  </g>
+</svg>

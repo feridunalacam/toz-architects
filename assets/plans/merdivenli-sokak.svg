@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
+  <g data-layer="mevcut">
+    <g fill="none" stroke="#b9b6ae" stroke-width="1">
+      <path d="M92 500 V262 H206 V420"/>
+      <path d="M232 410 V176 H372 V340"/>
+      <path d="M402 330 V108 H540 V260"/>
+      <path d="M572 250 V62 H718 V180"/>
+      <path d="M110 290 H134 V330 H110 Z M160 290 H184 V330 H160 Z M110 360 H134 V400 H110 Z M160 360 H184 V400 H160 Z"/>
+      <path d="M252 204 H276 V244 H252 Z M300 204 H324 V244 H300 Z M252 274 H276 V314 H252 Z M300 274 H324 V314 H300 Z M346 204 H362 V244 H346 Z"/>
+      <path d="M422 136 H446 V176 H422 Z M470 136 H494 V176 H470 Z M422 206 H446 V246 H422 Z M470 206 H494 V246 H470 Z M514 136 H530 V176 H514 Z"/>
+      <path d="M592 90 H616 V130 H592 Z M640 90 H664 V130 H640 Z M688 90 H708 V130 H688 Z M592 160 H616 V200 H592 Z M640 160 H664 V200 H640 Z"/>
+    </g>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744 V540 H60 Z" fill="#ebe8e1"/>
+    <path d="M60 500 H84 V490 H100 V480 H116 V470 H132 V460 H148 V450 H164 V440 H180 V430 H196 V420 H212 H252 V410 H268 V400 H284 V390 H300 V380 H316 V370 H332 V360 H348 V350 H364 V340 H380 H420 V330 H436 V320 H452 V310 H468 V300 H484 V290 H500 V280 H516 V270 H532 V260 H548 H588 V250 H604 V240 H620 V230 H636 V220 H652 V210 H668 V200 H684 V190 H700 V180 H716 H744" fill="none" stroke="#141414" stroke-width="3" stroke-linejoin="miter"/>
+  </g>
+  <g data-layer="sokulen">
+    <path d="M420 342 L548 270" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+    <path d="M84 504 L212 432" fill="none" stroke="#e0a400" stroke-width="3" stroke-dasharray="8 6"/>
+  </g>
+  <g data-layer="yeni">
+    <path d="M212 420 H252 M380 340 H420 M548 260 H588" fill="none" stroke="#e50015" stroke-width="5"/>
+    <g fill="none" stroke="#e50015" stroke-width="2">
+      <path d="M232 420 V384"/>
+      <circle cx="232" cy="360" r="26"/>
+      <path d="M386 326 H414 M390 326 V340 M410 326 V340"/>
+      <path d="M576 260 V196 M576 196 H592"/>
+    </g>
+    <circle cx="594" cy="198" r="4" fill="#e50015"/>
+  </g>
+  <g data-layer="not" fill="#6b6963" font-size="12" letter-spacing="1.4">
+    <text x="232" y="322" text-anchor="middle" data-en="TREE" fill="#e50015">AĞAÇ</text>
+    <text x="400" y="314" text-anchor="middle" data-en="SEAT" fill="#e50015">OTURMA</text>
+    <text x="566" y="200" text-anchor="end" data-en="LIGHT" fill="#e50015">AYDINLATMA</text>
+    <text x="568" y="300" text-anchor="middle" data-en="LANDING">SAHANLIK</text>
+    <text x="176" y="524" text-anchor="middle" data-en="8 STEPS">8 BASAMAK</text>
+    <text x="400" y="566" text-anchor="middle" data-en="LONG SECTION">BOY KESİTİ</text>
+  </g>
+</svg>

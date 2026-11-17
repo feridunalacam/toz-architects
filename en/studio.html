@@ -10,7 +10,7 @@
     (function () {
       var m = {};
       var h = location.hash.slice(1);
-      location.replace("team.html" + (m[h] ? "#" + m[h] : location.hash));
+      location.replace(m[h] || "team.html" + location.hash);
     })();
   </script>
 </head>
