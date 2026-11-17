@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>toz+ admin</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="preload" href="../assets/fonts/schibsted-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="admin.css">
+  <script type="module" src="admin.js"></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../" target="_blank" rel="noopener" title="Siteyi yeni sekmede aç"><img src="../assets/mark.svg" alt="" width="20" height="20">toz+<em>admin</em></a>
+    <p class="status" data-status><i></i><span>Yükleniyor…</span></p>
+    <p class="mode" data-mode hidden></p>
+    <div class="actions">
+      <button class="icon" type="button" data-undo title="Geri al (⌘Z)" aria-label="Geri al" disabled>↶</button>
+      <button class="icon" type="button" data-redo title="Yinele (⇧⌘Z)" aria-label="Yinele" disabled>↷</button>
+      <button class="btn ghost pv-toggle" type="button" data-pv-toggle aria-expanded="false">Önizleme</button>
+      <button class="btn ghost" type="button" data-download hidden>Taslağı indir</button>
+      <button class="btn ghost" type="button" data-save hidden>Kaydet</button>
+      <button class="btn" type="button" data-publish hidden>Yayınla</button>
+    </div>
+  </header>
+
+  <nav class="rail" data-rail aria-label="Bölümler"></nav>
+  <main class="editor" data-editor tabindex="-1"></main>
+
+  <section class="preview" data-preview aria-label="Önizleme">
+    <div class="pv-bar">
+      <select data-page aria-label="Önizlenen sayfa"></select>
+      <div class="seg" data-lang role="group" aria-label="Dil">
+        <button type="button" data-v="tr" aria-pressed="true">TR</button>
+        <button type="button" data-v="en" aria-pressed="false">EN</button>
+      </div>
+      <div class="seg" data-device role="group" aria-label="Ekran">
+        <button type="button" data-v="desktop" aria-pressed="true">Masaüstü</button>
+        <button type="button" data-v="phone" aria-pressed="false">Telefon</button>
+      </div>
+      <span class="spacer"></span>
+      <button class="icon" type="button" data-open title="Önizlemeyi yeni sekmede aç" aria-label="Önizlemeyi yeni sekmede aç">↗</button>
+    </div>
+    <div class="pv-stage" data-stage>
+      <iframe title="Sayfa önizlemesi" class="is-front"></iframe>
+      <iframe title="Sayfa önizlemesi" tabindex="-1" aria-hidden="true"></iframe>
+    </div>
+    <div class="snippet" data-snippet aria-label="Arama sonucunda görünüm"></div>
+  </section>
+
+  <dialog class="picker" data-picker aria-labelledby="picker-title"></dialog>
+  <dialog class="publish" data-publish-dialog aria-labelledby="publish-title"></dialog>
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+  <noscript><p class="boot">Yönetim paneli JavaScript gerektirir.</p></noscript>
+</body>
+</html>

@@ -186,7 +186,12 @@
         "kind": { "tr": "Plan", "en": "Plan" },
         "note": { "tr": "eşik", "en": "threshold" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -226,7 +231,12 @@
         "kind": { "tr": "Kesit", "en": "Section" },
         "note": { "tr": "makas ve çatı penceresi", "en": "truss and roof light" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -266,7 +276,12 @@
         "kind": { "tr": "Kesit", "en": "Section" },
         "note": { "tr": "pencere", "en": "window" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -306,7 +321,12 @@
         "kind": { "tr": "Plan", "en": "Plan" },
         "note": { "tr": "gider ve eğim", "en": "drain and fall" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -346,7 +366,12 @@
         "kind": { "tr": "Görünüş", "en": "Elevation" },
         "note": { "tr": "yeni açıklık", "en": "new opening" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -386,7 +411,12 @@
         "kind": { "tr": "Kesit", "en": "Section" },
         "note": { "tr": "konsol ve kaplama", "en": "bracket and boarding" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -426,7 +456,12 @@
         "kind": { "tr": "Plan", "en": "Plan" },
         "note": { "tr": "saçak", "en": "canopy" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     },
     {
@@ -467,7 +502,12 @@
         "kind": { "tr": "Boy kesiti", "en": "Long section" },
         "note": { "tr": "sahanlık", "en": "landings" }
       },
-      "facts": { "status": { "tr": "Çalışma", "en": "Study" }, "year": "", "place": { "tr": "", "en": "" }, "area": "" },
+      "facts": {
+        "status": { "tr": "Çalışma", "en": "Study" },
+        "year": "",
+        "place": { "tr": "", "en": "" },
+        "area": ""
+      },
       "gallery": []
     }
   ],
@@ -535,7 +575,10 @@
         "src": "assets/efe-bahri-toz.jpg",
         "w": 1088,
         "h": 1720,
-        "alt": { "tr": "Efe Bahri Toz yürürken. Siyah beyaz portre.", "en": "Efe Bahri Toz walking. Black and white portrait." }
+        "alt": {
+          "tr": "Efe Bahri Toz yürürken. Siyah beyaz portre.",
+          "en": "Efe Bahri Toz walking. Black and white portrait."
+        }
       }
     },
     { "name": "Başak Toz", "role": { "tr": "Ekip", "en": "Studio" }, "photo": null },
@@ -565,7 +608,10 @@
         "tr": "Buharı geçirir. Eski duvarın nemini içine hapsetmez.",
         "en": "It lets vapour through. An old wall does not trap its moisture behind it."
       },
-      "alt": { "tr": "Kireç sıvalı beyaz bir duvarda pencere gölgesi.", "en": "A window shadow on a white lime-plastered wall." }
+      "alt": {
+        "tr": "Kireç sıvalı beyaz bir duvarda pencere gölgesi.",
+        "en": "A window shadow on a white lime-plastered wall."
+      }
     },
     {
       "src": "assets/materials/mese.jpg",
@@ -576,7 +622,10 @@
         "tr": "Korkulukta, eşikte, elin değdiği yerde. Kullandıkça koyulaşır.",
         "en": "On the rail, the threshold, wherever a hand meets it. It darkens with use."
       },
-      "alt": { "tr": "Elle aşınmış meşe merdiven korkuluğu ve basamak kenarı.", "en": "A hand-worn oak stair rail and the edge of a tread." }
+      "alt": {
+        "tr": "Elle aşınmış meşe merdiven korkuluğu ve basamak kenarı.",
+        "en": "A hand-worn oak stair rail and the edge of a tread."
+      }
     },
     {
       "src": "assets/materials/karo.jpg",
@@ -587,7 +636,10 @@
         "tr": "Eski apartman girişlerinin zemini. Kırılan karo aynı desenle yeniden dökülür.",
         "en": "The floor of old apartment entrances. A broken tile is cast again in the same pattern."
       },
-      "alt": { "tr": "Desenli eski çimento karo zemin, kırmızı, siyah ve krem.", "en": "An old patterned cement tile floor in red, black and cream." }
+      "alt": {
+        "tr": "Desenli eski çimento karo zemin, kırmızı, siyah ve krem.",
+        "en": "An old patterned cement tile floor in red, black and cream."
+      }
     },
     {
       "src": "assets/materials/demir.jpg",
