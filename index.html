@@ -167,19 +167,20 @@
 </head>
 <body class="home">
   <a class="skip" href="#icerik">İçeriğe geç</a>
-  <header class="topbar on-dark" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="index.html" aria-label="toz+ architects, ana sayfa" aria-current="page">
-        <img class="logo-dark" src="assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="assets/logo-light.png" width="935" height="170" alt="">
+        <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="Sayfalar">
-        <a href="projeler.html">Projeler</a>
-        <a href="ekip.html">Ekip</a>
-        <a href="iletisim.html">İletişim</a>
+        <a href="projeler.html"><span class="n" aria-hidden="true">01</span>Projeler</a>
+        <a href="ekip.html"><span class="n" aria-hidden="true">02</span>Ekip</a>
+        <a href="iletisim.html"><span class="n" aria-hidden="true">03</span>İletişim</a>
       </nav>
-      <a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menü</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menü</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>
   <dialog class="menu" id="menu" aria-label="Menü">
@@ -206,18 +207,18 @@
     </div>
   </dialog>
   <main id="icerik">
-    <section class="hero" data-hero data-zone="dark" aria-roledescription="carousel" aria-label="Açılış görselleri">
+    <section class="hero" data-hero aria-roledescription="carousel" aria-label="Açılış görselleri">
       <div class="hero-slides">
-        <figure class="slide is-active" data-tone="dark" data-cap="Merdivenli sokak, ikindi">
+        <figure class="slide is-active" data-cap="Merdivenli sokak, ikindi">
           <img fetchpriority="high" decoding="async" src="assets/photos/hero-merdiven.jpg" srcset="assets/photos/hero-merdiven-960.jpg 960w, assets/photos/hero-merdiven.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Oda, sabah ışığı">
+        <figure class="slide" data-cap="Oda, sabah ışığı">
           <img loading="lazy" decoding="async" src="assets/photos/hero-salon.jpg" srcset="assets/photos/hero-salon-960.jpg 960w, assets/photos/hero-salon.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Boş bir odada ahşap masa ve iki sandalye; pencereden kiremit çatılar görünüyor, duvarda pencerenin gölgesi.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Cephe, kireç sıva ve ahşap kepenk">
+        <figure class="slide" data-cap="Cephe, kireç sıva ve ahşap kepenk">
           <img loading="lazy" decoding="async" src="assets/photos/hero-cephe.jpg" srcset="assets/photos/hero-cephe-960.jpg 960w, assets/photos/hero-cephe.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Kireç sıvalı simetrik bir cephe: ahşap kepenkler, ahşap kapı ve dövme demir balkon.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Sokak, sarmaşıklı duvar">
+        <figure class="slide" data-cap="Sokak, sarmaşıklı duvar">
           <img loading="lazy" decoding="async" src="assets/photos/hero-sokak.jpg" srcset="assets/photos/hero-sokak-960.jpg 960w, assets/photos/hero-sokak.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="Bir yanı sarmaşıkla kaplı duvar, öbür yanı apartmanlar olan sessiz bir yokuş sokak.">
         </figure>
       </div>
@@ -235,7 +236,7 @@
         </div>
         <div class="hc-projects">
           <a class="hc-project" href="projeler/merdivenli-sokak.html" data-hc="0">
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <g fill="none" stroke="#b9b6ae" stroke-width="1">
@@ -278,7 +279,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projeler/pencere.html" data-hc="1" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M70 500 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
@@ -328,7 +329,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projeler/cephe.html" data-hc="2" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M70 470 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
@@ -379,7 +380,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projeler/avlu.html" data-hc="3" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M78 78 H718 V528 H560 M300 528 H78 Z" fill="none" stroke="#141414" stroke-width="2"/>
@@ -433,9 +434,9 @@
         <div class="hc-ui">
           <div class="hero-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
           <div class="hero-btns">
-            <button class="round" type="button" data-hero-pause aria-pressed="false" aria-label="Görselleri durdur"><i class="icon-pause" aria-hidden="true"></i></button>
-            <button class="round" type="button" data-hero-prev aria-label="Önceki görsel">←</button>
-            <button class="round" type="button" data-hero-next aria-label="Sonraki görsel">→</button>
+            <button class="ctrl" type="button" data-hero-pause aria-pressed="false" aria-label="Görselleri durdur"><i class="icon-pause" aria-hidden="true"></i></button>
+            <button class="ctrl" type="button" data-hero-prev aria-label="Önceki görsel">←</button>
+            <button class="ctrl" type="button" data-hero-next aria-label="Sonraki görsel">→</button>
           </div>
         </div>
       </div>
@@ -445,7 +446,7 @@
       <p class="statement">İşe yerinde <span class="inl" aria-hidden="true"><img src="assets/photos/hero-sokak-960.jpg" alt="" loading="lazy" decoding="async"></span> başlarız. Ölçer, mevcut olanı <span class="inl" aria-hidden="true"><img src="assets/atolye/eskiz.jpg" alt="" loading="lazy" decoding="async"></span> ayırır, yenisini az ve net <span class="inl" aria-hidden="true"><img src="assets/atolye/numune.jpg" alt="" loading="lazy" decoding="async"></span> ekleriz.</p>
       <div class="intro-side">
         <p>Konut, iç mekân, mevcut yapı ve küçük kamusal ölçekte çalışıyoruz. Her iş paftayla ilerler: plan, kesit, malzeme ve ışık.</p>
-        <p class="pills"><a class="pill" href="projeler.html">Projeler <span aria-hidden="true">→</span></a><a class="pill" href="ekip.html">Ekip <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="projeler.html">Projeler <span aria-hidden="true">→</span></a><a class="btn" href="ekip.html">Ekip <span aria-hidden="true">→</span></a></p>
       </div>
       <div class="facts">
         <p><span class="meta-label">Ofis</span><span>Abbasağa, Beşiktaş</span></p>
@@ -970,7 +971,7 @@
         </div>
         <div class="sheet-tools">
           <div class="layers" role="group" aria-label="Katmanlar"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Mevcut</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Sökülen</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>Yeni</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notlar</button></div>
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>Tam ekran <span aria-hidden="true">↗</span></button>
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>Tam ekran <span aria-hidden="true">↗</span></button>
         </div>
       </div>
     </section>
@@ -1031,8 +1032,8 @@
         </figure>
       </div>
       <div class="bar strip-controls">
-        <button class="round glass" type="button" data-strip-prev aria-label="Önceki malzeme">←</button>
-        <button class="round glass" type="button" data-strip-next aria-label="Sonraki malzeme">→</button>
+        <button class="ctrl" type="button" data-strip-prev aria-label="Önceki malzeme">←</button>
+        <button class="ctrl" type="button" data-strip-next aria-label="Sonraki malzeme">→</button>
       </div>
     </section>
     <nav class="next-sheet bar" aria-label="Sonraki sayfa">
@@ -1044,7 +1045,7 @@
       <p class="swipe-hint" aria-hidden="true">← Kaydırarak geçin →</p>
     </nav>
   </main>
-  <footer class="colophon" data-zone="dark">
+  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>

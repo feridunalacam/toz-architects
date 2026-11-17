@@ -206,19 +206,20 @@
 </head>
 <body class="project">
   <a class="skip" href="#icerik">İçeriğe geç</a>
-  <header class="topbar" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="../index.html" aria-label="toz+ architects, ana sayfa">
-        <img class="logo-dark" src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="../assets/logo-light.png" width="935" height="170" alt="">
+        <img src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="Sayfalar">
-        <a href="../projeler.html" aria-current="true">Projeler</a>
-        <a href="../ekip.html">Ekip</a>
-        <a href="../iletisim.html">İletişim</a>
+        <a href="../projeler.html" aria-current="true"><span class="n" aria-hidden="true">01</span>Projeler</a>
+        <a href="../ekip.html"><span class="n" aria-hidden="true">02</span>Ekip</a>
+        <a href="../iletisim.html"><span class="n" aria-hidden="true">03</span>İletişim</a>
       </nav>
-      <a class="lang" href="../en/projects/facade.html" hreflang="en" lang="en">EN</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menü</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="../en/projects/facade.html" hreflang="en" lang="en">EN</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menü</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>
   <dialog class="menu" id="menu" aria-label="Menü">
@@ -245,15 +246,10 @@
     </div>
   </dialog>
   <main id="icerik">
-    <header class="p-hero" data-zone="light" style="--len:5;--word:5">
+    <header class="p-hero" style="--len:5;--word:5">
       <div class="p-media">
         <div class="p-frame" style="--ar:1.3333">
           <img fetchpriority="high" decoding="async" src="../assets/photos/mevcut.jpg" width="1152" height="864" alt="Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar." class="p-hero-img">
-          <ul class="pins" aria-label="Görseldeki notlar">
-            <li class="pin" style="--x:60%;--y:52%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Demir balkon</span></li>
-            <li class="pin is-left" style="--x:70%;--y:27%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Kablolar</span></li>
-            <li class="pin is-low" style="--x:42%;--y:88%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Dökülen sıva</span></li>
-          </ul>
         </div>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -265,20 +261,29 @@
           <div><dt>Durum</dt><dd><span class="chip">Çalışma</span></dd></div>
         </dl>
         <div class="p-steps">
-          <a class="round" href="islak-hacim.html" aria-label="Önceki çalışma: Islak hacim">←</a>
+          <a class="ctrl" href="islak-hacim.html" aria-label="Önceki çalışma: Islak hacim">←</a>
           <p class="p-count"><span>05</span> / 08</p>
           <div class="p-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span class="is-on"></span><span></span><span></span><span></span></div>
-          <a class="round" href="cumba.html" aria-label="Sonraki çalışma: Cumba">→</a>
+          <a class="ctrl" href="cumba.html" aria-label="Sonraki çalışma: Cumba">→</a>
         </div>
       </div>
       <h1 class="p-title has-desc">Cephe</h1>
+      <div class="p-media p-notes">
+        <div class="p-frame" style="--ar:1.3333">
+          <ul class="pins" aria-label="Görseldeki notlar">
+            <li class="pin" style="--x:60%;--y:52%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Demir balkon</span></li>
+            <li class="pin is-left" style="--x:70%;--y:27%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Kablolar</span></li>
+            <li class="pin is-low" style="--x:42%;--y:88%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Dökülen sıva</span></li>
+          </ul>
+        </div>
+      </div>
     </header>
     <section class="p-intro bar" aria-labelledby="p-intro-title">
       <h2 class="label" id="p-intro-title"><span class="sq" aria-hidden="true"></span>Çalışma 05</h2>
       <p class="statement">Eski yapı önce belgelenir. Eğri duvar, düzeltilmesi gereken bir ayıp değildir. Yeni iş ona oturur. Sökülen şey yazılır. Eklenen şey, eskinin taklidi olmak zorunda değildir.</p>
       <div class="p-side">
         <p>Yüksekliğine, ritmine ve ağırlığına cevap verir. Cephede kırmızı kesik çizgi, önerilen yeni açıklıktır. Mevcut pencerelerin düzenini bozmadan, neden orada olduğunu ayrıca anlatır.</p>
-        <p class="pills"><a class="pill" href="#pafta">Paftaya git <span aria-hidden="true">↓</span></a><a class="pill" href="../projeler.html">Tüm projeler <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="#pafta">Paftaya git <span aria-hidden="true">↓</span></a><a class="btn" href="../projeler.html">Tüm projeler <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
     <section class="p-sheet bar" id="pafta" aria-labelledby="pafta-title" data-pafta>
@@ -344,7 +349,7 @@
       </figure>
       <div class="sheet-tools">
           <div class="layers" role="group" aria-label="Katmanlar"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Mevcut</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Sökülen</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>Yeni</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notlar</button></div>
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>Tam ekran <span aria-hidden="true">↗</span></button>
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>Tam ekran <span aria-hidden="true">↗</span></button>
         </div>
     </section>
     <nav class="p-nav bar" aria-label="Çalışmalar arasında">
@@ -360,7 +365,7 @@
       </a>
     </nav>
   </main>
-  <footer class="colophon" data-zone="dark">
+  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>

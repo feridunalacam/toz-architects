@@ -340,21 +340,22 @@ function topbar(c, pg, page) {
   const u = pg.u, a = pg.a;
   const links = [1, 2, 3].map((j) => {
     const cur = page.nav === j ? (page.sheet.includes(".") ? ' aria-current="true"' : ' aria-current="page"') : "";
-    return `        <a href="${pg.main(j)}"${cur}>${esc(u.names[j])}</a>`;
+    return `        <a href="${pg.main(j)}"${cur}><span class="n" aria-hidden="true">0${j}</span>${esc(u.names[j])}</a>`;
   }).join("\n");
   const other = UI[u.other];
   return `  <a class="skip" href="#icerik">${u.skip}</a>
-  <header class="topbar${page.dark ? " on-dark" : ""}" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="${pg.main(0)}" aria-label="${u.homeLabel}"${page.nav === 0 ? ' aria-current="page"' : ""}>
-        <img class="logo-dark" src="${a}assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="${a}assets/logo-light.png" width="935" height="170" alt="">
+        <img src="${a}assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="${u.nav}">
 ${links}
       </nav>
-      <a class="lang" href="${pg.to(page.alt[u.other])}" hreflang="${other.code}" lang="${other.code}">${u.langShort}</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>${u.menu}</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="${pg.to(page.alt[u.other])}" hreflang="${other.code}" lang="${other.code}">${u.langShort}</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>${u.menu}</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>`;
 }
@@ -413,7 +414,7 @@ function nextSheet(c, pg, i) {
 function footer(c, pg) {
   const u = pg.u, a = pg.a, o = c.office;
   const pages = "<span>" + [0, 1, 2, 3].map((j) => `<a href="${pg.main(j)}">${esc(u.names[j])}</a>`).join(" · ") + "</span>";
-  return `  <footer class="colophon" data-zone="dark">
+  return `  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:${attr(o.tel)}">${esc(o.phone)}</a>
@@ -470,7 +471,7 @@ function layerTools(pg, layers, full) {
   const btns = layers.map((l) => `<button type="button" aria-pressed="true" data-layer-toggle="${l}"><i class="sw sw-${l}" aria-hidden="true"></i>${u.layerNames[l]}</button>`).join("");
   return `<div class="sheet-tools">
           <div class="layers" role="group" aria-label="${u.layers}">${btns}</div>${full ? `
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>${u.full} <span aria-hidden="true">↗</span></button>` : ""}
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>${u.full} <span aria-hidden="true">↗</span></button>` : ""}
         </div>`;
 }
 
@@ -484,13 +485,13 @@ function home(c, lg) {
   const meta = c.content.pages?.home?.[lg] || {};
   const n = c.projects.length;
   const page = {
-    sheet: "0", nav: 0, dark: slides[0]?.tone !== "light",
+    sheet: "0", nav: 0,
     title: meta.title, desc: meta.description,
     alt: { tr: c.main("tr", 0), en: c.main("en", 0) },
     prev: pg.main(3), next: pg.main(1), preload: slides[0],
   };
 
-  const slideHtml = slides.map((s, k) => `        <figure class="slide${k === 0 ? " is-active" : ""}" data-tone="${s.tone === "light" ? "light" : "dark"}" data-cap="${attr(tx(s.cap, lg))}">
+  const slideHtml = slides.map((s, k) => `        <figure class="slide${k === 0 ? " is-active" : ""}" data-cap="${attr(tx(s.cap, lg))}">
           ${picture(pg, s, { alt: tx(s.alt, lg), sizes: "100vw", eager: k === 0, high: k === 0 })}
         </figure>`).join("\n");
   const bars = slides.map(() => "<span></span>").join("");
@@ -500,7 +501,7 @@ function home(c, lg) {
     const svg = c.svg(p, lg);
     return `
           <a class="hc-project" href="${pg.detail(p)}" data-hc="${k}"${k === 0 ? "" : " hidden"}>
-            ${svg ? `<span class="hc-plan plan-light" aria-hidden="true">${svg}</span>` : ""}
+            ${svg ? `<span class="hc-plan plan-mini" aria-hidden="true">${svg}</span>` : ""}
             <span class="hc-meta"><span class="hc-no">${u.study} ${pad(p.i + 1)} · ${esc(c.cat(p.cat, lg))}</span><span class="hc-title">${esc(tx(p.title, lg))}</span><span class="hc-what">${esc(tx(p.what, lg))}</span></span>
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>`;
@@ -587,8 +588,8 @@ ${panels}
 ${matHtml}
       </div>
       <div class="bar strip-controls">
-        <button class="round glass" type="button" data-strip-prev aria-label="${u.prevMat}">←</button>
-        <button class="round glass" type="button" data-strip-next aria-label="${u.nextMat}">→</button>
+        <button class="ctrl" type="button" data-strip-prev aria-label="${u.prevMat}">←</button>
+        <button class="ctrl" type="button" data-strip-next aria-label="${u.nextMat}">→</button>
       </div>
     </section>` : "";
 
@@ -597,7 +598,7 @@ ${matHtml}
 ${topbar(c, pg, page)}
 ${menu(c, pg, page)}
   <main id="icerik">
-    <section class="hero" data-hero data-zone="${page.dark ? "dark" : "light"}" aria-roledescription="carousel" aria-label="${u.heroRegion}">
+    <section class="hero" data-hero aria-roledescription="carousel" aria-label="${u.heroRegion}">
       <div class="hero-slides">
 ${slideHtml}
       </div>
@@ -618,9 +619,9 @@ ${slideHtml}
         <div class="hc-ui">
           <div class="hero-progress" aria-hidden="true">${bars}</div>
           <div class="hero-btns">
-            <button class="round" type="button" data-hero-pause aria-pressed="false" aria-label="${u.pause}"><i class="icon-pause" aria-hidden="true"></i></button>
-            <button class="round" type="button" data-hero-prev aria-label="${u.prevImg}">←</button>
-            <button class="round" type="button" data-hero-next aria-label="${u.nextImg}">→</button>
+            <button class="ctrl" type="button" data-hero-pause aria-pressed="false" aria-label="${u.pause}"><i class="icon-pause" aria-hidden="true"></i></button>
+            <button class="ctrl" type="button" data-hero-prev aria-label="${u.prevImg}">←</button>
+            <button class="ctrl" type="button" data-hero-next aria-label="${u.nextImg}">→</button>
           </div>
         </div>
       </div>
@@ -630,7 +631,7 @@ ${slideHtml}
       <p class="statement">${statement}</p>
       <div class="intro-side">
         <p>${esc(h.intro)}</p>
-        <p class="pills"><a class="pill" href="${pg.main(1)}">${esc(u.names[1])} <span aria-hidden="true">→</span></a><a class="pill" href="${pg.main(2)}">${esc(u.names[2])} <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="${pg.main(1)}">${esc(u.names[1])} <span aria-hidden="true">→</span></a><a class="btn" href="${pg.main(2)}">${esc(u.names[2])} <span aria-hidden="true">→</span></a></p>
       </div>
       <div class="facts">
 ${facts}
@@ -755,7 +756,6 @@ function detail(c, lg, p) {
   const title = tx(p.title, lg), what = tx(p.what, lg), cat = c.cat(p.cat, lg);
   const body = (p.body?.[lg] || []).filter((s) => String(s).trim());
   const cover = p.cover || {};
-  const dark = cover.tone !== "light";
   const pageTitle = `${title} — ${cat} · toz+ architects`;
   const desc = clip(`${title} — ${what}. ${body[0] || ""}`);
   const work = {
@@ -771,7 +771,7 @@ function detail(c, lg, p) {
   };
   if (cover.src) work.image = c.abs(cover.src);
   const page = {
-    sheet: `1.${p.i + 1}`, count: n, nav: 1, dark,
+    sheet: `1.${p.i + 1}`, count: n, nav: 1,
     title: pageTitle, desc, ogType: "article",
     og: cover.src ? { src: cover.src, w: cover.w, h: cover.h, alt: tx(cover.alt, lg) } : null,
     alt: { tr: c.detail("tr", p), en: c.detail("en", p) },
@@ -828,13 +828,10 @@ ${gallery.map((g) => `        <li><figure>${picture(pg, g, { alt: tx(g.alt, lg),
 ${topbar(c, pg, page)}
 ${menu(c, pg, page)}
   <main id="icerik">
-    <header class="p-hero" data-zone="${dark ? "dark" : "light"}" style="--len:${len};--word:${word}">
+    <header class="p-hero" style="--len:${len};--word:${word}">
       <div class="p-media">
         <div class="p-frame" style="--ar:${ar}">
-          ${picture(pg, cover, { alt: tx(cover.alt, lg), sizes: "100vw", eager: true, high: true, cls: "p-hero-img" })}${pins ? `
-          <ul class="pins" aria-label="${u.pins}">
-${pins}
-          </ul>` : ""}
+          ${picture(pg, cover, { alt: tx(cover.alt, lg), sizes: "100vw", eager: true, high: true, cls: "p-hero-img" })}
         </div>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -844,20 +841,27 @@ ${pins}
 ${facts}
         </dl>
         <div class="p-steps">
-          <a class="round" href="${pg.detail(prevP)}" aria-label="${u.prevStudy}: ${attr(tx(prevP.title, lg))}">←</a>
+          <a class="ctrl" href="${pg.detail(prevP)}" aria-label="${u.prevStudy}: ${attr(tx(prevP.title, lg))}">←</a>
           <p class="p-count"><span>${pad(p.i + 1)}</span> / ${pad(n)}</p>
           <div class="p-progress" aria-hidden="true">${segs}</div>
-          <a class="round" href="${pg.detail(nextP)}" aria-label="${u.nextStudy}: ${attr(tx(nextP.title, lg))}">→</a>
+          <a class="ctrl" href="${pg.detail(nextP)}" aria-label="${u.nextStudy}: ${attr(tx(nextP.title, lg))}">→</a>
         </div>
       </div>
-      <h1 class="p-title${/[gjpqyçşğÇŞ]/.test(title) ? " has-desc" : ""}">${br(title)}</h1>
+      <h1 class="p-title${/[gjpqyçşğÇŞ]/.test(title) ? " has-desc" : ""}">${br(title)}</h1>${pins ? `
+      <div class="p-media p-notes">
+        <div class="p-frame" style="--ar:${ar}">
+          <ul class="pins" aria-label="${u.pins}">
+${pins}
+          </ul>
+        </div>
+      </div>` : ""}
     </header>
     <section class="p-intro bar" aria-labelledby="p-intro-title">
       <h2 class="label" id="p-intro-title"><span class="sq" aria-hidden="true"></span>${u.study} ${pad(p.i + 1)}</h2>
       ${body[0] ? `<p class="statement">${esc(body[0])}</p>` : ""}
       <div class="p-side">
 ${body.slice(1).map((s) => `        <p>${esc(s)}</p>`).join("\n")}
-        <p class="pills">${sheet ? `<a class="pill" href="#pafta">${u.toSheet} <span aria-hidden="true">↓</span></a>` : ""}<a class="pill" href="${pg.main(1)}">${u.allProjects} <span aria-hidden="true">→</span></a></p>
+        <p class="btns">${sheet ? `<a class="btn" href="#pafta">${u.toSheet} <span aria-hidden="true">↓</span></a>` : ""}<a class="btn" href="${pg.main(1)}">${u.allProjects} <span aria-hidden="true">→</span></a></p>
       </div>
     </section>${sheet}${galleryHtml}
     <nav class="p-nav bar" aria-label="${u.projNav}">
@@ -990,7 +994,7 @@ ${menu(c, pg, page)}
       <div class="contact-main">
         <a class="contact-phone" href="tel:${attr(o.tel)}"><span class="meta-label">${u.call}</span>${esc(o.phone)}</a>
 ${plate(c, pg, extra)}
-        <a class="pill" href="${attr(c.maps)}" rel="noopener noreferrer">${u.maps} <span aria-hidden="true">→</span></a>
+        <a class="btn" href="${attr(c.maps)}" rel="noopener noreferrer">${u.maps} <span aria-hidden="true">→</span></a>
       </div>
       <figure class="map">
         <iframe src="${attr(c.embed)}" title="${u.mapTitle}: ${attr(`${o.neighbourhood}, ${o.street}, ${o.district}`)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1052,14 +1056,14 @@ function notFound(c) {
 </head>
 <body>
   <header class="topbar">
-    <div class="liquid">
+    <div class="topbar-in bar">
       <a class="brand" href="index.html" aria-label="toz+ architects, ana sayfa">
-        <img class="logo-dark" src="assets/logo.png" width="935" height="170" alt="toz+ architects">
+        <img src="assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav nav-always" aria-label="Sayfalar">
-        <a href="projeler.html">Projeler</a>
-        <a href="ekip.html">Ekip</a>
-        <a href="iletisim.html">İletişim</a>
+        <a href="projeler.html"><span class="n" aria-hidden="true">01</span>Projeler</a>
+        <a href="ekip.html"><span class="n" aria-hidden="true">02</span>Ekip</a>
+        <a href="iletisim.html"><span class="n" aria-hidden="true">03</span>İletişim</a>
       </nav>
     </div>
   </header>
@@ -1068,7 +1072,7 @@ function notFound(c) {
       <p class="kicker"><span class="sq" aria-hidden="true"></span>404</p>
       <h1>Bu sayfa yok.</h1>
       <p class="lede">Aradığınız pafta bu sette değil. Ana sayfadan ya da projeler dizininden devam edebilirsiniz.</p>
-      <p class="pills"><a class="pill" href="index.html">Ana sayfa <span aria-hidden="true">→</span></a><a class="pill" href="projeler.html">Projeler <span aria-hidden="true">→</span></a><a class="pill" href="en/index.html" lang="en">English <span aria-hidden="true">→</span></a></p>
+      <p class="btns"><a class="btn" href="index.html">Ana sayfa <span aria-hidden="true">→</span></a><a class="btn" href="projeler.html">Projeler <span aria-hidden="true">→</span></a><a class="btn" href="en/index.html" lang="en">English <span aria-hidden="true">→</span></a></p>
     </header>
   </main>
 </body>

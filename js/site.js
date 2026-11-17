@@ -25,7 +25,7 @@
   };
 
   /* Opening slideshow: autoplay with progress, swipe, buttons, arrow keys while in view.
-     The glass card follows the slide with the study the photograph belongs to. */
+     The card follows the slide with the study the photograph belongs to. */
   const hero = document.querySelector("[data-hero]");
   let heroStep = null;
   let heroInView = false;
@@ -77,9 +77,7 @@
       num.textContent = pad(cur + 1);
       cap.textContent = neu.dataset.cap;
       cards.forEach((c) => { c.hidden = +c.dataset.hc !== cur; });
-      hero.dataset.zone = neu.dataset.tone || "dark";
       runBar();
-      dispatchEvent(new Event("toz:tone"));
       cleanup = setTimeout(() => {
         old.classList.remove("is-leaving", "to-right");
         neu.classList.remove("is-entering", "from-left");
@@ -178,96 +176,7 @@
     });
   }
 
-  /* Glass bar: light or dark tone depending on what passes behind it (data-zone). */
-  const topbar = document.querySelector("[data-topbar]");
-  const liquid = document.querySelector("[data-liquid]");
-  if (topbar && liquid) {
-    const zones = [...document.querySelectorAll("[data-zone]")];
-    const under = (el, y) => {
-      const r = el.getBoundingClientRect();
-      return r.top <= y && r.bottom >= y;
-    };
-    let queued = false;
-    const tone = () => {
-      queued = false;
-      const b = liquid.getBoundingClientRect();
-      const y = b.top + b.height / 2;
-      const zone = zones.find((el) => under(el, y));
-      topbar.classList.toggle("on-dark", zone?.dataset.zone === "dark");
-    };
-    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(tone); } };
-    addEventListener("scroll", queue, { passive: true });
-    addEventListener("resize", queue);
-    addEventListener("toz:tone", queue);
-    tone();
-  }
-
-  /* Chromium: the bar bends what passes behind its rim, through an SVG displacement map. */
-  const chromium = !!navigator.userAgentData?.brands?.some((b) => b.brand === "Chromium");
-  if (liquid && chromium && !reduce) {
-    const NS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(NS, "svg");
-    svg.setAttribute("width", "0");
-    svg.setAttribute("height", "0");
-    svg.setAttribute("aria-hidden", "true");
-    svg.style.position = "absolute";
-    svg.innerHTML =
-      '<filter id="liquid-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">' +
-      '<feImage result="map" preserveAspectRatio="none"/>' +
-      '<feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
-      "</filter>";
-    document.body.append(svg);
-    const feImage = svg.querySelector("feImage");
-    const disp = svg.querySelector("feDisplacementMap");
-    let size = "";
-
-    const build = () => {
-      const w = Math.round(liquid.offsetWidth);
-      const h = Math.round(liquid.offsetHeight);
-      if (!w || !h || size === `${w}x${h}`) return;
-      size = `${w}x${h}`;
-      const c = document.createElement("canvas");
-      c.width = w;
-      c.height = h;
-      const ctx = c.getContext("2d");
-      const img = ctx.createImageData(w, h);
-      const d = img.data;
-      const r = h / 2;
-      const rim = Math.min(r * 0.85, 20);
-      for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
-          const px = x + 0.5, py = y + 0.5;
-          const vx = px - Math.min(Math.max(px, r), w - r);
-          const vy = py - r;
-          const len = Math.hypot(vx, vy) || 1e-6;
-          const inset = r - len;
-          let ox = 0, oy = 0;
-          if (inset > 0 && inset < rim) {
-            const k = (1 - inset / rim) ** 2;
-            ox = (vx / len) * k;
-            oy = (vy / len) * k;
-          }
-          const i = (y * w + x) * 4;
-          d[i] = 128 + ox * 127;
-          d[i + 1] = 128 + oy * 127;
-          d[i + 2] = 128;
-          d[i + 3] = 255;
-        }
-      }
-      ctx.putImageData(img, 0, 0);
-      feImage.setAttribute("href", c.toDataURL());
-      feImage.setAttribute("width", w);
-      feImage.setAttribute("height", h);
-      disp.setAttribute("scale", String(Math.round(h * 0.55)));
-    };
-
-    build();
-    liquid.classList.add("refract");
-    let rt = 0;
-    addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 150); });
-  }
-
-  /* Menu: full-screen glass sheet with image previews; Esc, button or a vertical swipe closes it. */
+  /* Menu: full-screen sheet with image previews; Esc, button or a vertical swipe closes it. */
   const menu = document.getElementById("menu");
   const menuBtn = document.querySelector("[data-menu-open]");
   if (menu && menuBtn && window.HTMLDialogElement) {
@@ -576,10 +485,10 @@
     dlg.innerHTML =
       '<div class="lb-stage"><img class="lb-img" alt=""></div>' +
       '<div class="lb-bar"><p class="lb-caption" aria-live="polite"></p><div class="lb-nav">' +
-      `<button type="button" class="round" data-lb="prev" aria-label="${t.prev}">←</button>` +
-      `<button type="button" class="round" data-lb="next" aria-label="${t.next}">→</button>` +
+      `<button type="button" class="ctrl" data-lb="prev" aria-label="${t.prev}">←</button>` +
+      `<button type="button" class="ctrl" data-lb="next" aria-label="${t.next}">→</button>` +
       "</div></div>" +
-      `<button type="button" class="round lb-close" data-lb="close" aria-label="${t.close}">×</button>`;
+      `<button type="button" class="ctrl lb-close" data-lb="close" aria-label="${t.close}">×</button>`;
     document.body.append(dlg);
 
     const stage = dlg.querySelector(".lb-stage");

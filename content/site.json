@@ -93,7 +93,6 @@
         "small": "assets/photos/hero-merdiven-960.jpg",
         "w": 1920,
         "h": 1080,
-        "tone": "dark",
         "project": "merdivenli-sokak",
         "cap": { "tr": "Merdivenli sokak, ikindi", "en": "Stepped street, late afternoon" },
         "alt": {
@@ -106,7 +105,6 @@
         "small": "assets/photos/hero-salon-960.jpg",
         "w": 1920,
         "h": 1080,
-        "tone": "light",
         "project": "pencere",
         "cap": { "tr": "Oda, sabah ışığı", "en": "Room, morning light" },
         "alt": {
@@ -119,7 +117,6 @@
         "small": "assets/photos/hero-cephe-960.jpg",
         "w": 1920,
         "h": 1080,
-        "tone": "light",
         "project": "cephe",
         "cap": { "tr": "Cephe, kireç sıva ve ahşap kepenk", "en": "Facade, lime plaster and timber shutters" },
         "alt": {
@@ -132,7 +129,6 @@
         "small": "assets/photos/hero-sokak-960.jpg",
         "w": 1920,
         "h": 1080,
-        "tone": "light",
         "project": "avlu",
         "cap": { "tr": "Sokak, sarmaşıklı duvar", "en": "Street and ivy wall" },
         "alt": {
@@ -160,7 +156,6 @@
         "src": "assets/photos/konut.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Taş eşik, koyu ahşap kapı, demir korkuluk ve bitişiğindeki pencere.",
           "en": "A stone threshold, a dark wooden door, an iron rail and the window beside it."
@@ -205,7 +200,6 @@
         "src": "assets/photos/catikati.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Ahşap makaslı bir çatı katı; çatı penceresinden giren ışık meşe döşemeye düşüyor.",
           "en": "An attic with timber trusses; light from a roof window falls on an oak floor."
@@ -250,7 +244,6 @@
         "src": "assets/photos/ic-mekan.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Sıvalı bir odada pencereden gelen gün ışığı, ahşap masa ve bir sandalye.",
           "en": "Daylight from a window in a plastered room, a wooden table and one chair."
@@ -295,7 +288,6 @@
         "src": "assets/photos/islak.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Kireç sıvalı küçük bir banyoda taş lavabo, ahşap raf ve buzlu camlı pencere; zemin terrazzo.",
           "en": "A small lime-plastered bathroom with a stone basin, a timber shelf and a frosted window; terrazzo floor."
@@ -340,7 +332,6 @@
         "src": "assets/photos/mevcut.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Dökülen sıvalı eski bir cephe. Farklı pencereler, demir balkon ve kablolar.",
           "en": "An old facade with peeling plaster, uneven windows, an iron balcony and wires."
@@ -385,7 +376,6 @@
         "src": "assets/photos/cumba.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "light",
         "alt": {
           "tr": "Sıvalı bir cephede eski ahşap cumba; boyası dökülmüş, oymalı konsollar üzerinde.",
           "en": "An old timber bay window on a plastered facade, paint peeling, resting on carved brackets."
@@ -430,7 +420,6 @@
         "src": "assets/photos/avlu.jpg",
         "w": 1152,
         "h": 864,
-        "tone": "dark",
         "alt": {
           "tr": "Küçük bir avlu. Ağaç, ahşap bank, çelik saçak ve gölgesi.",
           "en": "A small court with a tree, a wooden bench and a steel canopy."
@@ -476,7 +465,6 @@
         "small": "assets/photos/hero-merdiven-960.jpg",
         "w": 1920,
         "h": 1080,
-        "tone": "dark",
         "alt": {
           "tr": "Eski apartmanlar arasında taş basamaklı bir yokuş; ortada bir çınar ağacı, ikindi güneşi.",
           "en": "A stone stair street between old apartment blocks, a plane tree in the middle, late afternoon sun."

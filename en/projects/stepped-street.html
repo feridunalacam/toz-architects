@@ -206,19 +206,20 @@
 </head>
 <body class="project">
   <a class="skip" href="#icerik">Skip to content</a>
-  <header class="topbar on-dark" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="../index.html" aria-label="toz+ architects, home">
-        <img class="logo-dark" src="../../assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="../../assets/logo-light.png" width="935" height="170" alt="">
+        <img src="../../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="Pages">
-        <a href="../projects.html" aria-current="true">Projects</a>
-        <a href="../team.html">Team</a>
-        <a href="../contact.html">Contact</a>
+        <a href="../projects.html" aria-current="true"><span class="n" aria-hidden="true">01</span>Projects</a>
+        <a href="../team.html"><span class="n" aria-hidden="true">02</span>Team</a>
+        <a href="../contact.html"><span class="n" aria-hidden="true">03</span>Contact</a>
       </nav>
-      <a class="lang" href="../../projeler/merdivenli-sokak.html" hreflang="tr" lang="tr">TR</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="../../projeler/merdivenli-sokak.html" hreflang="tr" lang="tr">TR</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>
   <dialog class="menu" id="menu" aria-label="Menu">
@@ -245,15 +246,10 @@
     </div>
   </dialog>
   <main id="icerik">
-    <header class="p-hero" data-zone="dark" style="--len:14;--word:7">
+    <header class="p-hero" style="--len:14;--word:7">
       <div class="p-media">
         <div class="p-frame" style="--ar:1.7778">
           <img fetchpriority="high" decoding="async" src="../../assets/photos/hero-merdiven.jpg" srcset="../../assets/photos/hero-merdiven-960.jpg 960w, ../../assets/photos/hero-merdiven.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="A stone stair street between old apartment blocks, a plane tree in the middle, late afternoon sun." class="p-hero-img">
-          <ul class="pins" aria-label="Notes on the image">
-            <li class="pin" style="--x:33%;--y:30%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Plane tree</span></li>
-            <li class="pin" style="--x:54%;--y:64%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Landing</span></li>
-            <li class="pin is-low" style="--x:52%;--y:85%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Steps</span></li>
-          </ul>
         </div>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -265,20 +261,29 @@
           <div><dt>Status</dt><dd><span class="chip">Study</span></dd></div>
         </dl>
         <div class="p-steps">
-          <a class="round" href="courtyard.html" aria-label="Previous study: Courtyard">←</a>
+          <a class="ctrl" href="courtyard.html" aria-label="Previous study: Courtyard">←</a>
           <p class="p-count"><span>08</span> / 08</p>
           <div class="p-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="is-on"></span></div>
-          <a class="round" href="threshold.html" aria-label="Next study: Threshold">→</a>
+          <a class="ctrl" href="threshold.html" aria-label="Next study: Threshold">→</a>
         </div>
       </div>
       <h1 class="p-title has-desc">Stepped street</h1>
+      <div class="p-media p-notes">
+        <div class="p-frame" style="--ar:1.7778">
+          <ul class="pins" aria-label="Notes on the image">
+            <li class="pin" style="--x:33%;--y:30%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Plane tree</span></li>
+            <li class="pin" style="--x:54%;--y:64%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Landing</span></li>
+            <li class="pin is-low" style="--x:52%;--y:85%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Steps</span></li>
+          </ul>
+        </div>
+      </div>
     </header>
     <section class="p-intro bar" aria-labelledby="p-intro-title">
       <h2 class="label" id="p-intro-title"><span class="sq" aria-hidden="true"></span>Study 08</h2>
       <p class="statement">On a slope the stair is the street. Riser height and landing intervals are set by the walker’s breath.</p>
       <div class="p-side">
         <p>A tree, a place to sit, a light for the evening. All three are drawn on the same sheet, at the same scale.</p>
-        <p class="pills"><a class="pill" href="#pafta">Go to the sheet <span aria-hidden="true">↓</span></a><a class="pill" href="../projects.html">All projects <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="#pafta">Go to the sheet <span aria-hidden="true">↓</span></a><a class="btn" href="../projects.html">All projects <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
     <section class="p-sheet bar" id="pafta" aria-labelledby="pafta-title" data-pafta>
@@ -336,7 +341,7 @@
       </figure>
       <div class="sheet-tools">
           <div class="layers" role="group" aria-label="Layers"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Existing</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Removed</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>New</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notes</button></div>
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
         </div>
     </section>
     <nav class="p-nav bar" aria-label="Between studies">
@@ -352,7 +357,7 @@
       </a>
     </nav>
   </main>
-  <footer class="colophon" data-zone="dark">
+  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>

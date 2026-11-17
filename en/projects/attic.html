@@ -206,19 +206,20 @@
 </head>
 <body class="project">
   <a class="skip" href="#icerik">Skip to content</a>
-  <header class="topbar" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="../index.html" aria-label="toz+ architects, home">
-        <img class="logo-dark" src="../../assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="../../assets/logo-light.png" width="935" height="170" alt="">
+        <img src="../../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="Pages">
-        <a href="../projects.html" aria-current="true">Projects</a>
-        <a href="../team.html">Team</a>
-        <a href="../contact.html">Contact</a>
+        <a href="../projects.html" aria-current="true"><span class="n" aria-hidden="true">01</span>Projects</a>
+        <a href="../team.html"><span class="n" aria-hidden="true">02</span>Team</a>
+        <a href="../contact.html"><span class="n" aria-hidden="true">03</span>Contact</a>
       </nav>
-      <a class="lang" href="../../projeler/catikati.html" hreflang="tr" lang="tr">TR</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="../../projeler/catikati.html" hreflang="tr" lang="tr">TR</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>
   <dialog class="menu" id="menu" aria-label="Menu">
@@ -245,15 +246,10 @@
     </div>
   </dialog>
   <main id="icerik">
-    <header class="p-hero" data-zone="light" style="--len:5;--word:5">
+    <header class="p-hero" style="--len:5;--word:5">
       <div class="p-media">
         <div class="p-frame" style="--ar:1.3333">
           <img fetchpriority="high" decoding="async" src="../../assets/photos/catikati.jpg" width="1152" height="864" alt="An attic with timber trusses; light from a roof window falls on an oak floor." class="p-hero-img">
-          <ul class="pins" aria-label="Notes on the image">
-            <li class="pin" style="--x:40%;--y:33%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Truss</span></li>
-            <li class="pin is-left" style="--x:83%;--y:33%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Roof light</span></li>
-            <li class="pin is-low" style="--x:50%;--y:86%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Oak floor</span></li>
-          </ul>
         </div>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -265,20 +261,29 @@
           <div><dt>Status</dt><dd><span class="chip">Study</span></dd></div>
         </dl>
         <div class="p-steps">
-          <a class="round" href="threshold.html" aria-label="Previous study: Threshold">←</a>
+          <a class="ctrl" href="threshold.html" aria-label="Previous study: Threshold">←</a>
           <p class="p-count"><span>02</span> / 08</p>
           <div class="p-progress" aria-hidden="true"><span></span><span class="is-on"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <a class="round" href="window.html" aria-label="Next study: Window">→</a>
+          <a class="ctrl" href="window.html" aria-label="Next study: Window">→</a>
         </div>
       </div>
       <h1 class="p-title">Attic</h1>
+      <div class="p-media p-notes">
+        <div class="p-frame" style="--ar:1.3333">
+          <ul class="pins" aria-label="Notes on the image">
+            <li class="pin" style="--x:40%;--y:33%;--i:0"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Truss</span></li>
+            <li class="pin is-left" style="--x:83%;--y:33%;--i:1"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Roof light</span></li>
+            <li class="pin is-low" style="--x:50%;--y:86%;--i:2"><span class="pin-dot" aria-hidden="true"></span><span class="pin-label">Oak floor</span></li>
+          </ul>
+        </div>
+      </div>
     </header>
     <section class="p-intro bar" aria-labelledby="p-intro-title">
       <h2 class="label" id="p-intro-title"><span class="sq" aria-hidden="true"></span>Study 02</h2>
       <p class="statement">An attic often stays a store room. First the trusses and rafters are measured; what carries and what was added later is separated.</p>
       <div class="p-side">
         <p>Light comes in through the roof. The window sits between two rafters; the timber is not boxed in, it stays visible.</p>
-        <p class="pills"><a class="pill" href="#pafta">Go to the sheet <span aria-hidden="true">↓</span></a><a class="pill" href="../projects.html">All projects <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="#pafta">Go to the sheet <span aria-hidden="true">↓</span></a><a class="btn" href="../projects.html">All projects <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
     <section class="p-sheet bar" id="pafta" aria-labelledby="pafta-title" data-pafta>
@@ -339,7 +344,7 @@
       </figure>
       <div class="sheet-tools">
           <div class="layers" role="group" aria-label="Layers"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Existing</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Removed</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>New</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notes</button></div>
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
         </div>
     </section>
     <nav class="p-nav bar" aria-label="Between studies">
@@ -355,7 +360,7 @@
       </a>
     </nav>
   </main>
-  <footer class="colophon" data-zone="dark">
+  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>

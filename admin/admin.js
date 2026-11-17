@@ -23,7 +23,6 @@ const SECTIONS = [
   { id: "pages", name: "Sayfa bilgileri", page: null },
   { id: "office", name: "Ofis", page: 3 },
 ];
-const TONES = [["dark", "Koyu"], ["light", "Açık"]];
 const LAYER_NAMES = { mevcut: "Mevcut", sokulen: "Sökülen", yeni: "Yeni", not: "Notlar" };
 /* Re-rendering the page being edited should not replay its entrance animations on every keystroke.
    Durations are left alone: the opening slideshow advances on its progress bar's animationend. */
@@ -287,15 +286,6 @@ const paragraphs = (label, obj, key, o) => duo(label,
     obj[key][lg] = v.split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean);
     touch();
   }, { rows: 6, stack: true, ...o });
-
-function seg(label, options, get, set, text) {
-  const box = h("div", { class: "seg", role: "group", "aria-label": label });
-  const draw = () => box.replaceChildren(...options.map(([v, name]) => h("button", {
-    type: "button", "aria-pressed": String(get() === v), onclick: () => { set(v); touch(); draw(); },
-  }, name)));
-  draw();
-  return h("div", { class: "field" }, h("span", { class: "f-label" }, label), box, help(text));
-}
 
 function choice(label, options, get, set, text) {
   const sel = h("select", { onchange: () => { set(sel.value); touch(); } }, options.map(([v, name]) => h("option", { value: v }, name)));
@@ -777,8 +767,6 @@ function projectView(i) {
 
     group("02", "Kapak ve notlar", [
       imageField("Kapak görseli", p, "cover", { name: () => p.id, change: () => renderEditor(), help: "Proje sayfasının açılışını kaplar; kartlarda ve paylaşımlarda da kullanılır. Yatay fotoğraf önerilir." }),
-      p.cover?.src ? seg("Görselin üst kısmı", TONES, () => (p.cover.tone === "light" ? "light" : "dark"), (v) => { p.cover.tone = v; },
-        "Menü ve yazı rengi buna göre seçilir: koyu görselde açık, açık görselde koyu yazı.") : null,
       p.cover?.src ? dual("Görsel açıklaması", p.cover, "alt", { rows: 2, help: "Görmeyen ziyaretçiler ve arama motorları için kısa bir tarif." }) : null,
       pinsField(p),
     ]),
@@ -842,17 +830,15 @@ const VIEWS = {
     const slides = (home.slides ||= []);
     const projects = [["", "Bağlı çalışma yok"], ...S.content.projects.map((p, i) => [p.id, `${pad(i + 1)} · ${tx(p.title)}`])];
     return [
-      head("02 · Açılış", "Açılış görselleri", "Ana sayfanın en üstünde sırayla geçen büyük görseller. Cam kart, bağlı çalışmanın planını ve başlığını gösterir."),
+      head("02 · Açılış", "Açılış görselleri", "Ana sayfanın en üstünde sırayla geçen büyük görseller. Sağ alttaki kart, bağlı çalışmanın planını ve başlığını gösterir."),
       list(slides, {
         noun: "Görsel", add: "Görsel ekle", min: 1,
         label: (s) => tx(s.cap) || fileName(s.src),
-        create: photoItem("acilis", () => ({ tone: "dark", project: "", cap: bi(), alt: bi() })),
+        create: photoItem("acilis", () => ({ project: "", cap: bi(), alt: bi() })),
         render: (s) => [
           imageField("Görsel", s, null, { name: "acilis", help: "Yatay ve en az 1920 piksel genişliğinde bir fotoğraf önerilir." }),
-          h("div", { class: "grid2" },
-            seg("Görselin üst kısmı", TONES, () => (s.tone === "light" ? "light" : "dark"), (v) => { s.tone = v; }),
-            choice("Bağlı çalışma", projects, () => s.project || "", (v) => { s.project = v; })),
-          dual("Alt yazı", s, "cap", { help: "Cam kartta küçük yazar. Ör. Merdivenli sokak, ikindi" }),
+          choice("Bağlı çalışma", projects, () => s.project || "", (v) => { s.project = v; }),
+          dual("Alt yazı", s, "cap", { help: "Karttaki sayacın yanında küçük yazar. Ör. Merdivenli sokak, ikindi" }),
           dual("Görsel açıklaması", s, "alt", { rows: 2, help: "Görmeyen ziyaretçiler ve arama motorları için kısa bir tarif." }),
         ],
       }),

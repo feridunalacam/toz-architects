@@ -167,19 +167,20 @@
 </head>
 <body class="home">
   <a class="skip" href="#icerik">Skip to content</a>
-  <header class="topbar on-dark" data-topbar>
-    <div class="liquid" data-liquid>
+  <header class="topbar">
+    <div class="topbar-in bar">
       <a class="brand" href="index.html" aria-label="toz+ architects, home" aria-current="page">
-        <img class="logo-dark" src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
-        <img class="logo-light" src="../assets/logo-light.png" width="935" height="170" alt="">
+        <img src="../assets/logo.png" width="935" height="170" alt="toz+ architects">
       </a>
       <nav class="nav" aria-label="Pages">
-        <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
-        <a href="contact.html">Contact</a>
+        <a href="projects.html"><span class="n" aria-hidden="true">01</span>Projects</a>
+        <a href="team.html"><span class="n" aria-hidden="true">02</span>Team</a>
+        <a href="contact.html"><span class="n" aria-hidden="true">03</span>Contact</a>
       </nav>
-      <a class="lang" href="../index.html" hreflang="tr" lang="tr">TR</a>
-      <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      <div class="topbar-end">
+        <a class="lang" href="../index.html" hreflang="tr" lang="tr">TR</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" data-menu-open><span>Menu</span><i aria-hidden="true"></i></button>
+      </div>
     </div>
   </header>
   <dialog class="menu" id="menu" aria-label="Menu">
@@ -206,18 +207,18 @@
     </div>
   </dialog>
   <main id="icerik">
-    <section class="hero" data-hero data-zone="dark" aria-roledescription="carousel" aria-label="Opening images">
+    <section class="hero" data-hero aria-roledescription="carousel" aria-label="Opening images">
       <div class="hero-slides">
-        <figure class="slide is-active" data-tone="dark" data-cap="Stepped street, late afternoon">
+        <figure class="slide is-active" data-cap="Stepped street, late afternoon">
           <img fetchpriority="high" decoding="async" src="../assets/photos/hero-merdiven.jpg" srcset="../assets/photos/hero-merdiven-960.jpg 960w, ../assets/photos/hero-merdiven.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="A stone stair street between old apartment blocks, a plane tree in the middle, late afternoon sun.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Room, morning light">
+        <figure class="slide" data-cap="Room, morning light">
           <img loading="lazy" decoding="async" src="../assets/photos/hero-salon.jpg" srcset="../assets/photos/hero-salon-960.jpg 960w, ../assets/photos/hero-salon.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="A timber table and two chairs in an empty room; tiled roofs through the window, its shadow on the wall.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Facade, lime plaster and timber shutters">
+        <figure class="slide" data-cap="Facade, lime plaster and timber shutters">
           <img loading="lazy" decoding="async" src="../assets/photos/hero-cephe.jpg" srcset="../assets/photos/hero-cephe-960.jpg 960w, ../assets/photos/hero-cephe.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="A symmetrical lime-plastered facade: timber shutters, a timber door and a wrought iron balcony.">
         </figure>
-        <figure class="slide" data-tone="light" data-cap="Street and ivy wall">
+        <figure class="slide" data-cap="Street and ivy wall">
           <img loading="lazy" decoding="async" src="../assets/photos/hero-sokak.jpg" srcset="../assets/photos/hero-sokak-960.jpg 960w, ../assets/photos/hero-sokak.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="A quiet sloping street with an ivy-covered wall on one side and apartment blocks on the other.">
         </figure>
       </div>
@@ -235,7 +236,7 @@
         </div>
         <div class="hc-projects">
           <a class="hc-project" href="projects/stepped-street.html" data-hc="0">
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <g fill="none" stroke="#b9b6ae" stroke-width="1">
@@ -278,7 +279,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projects/window.html" data-hc="1" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M70 500 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
@@ -328,7 +329,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projects/facade.html" data-hc="2" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M70 470 H740" fill="none" stroke="#141414" stroke-width="2.5"/>
@@ -379,7 +380,7 @@
             <span class="hc-arrow" aria-hidden="true">→</span>
           </a>
           <a class="hc-project" href="projects/courtyard.html" data-hc="3" hidden>
-            <span class="hc-plan plan-light" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
+            <span class="hc-plan plan-mini" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, ui-monospace, monospace" class="plan-svg" aria-hidden="true" focusable="false">
   <rect x="28" y="24" width="744" height="552" fill="none" stroke="#e3e1db" stroke-width="1"/>
   <g data-layer="mevcut">
     <path d="M78 78 H718 V528 H560 M300 528 H78 Z" fill="none" stroke="#141414" stroke-width="2"/>
@@ -433,9 +434,9 @@
         <div class="hc-ui">
           <div class="hero-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
           <div class="hero-btns">
-            <button class="round" type="button" data-hero-pause aria-pressed="false" aria-label="Pause images"><i class="icon-pause" aria-hidden="true"></i></button>
-            <button class="round" type="button" data-hero-prev aria-label="Previous image">←</button>
-            <button class="round" type="button" data-hero-next aria-label="Next image">→</button>
+            <button class="ctrl" type="button" data-hero-pause aria-pressed="false" aria-label="Pause images"><i class="icon-pause" aria-hidden="true"></i></button>
+            <button class="ctrl" type="button" data-hero-prev aria-label="Previous image">←</button>
+            <button class="ctrl" type="button" data-hero-next aria-label="Next image">→</button>
           </div>
         </div>
       </div>
@@ -445,7 +446,7 @@
       <p class="statement">We start on site <span class="inl" aria-hidden="true"><img src="../assets/photos/hero-sokak-960.jpg" alt="" loading="lazy" decoding="async"></span>. We measure, set apart what is there <span class="inl" aria-hidden="true"><img src="../assets/atolye/eskiz.jpg" alt="" loading="lazy" decoding="async"></span>, and add the new sparingly and clearly <span class="inl" aria-hidden="true"><img src="../assets/atolye/numune.jpg" alt="" loading="lazy" decoding="async"></span>.</p>
       <div class="intro-side">
         <p>We work on housing, interiors, existing buildings and small civic projects. Every job moves sheet by sheet: plan, section, material and light.</p>
-        <p class="pills"><a class="pill" href="projects.html">Projects <span aria-hidden="true">→</span></a><a class="pill" href="team.html">Team <span aria-hidden="true">→</span></a></p>
+        <p class="btns"><a class="btn" href="projects.html">Projects <span aria-hidden="true">→</span></a><a class="btn" href="team.html">Team <span aria-hidden="true">→</span></a></p>
       </div>
       <div class="facts">
         <p><span class="meta-label">Office</span><span>Abbasağa, Beşiktaş</span></p>
@@ -970,7 +971,7 @@
         </div>
         <div class="sheet-tools">
           <div class="layers" role="group" aria-label="Layers"><button type="button" aria-pressed="true" data-layer-toggle="mevcut"><i class="sw sw-mevcut" aria-hidden="true"></i>Existing</button><button type="button" aria-pressed="true" data-layer-toggle="sokulen"><i class="sw sw-sokulen" aria-hidden="true"></i>Removed</button><button type="button" aria-pressed="true" data-layer-toggle="yeni"><i class="sw sw-yeni" aria-hidden="true"></i>New</button><button type="button" aria-pressed="true" data-layer-toggle="not"><i class="sw sw-not" aria-hidden="true"></i>Notes</button></div>
-          <button class="pill sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
+          <button class="btn sheet-full" type="button" data-sheet-full hidden>Full screen <span aria-hidden="true">↗</span></button>
         </div>
       </div>
     </section>
@@ -1031,8 +1032,8 @@
         </figure>
       </div>
       <div class="bar strip-controls">
-        <button class="round glass" type="button" data-strip-prev aria-label="Previous material">←</button>
-        <button class="round glass" type="button" data-strip-next aria-label="Next material">→</button>
+        <button class="ctrl" type="button" data-strip-prev aria-label="Previous material">←</button>
+        <button class="ctrl" type="button" data-strip-next aria-label="Next material">→</button>
       </div>
     </section>
     <nav class="next-sheet bar" aria-label="Next page">
@@ -1044,7 +1045,7 @@
       <p class="swipe-hint" aria-hidden="true">← Swipe to turn →</p>
     </nav>
   </main>
-  <footer class="colophon" data-zone="dark">
+  <footer class="colophon">
     <div class="bar">
       <div class="colophon-top">
         <a class="colophon-phone" href="tel:+905425190361">0542 519 0361</a>
