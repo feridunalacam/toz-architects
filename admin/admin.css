@@ -131,6 +131,10 @@ img { display: block; max-width: 100%; }
 .status i { width: 0.5rem; height: 0.5rem; background: var(--ink); flex: none; }
 .status.is-dirty i { background: var(--red); }
 .mode { margin: 0; padding: 0.3rem 0.6rem; border: 1px solid var(--line-2); font: 500 0.66rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.token-steps { margin: 0 0 1rem; padding-left: 1.2rem; color: var(--muted); font-size: 0.875rem; line-height: 1.55; }
+.token-steps a { color: var(--ink); }
+.token-steps li + li { margin-top: 0.35rem; }
+.rail-foot .btn { margin: 0.35rem 0 0.6rem; }
 .actions { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
 
 .btn {

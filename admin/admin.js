@@ -1,12 +1,24 @@
 /* toz+ admin.
    Edits content/site.json and previews every page with the site's own renderer.
-   Opened through tools/admin_server.py it also uploads images, saves and publishes;
-   anywhere else it is a preview and keeps the draft in this browser. */
+   On this Mac (tools/admin_server.py) it writes to the folder and pushes with git.
+   On the live /admin it can do the same through the GitHub API when a token is saved
+   in this browser (never in the repo). Without a token it stays a preview. */
 import { LAYERS, cleanSvg, planSources, renderSite, slugify, validate } from "../tools/render.mjs";
 
 const ROOT = new URL("../", location.href);
 const SITE = "https://feridunalacam.github.io/toz-architects/";
 const DRAFT = "toz-admin-draft";
+const TOKEN_KEY = "toz-admin-gh-token";
+const GH_OWNER = "feridunalacam";
+const GH_REPO = "toz-architects";
+const GH_BRANCH = "main";
+const DETAIL_RE = /^(projeler|en\/projects)\/[a-z0-9][a-z0-9-]*\.html$/;
+const UPLOAD_RE = /^assets\/(uploads\/[a-z0-9][a-z0-9-]*\.(jpg|jpeg|png|webp)|plans\/[a-z0-9][a-z0-9-]*\.svg)$/;
+const PLAN_RE = /^assets\/plans\/[a-z0-9][a-z0-9-]*\.svg$/;
+const PAGE_FILES = new Set([
+  "index.html", "projeler.html", "ekip.html", "iletisim.html", "pratik.html", "ofis.html", "404.html", "sitemap.xml",
+  "en/index.html", "en/projects.html", "en/team.html", "en/contact.html", "en/practice.html", "en/studio.html",
+]);
 const MAIN = {
   tr: ["index.html", "projeler.html", "ekip.html", "iletisim.html"],
   en: ["en/index.html", "en/projects.html", "en/team.html", "en/contact.html"],
@@ -39,8 +51,10 @@ const S = {
   dirtyPlans: new Set(),
   planUrls: new Map(),
   blobs: new Map(),
+  pendingBlobs: new Map(),
   images: [],
   local: false,
+  remote: false,
   unpublished: null,
   files: {},
   section: "projects",
@@ -114,9 +128,131 @@ async function api(path, body, json = false) {
   return out;
 }
 
+const canWrite = () => S.local || S.remote;
+const tokenGet = () => localStorage.getItem(TOKEN_KEY) || "";
+const tokenSet = (t) => {
+  t = String(t || "").trim();
+  if (t) localStorage.setItem(TOKEN_KEY, t);
+  else localStorage.removeItem(TOKEN_KEY);
+};
+
+function bytesToBase64(bytes) {
+  let s = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+async function blobToBase64(blob) { return bytesToBase64(new Uint8Array(await blob.arrayBuffer())); }
+
+async function gh(path, { method = "GET", body } = {}) {
+  const token = tokenGet();
+  if (!token) throw new Error("GitHub bağlantısı yok.");
+  const res = await fetch(`https://api.github.com${path}`, {
+    method,
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 204) return null;
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = { message: text }; }
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("GitHub token geçersiz ya da süresi dolmuş.");
+    if (res.status === 403) throw new Error("GitHub izni yok. Token’a bu depo için Contents yazma yetkisi verin.");
+    if (res.status === 409) throw new Error("Depoda çakışma var. Sayfayı yenileyip tekrar deneyin.");
+    throw new Error(data?.message || `GitHub HTTP ${res.status}`);
+  }
+  return data;
+}
+
+async function ghVerify() {
+  const repo = await gh(`/repos/${GH_OWNER}/${GH_REPO}`);
+  if (repo.permissions && repo.permissions.push === false) {
+    throw new Error("Bu token depoya yazamıyor. Contents: Read and write yetkisi verin.");
+  }
+  return repo;
+}
+
+async function ghListTree() {
+  const tree = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/trees/${GH_BRANCH}?recursive=1`);
+  if (tree.truncated) throw new Error("Depo ağacı çok büyük; liste alınamadı.");
+  return tree.tree || [];
+}
+
+async function ghListImages() {
+  const dirs = ["assets/photos/", "assets/atolye/", "assets/materials/", "assets/uploads/"];
+  return (await ghListTree())
+    .filter((t) => t.type === "blob" && dirs.some((d) => t.path.startsWith(d)) && /\.(jpe?g|png|webp)$/i.test(t.path))
+    .map((t) => t.path);
+}
+
+async function ghCommit(files, removes, message) {
+  const ref = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/ref/heads/${GH_BRANCH}`);
+  const head = ref.object.sha;
+  const parent = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/commits/${head}`);
+  const entries = [];
+  for (const f of files) {
+    const blob = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/blobs`, {
+      method: "POST",
+      body: f.base64 != null
+        ? { content: f.base64, encoding: "base64" }
+        : { content: f.content, encoding: "utf-8" },
+    });
+    entries.push({ path: f.path, mode: "100644", type: "blob", sha: blob.sha });
+  }
+  for (const path of removes) entries.push({ path, mode: "100644", type: "blob", sha: null });
+  const tree = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/trees`, {
+    method: "POST",
+    body: { base_tree: parent.tree.sha, tree: entries },
+  });
+  const commit = await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/commits`, {
+    method: "POST",
+    body: { message, tree: tree.sha, parents: [head] },
+  });
+  await gh(`/repos/${GH_OWNER}/${GH_REPO}/git/refs/heads/${GH_BRANCH}`, {
+    method: "PATCH",
+    body: { sha: commit.sha },
+  });
+  return commit.sha.slice(0, 7);
+}
+
+async function remotePublish(message) {
+  const { files } = renderSite(S.content, { plans: S.plans });
+  for (const src of S.dirtyPlans) {
+    if (!PLAN_RE.test(src)) throw new Error("İzin verilmeyen pafta yolu: " + src);
+    files[src] = S.plans[src];
+  }
+  if (!files["index.html"] || !Object.keys(files).some((p) => DETAIL_RE.test(p))) {
+    throw new Error("Site eksik üretildi, gönderilmedi.");
+  }
+  const payload = [];
+  const json = pretty(S.content);
+  payload.push({ path: "content/site.json", content: json.endsWith("\n") ? json : json + "\n" });
+  for (const [path, text] of Object.entries(files)) {
+    if (!PAGE_FILES.has(path) && !DETAIL_RE.test(path) && !PLAN_RE.test(path)) {
+      throw new Error("İzin verilmeyen dosya yolu: " + path);
+    }
+    payload.push({ path, content: text });
+  }
+  for (const [path, blob] of S.pendingBlobs) {
+    if (!UPLOAD_RE.test(path)) throw new Error("İzin verilmeyen yükleme yolu: " + path);
+    payload.push({ path, base64: await blobToBase64(blob) });
+  }
+  const keep = new Set(Object.keys(files));
+  const removes = (await ghListTree())
+    .filter((t) => t.type === "blob" && DETAIL_RE.test(t.path) && !keep.has(t.path))
+    .map((t) => t.path);
+  if (!payload.length && !removes.length) return null;
+  return ghCommit(payload, removes, message);
+}
+
 /* ---------------------------------------------------------------- state and history */
 
-const dirty = () => JSON.stringify(S.content) !== S.savedRaw || S.dirtyPlans.size > 0;
+const dirty = () => JSON.stringify(S.content) !== S.savedRaw || S.dirtyPlans.size > 0 || S.pendingBlobs.size > 0;
 let snapTimer, draftTimer, previewTimer;
 
 function touch({ preview = true } = {}) {
@@ -191,10 +327,12 @@ function status(text) {
   const el = $("[data-status]");
   el.classList.toggle("is-dirty", d || S.unpublished === true);
   el.lastElementChild.textContent = text || (d
-    ? (S.local ? "Kaydedilmemiş değişiklik var" : "Değişiklikler yalnızca bu tarayıcıda")
-    : !S.local ? "Çevrimiçi önizleme"
-      : S.unpublished === true ? "Kaydedildi · henüz yayında değil"
-        : S.unpublished === false ? "Kaydedildi ve yayında" : "Kaydedildi");
+    ? (canWrite() ? "Kaydedilmemiş değişiklik var" : "Değişiklikler yalnızca bu tarayıcıda")
+    : S.local
+      ? (S.unpublished === true ? "Kaydedildi · henüz yayında değil"
+        : S.unpublished === false ? "Kaydedildi ve yayında" : "Kaydedildi")
+      : S.remote ? "Çevrimiçi · bağlı"
+        : "Çevrimiçi · bağlanmamış");
   $("[data-undo]").disabled = !S.undo.length && JSON.stringify(S.content) === S.lastSnap;
   $("[data-redo]").disabled = !S.redo.length;
   $("[data-save]").disabled = !d || S.saving;
@@ -206,11 +344,16 @@ function status(text) {
 }
 
 async function refreshGit() {
-  if (!S.local) return;
-  try {
-    const g = await api("status");
-    S.unpublished = g.changes + g.ahead > 0;
-  } catch {
+  if (S.local) {
+    try {
+      const g = await api("status");
+      S.unpublished = g.changes + g.ahead > 0;
+    } catch {
+      S.unpublished = null;
+    }
+  } else if (S.remote) {
+    S.unpublished = dirty();
+  } else {
     S.unpublished = null;
   }
   status();
@@ -453,7 +596,12 @@ async function upload(file, name) {
     S.images.push(out.src, ...(small ? [out.small] : []));
   } else {
     S.blobs.set(out.src, URL.createObjectURL(big.blob));
-    if (small) S.blobs.set(out.small, URL.createObjectURL(small.blob));
+    S.pendingBlobs.set(out.src, big.blob);
+    if (small) {
+      S.blobs.set(out.small, URL.createObjectURL(small.blob));
+      S.pendingBlobs.set(out.small, small.blob);
+    }
+    S.images.push(out.src, ...(small ? [out.small] : []));
   }
   return out;
 }
@@ -1016,7 +1164,14 @@ function rail() {
     h("div", { class: "rail-foot" },
       h("p", {}, S.local
         ? "Kaydet, değişiklikleri bu Mac’teki klasöre yazar. Yayınla, GitHub’a gönderir; site birkaç dakika içinde güncellenir."
-        : "Bu adres yalnızca önizleme içindir. Kaydetmek için Mac’te site klasöründeki “Toz Admin” dosyasını açın."),
+        : S.remote
+          ? "GitHub’a bağlısınız. Kaydet / Yayınla değişiklikleri doğrudan canlı siteye gönderir."
+          : "Önizleme modundasınız. Canlıdan yönetmek için üstteki GitHub düğmesiyle bir token bağlayın."),
+      S.remote
+        ? h("button", { type: "button", class: "btn sm ghost", onclick: connectDialog }, "Bağlantıyı yönet")
+        : !S.local
+          ? h("button", { type: "button", class: "btn sm", onclick: connectDialog }, "GitHub bağla")
+          : null,
       h("a", { href: SITE, target: "_blank", rel: "noopener" }, "Canlı siteyi aç ↗")));
 }
 
@@ -1292,8 +1447,8 @@ function setupPreview() {
 
 /* ---------------------------------------------------------------- save and publish */
 
-async function save({ quiet = false } = {}) {
-  if (!S.local || S.saving) return false;
+async function save({ quiet = false, message = "İçerik güncellemesi" } = {}) {
+  if (!canWrite() || S.saving) return false;
   S.problems = checks();
   if (S.problems.length) {
     renderEditor({ top: true });
@@ -1301,19 +1456,29 @@ async function save({ quiet = false } = {}) {
     return false;
   }
   S.saving = true;
-  status("Kaydediliyor…");
+  status(S.remote ? "GitHub’a gönderiliyor…" : "Kaydediliyor…");
   try {
-    const { files } = renderSite(S.content, { plans: S.plans });
-    for (const src of S.dirtyPlans) files[src] = S.plans[src];
-    const res = await api("save", { content: pretty(S.content), files }, true);
-    S.savedRaw = JSON.stringify(S.content);
-    S.dirtyPlans.clear();
-    localStorage.removeItem(DRAFT);
-    if (!quiet) toast(`Kaydedildi · ${Object.keys(files).length} dosya${res.removed?.length ? ` · ${res.removed.length} eski sayfa kaldırıldı` : ""}`);
+    if (S.local) {
+      const { files } = renderSite(S.content, { plans: S.plans });
+      for (const src of S.dirtyPlans) files[src] = S.plans[src];
+      const res = await api("save", { content: pretty(S.content), files }, true);
+      S.savedRaw = JSON.stringify(S.content);
+      S.dirtyPlans.clear();
+      localStorage.removeItem(DRAFT);
+      if (!quiet) toast(`Kaydedildi · ${Object.keys(files).length} dosya${res.removed?.length ? ` · ${res.removed.length} eski sayfa kaldırıldı` : ""}`);
+    } else {
+      const sha = await remotePublish(message);
+      S.savedRaw = JSON.stringify(S.content);
+      S.dirtyPlans.clear();
+      S.pendingBlobs.clear();
+      localStorage.removeItem(DRAFT);
+      S.unpublished = false;
+      if (!quiet) toast(sha ? `Yayınlandı · ${sha}` : "Gönderilecek yeni değişiklik yoktu");
+    }
     refreshProblems();
     return true;
   } catch (err) {
-    toast("Kaydedilemedi: " + err.message, true);
+    toast((S.remote ? "Gönderilemedi: " : "Kaydedilemedi: ") + err.message, true);
     return false;
   } finally {
     S.saving = false;
@@ -1326,7 +1491,9 @@ function publishDialog() {
   const dlg = $("[data-publish-dialog]");
   const msg = h("input", { type: "text", value: "İçerik güncellemesi", maxlength: "200" });
   const body = h("div", { class: "dlg-body" },
-    h("p", {}, dirty() ? "Değişiklikler önce kaydedilecek, sonra GitHub’a gönderilecek." : "Kaydedilmiş değişiklikler GitHub’a gönderilecek."),
+    h("p", {}, S.remote
+      ? (dirty() ? "Değişiklikler GitHub’a tek commit olarak gönderilecek; canlı site birkaç dakika içinde güncellenir." : "Gönderilecek kayıtlı değişiklik yok.")
+      : (dirty() ? "Değişiklikler önce kaydedilecek, sonra GitHub’a gönderilecek." : "Kaydedilmiş değişiklikler GitHub’a gönderilecek.")),
     h("p", { class: "quiet small" }, "Canlı site birkaç dakika içinde güncellenir."),
     h("label", { class: "field" }, h("span", { class: "f-label" }, "Değişiklik notu"), msg));
   const cancel = h("button", { type: "button", class: "btn ghost", onclick: () => dlg.close() }, "Vazgeç");
@@ -1334,17 +1501,32 @@ function publishDialog() {
   const foot = h("div", { class: "dlg-foot" }, cancel, send);
   const lock = (on) => { send.disabled = cancel.disabled = msg.disabled = on; };
   send.addEventListener("click", async () => {
-    lock(true);
-    const busy = h("p", { class: "busy" }, dirty() ? "Kaydediliyor…" : "GitHub’a gönderiliyor…");
-    body.append(busy);
-    if (dirty() && !(await save({ quiet: true }))) { busy.remove(); lock(false); return; }
-    busy.textContent = "GitHub’a gönderiliyor…";
-    try {
-      const r = await api("publish", { message: msg.value }, true);
+    if (S.remote && !dirty()) {
       body.replaceChildren(h("div", { class: "pub-ok" },
-        h("p", { class: "kicker" }, r.committed ? `Gönderildi · ${r.commit}` : "Gönderilecek yeni değişiklik yoktu"),
-        h("p", {}, "GitHub Pages siteyi birkaç dakika içinde günceller."),
+        h("p", { class: "kicker" }, "Gönderilecek yeni değişiklik yoktu"),
         h("p", {}, h("a", { href: SITE, target: "_blank", rel: "noopener" }, "Canlı siteyi aç ↗"))));
+      foot.replaceChildren(h("button", { type: "button", class: "btn", onclick: () => dlg.close() }, "Tamam"));
+      return;
+    }
+    lock(true);
+    const busy = h("p", { class: "busy" }, S.remote || dirty() ? "GitHub’a gönderiliyor…" : "GitHub’a gönderiliyor…");
+    body.append(busy);
+    try {
+      if (S.remote) {
+        if (!(await save({ quiet: true, message: msg.value }))) { busy.remove(); lock(false); return; }
+        body.replaceChildren(h("div", { class: "pub-ok" },
+          h("p", { class: "kicker" }, "Gönderildi"),
+          h("p", {}, "GitHub Pages siteyi birkaç dakika içinde günceller."),
+          h("p", {}, h("a", { href: SITE, target: "_blank", rel: "noopener" }, "Canlı siteyi aç ↗"))));
+      } else {
+        if (dirty() && !(await save({ quiet: true }))) { busy.remove(); lock(false); return; }
+        busy.textContent = "GitHub’a gönderiliyor…";
+        const r = await api("publish", { message: msg.value }, true);
+        body.replaceChildren(h("div", { class: "pub-ok" },
+          h("p", { class: "kicker" }, r.committed ? `Gönderildi · ${r.commit}` : "Gönderilecek yeni değişiklik yoktu"),
+          h("p", {}, "GitHub Pages siteyi birkaç dakika içinde günceller."),
+          h("p", {}, h("a", { href: SITE, target: "_blank", rel: "noopener" }, "Canlı siteyi aç ↗"))));
+      }
       foot.replaceChildren(h("button", { type: "button", class: "btn", onclick: () => dlg.close() }, "Tamam"));
     } catch (err) {
       busy.remove();
@@ -1365,6 +1547,97 @@ function publishDialog() {
   msg.select();
 }
 
+function connectDialog() {
+  const dlg = $("[data-publish-dialog]");
+  const input = h("input", {
+    type: "password",
+    value: tokenGet(),
+    placeholder: "ghp_… ya da github_pat_…",
+    autocomplete: "off",
+    spellcheck: "false",
+  });
+  const body = h("div", { class: "dlg-body" },
+    h("p", {}, "Canlı panelden kaydetmek için GitHub kişisel erişim anahtarı (token) gerekir. Token yalnızca bu tarayıcıda saklanır; site dosyalarına yazılmaz."),
+    h("ol", { class: "token-steps" },
+      h("li", {}, h("a", { href: "https://github.com/settings/personal-access-tokens/new", target: "_blank", rel: "noopener" }, "Fine-grained token oluştur ↗")),
+      h("li", {}, `Repository access: yalnızca ${GH_OWNER}/${GH_REPO}`),
+      h("li", {}, "Permissions → Repository → Contents: Read and write"),
+      h("li", {}, "Oluşturulan anahtarı aşağıya yapıştırın")),
+    h("label", { class: "field" }, h("span", { class: "f-label" }, "GitHub token"), input),
+    h("p", { class: "quiet small" }, "Bu bilgisayarı başkası da kullanıyorsa işiniz bitince Bağlantıyı kesin."));
+  const cancel = h("button", { type: "button", class: "btn ghost", onclick: () => dlg.close() }, "Vazgeç");
+  const clear = h("button", {
+    type: "button", class: "btn danger", hidden: !tokenGet(),
+    onclick: async () => {
+      tokenSet("");
+      S.remote = false;
+      S.unpublished = null;
+      syncChrome();
+      rail();
+      dlg.close();
+      toast("GitHub bağlantısı kesildi");
+    },
+  }, "Bağlantıyı kes");
+  const saveBtn = h("button", { type: "button", class: "btn" }, "Bağla");
+  const foot = h("div", { class: "dlg-foot" }, clear, cancel, saveBtn);
+  saveBtn.addEventListener("click", async () => {
+    const value = input.value.trim();
+    if (!value) { toast("Token boş olamaz", true); return; }
+    saveBtn.disabled = cancel.disabled = input.disabled = true;
+    const busy = h("p", { class: "busy" }, "Token kontrol ediliyor…");
+    body.append(busy);
+    const prev = tokenGet();
+    tokenSet(value);
+    try {
+      await ghVerify();
+      S.images = await ghListImages().catch(() => S.images);
+      S.remote = true;
+      syncChrome();
+      rail();
+      refreshGit();
+      dlg.close();
+      toast("GitHub bağlandı · artık kaydedebilirsiniz");
+    } catch (err) {
+      tokenSet(prev);
+      busy.remove();
+      body.querySelectorAll(".problems").forEach((el) => el.remove());
+      body.append(h("div", { class: "problems" }, h("strong", {}, "Bağlanamadı"), err.message));
+      saveBtn.disabled = cancel.disabled = input.disabled = false;
+    }
+  });
+  dlg.replaceChildren(
+    h("div", { class: "dlg-head" }, h("h2", { id: "publish-title" }, "GitHub bağlantısı"), h("button", { type: "button", class: "icon", "aria-label": "Kapat", onclick: () => dlg.close() }, "✕")),
+    body,
+    foot);
+  dlg.onclose = null;
+  dlg.onclick = null;
+  dlg.showModal();
+  input.focus();
+  input.select();
+}
+
+function syncChrome() {
+  const mode = $("[data-mode]");
+  mode.hidden = false;
+  if (S.local) {
+    mode.textContent = "Yerel · kaydedilebilir";
+    mode.title = "Bu Mac’teki site klasörüne kaydeder ve GitHub’a gönderir.";
+  } else if (S.remote) {
+    mode.textContent = "Çevrimiçi · bağlı";
+    mode.title = "GitHub token bu tarayıcıda saklı. Kaydet / Yayınla doğrudan depoya yazar.";
+  } else {
+    mode.textContent = "Çevrimiçi · bağlanmamış";
+    mode.title = "Canlıdan yönetmek için GitHub token bağlayın.";
+  }
+  $("[data-connect]").hidden = S.local;
+  $("[data-connect]").textContent = S.remote ? "Bağlı" : "GitHub";
+  $("[data-save]").hidden = !canWrite();
+  $("[data-publish]").hidden = !canWrite();
+  $("[data-download]").hidden = canWrite();
+  $("[data-mode]").style.cursor = S.local ? "" : "pointer";
+  status();
+}
+
 function downloadDraft() {
   const a = h("a", { href: URL.createObjectURL(new Blob([pretty(S.content) + "\n"], { type: "application/json" })), download: "site.json" });
   a.click();
@@ -1375,16 +1648,13 @@ function downloadDraft() {
 /* ---------------------------------------------------------------- start */
 
 function setupChrome() {
-  const mode = $("[data-mode]");
-  mode.hidden = false;
-  mode.textContent = S.local ? "Yerel · kaydedilebilir" : "Çevrimiçi · yalnızca önizleme";
-  mode.title = S.local ? "Bu Mac’teki site klasörüne kaydeder ve GitHub’a gönderir." : "Bu adreste kayıt yapılamaz. Mac’te “Toz Admin” dosyasını açın.";
-  $("[data-save]").hidden = !S.local;
-  $("[data-publish]").hidden = !S.local;
-  $("[data-download]").hidden = S.local;
+  syncChrome();
   $("[data-save]").addEventListener("click", () => save());
   $("[data-publish]").addEventListener("click", publishDialog);
   $("[data-download]").addEventListener("click", downloadDraft);
+  $("[data-connect]").addEventListener("click", connectDialog);
+  $("[data-mode]").addEventListener("click", () => { if (!S.local) connectDialog(); });
+  $("[data-mode]").style.cursor = S.local ? "" : "pointer";
   $("[data-undo]").addEventListener("click", undo);
   $("[data-redo]").addEventListener("click", redo);
   const pvBtn = $("[data-pv-toggle]");
@@ -1399,7 +1669,7 @@ function setupChrome() {
     const key = e.key.toLowerCase();
     if (mod && key === "s") {
       e.preventDefault();
-      if (S.local) save();
+      if (canWrite()) save();
       else downloadDraft();
     } else if (mod && key === "z" && !e.target.closest("input, textarea, select")) {
       e.preventDefault();
@@ -1408,7 +1678,7 @@ function setupChrome() {
     }
   });
   addEventListener("beforeunload", (e) => {
-    if (S.local && dirty()) e.preventDefault();
+    if (canWrite() && dirty()) e.preventDefault();
   });
 }
 
@@ -1433,6 +1703,17 @@ async function loadPlans() {
   }));
 }
 
+async function bootRemote() {
+  if (!tokenGet()) return;
+  try {
+    await ghVerify();
+    S.remote = true;
+    S.images = await ghListImages().catch(() => []);
+  } catch {
+    S.remote = false;
+  }
+}
+
 async function boot() {
   const [content, local] = await Promise.all([
     fetch(new URL("content/site.json", ROOT), { cache: "no-store" }).then((res) => {
@@ -1447,6 +1728,7 @@ async function boot() {
   S.local = local;
   await loadPlans();
   if (local) S.images = (await api("images").catch(() => ({ images: [] }))).images;
+  else await bootRemote();
   readHash();
   setupChrome();
   rail();
