@@ -1,0 +1,9 @@
+{
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/tools/(.*).mjs",
+      "headers": [{ "key": "Content-Type", "value": "text/javascript; charset=utf-8" }]
+    }
+  ]
+}

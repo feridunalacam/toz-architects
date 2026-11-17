@@ -6,7 +6,7 @@
 import { LAYERS, cleanSvg, planSources, renderSite, slugify, validate } from "../tools/render.mjs";
 
 const ROOT = new URL("../", location.href);
-const SITE = "https://feridunalacam.github.io/toz-architects/";
+const SITE = "https://toz-architects.vercel.app/";
 const DRAFT = "toz-admin-draft";
 const TOKEN_KEY = "toz-admin-gh-token";
 const GH_OWNER = "feridunalacam";
